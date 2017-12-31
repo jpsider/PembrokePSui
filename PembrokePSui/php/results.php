@@ -1,7 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once 'components/header.php';
+	require_once 'components/header.php';
+?>
+<?php
+	if (!empty($_GET['UpdateResult'])) {
+		$ID=$_GET['ID'];
+		$Result_Name=$_GET['Result_Name'];
+		$HtmlColor=$_GET['HtmlColor'];
+		$HTML_Description=$_GET['HTML_Description'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+		$sql = "update results set Result_Name='$Result_Name',HtmlColor='$HtmlColor',HTML_Description='$HTML_Description' where ID=$ID";
+		$pdo->query($sql);
+		header("Refresh:0 url=results.php");
+	}
+	else {
+
 ?>
 <script> 
 $(document).ready(function() {
@@ -35,12 +50,14 @@ $(document).ready(function() {
 							$sql = 'select * from RESULTS';
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
-								echo '<td>' . $row['ID'] . '</td>';
-								echo '<td>' . $row['Result_Name'] . '</td>';
-								echo '<td>' . $row['HtmlColor'] . '</td>';
-								echo '<td style=background-color:' . $row['HtmlColor'] . '>' . $row['HTML_Description'] . '</td>';
+								echo '<form action="results.php" method="get">';
+								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">' . $row['ID'] . '</td>';
+								echo '<td><input type="text" name="Result_Name" value="' . $row['Result_Name'] . '"></td>';
+								echo '<td><input type="text" name="HtmlColor" value="' . $row['HtmlColor'] . '"></td>';
+								echo '<td style=background-color:'. $row['HtmlColor'] . '><input type="text" name="HTML_Description" value="' . $row['HTML_Description'] . '"</td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
-							   	echo '<td><a class="btn btn-success" href="results.php?id=' . $row['ID'] . '">Update</a></td>';
+							   	echo '<td><input type="hidden" name="UpdateResult" value="TRUE"><input type="submit" class="btn btn-warning" value="Update"></td>';
+								echo '</form>';
 								echo '</tr>';
 							}
 							Database::disconnect();
@@ -53,6 +70,9 @@ $(document).ready(function() {
 	</div> <!-- /container -->
 </body>
 <?php
-require_once 'components/footer.php';
+	require_once 'components/footer.php';
+?>
+<?php
+  	}
 ?>
 </html>

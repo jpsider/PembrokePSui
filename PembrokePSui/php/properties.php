@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once 'components/header.php';
+	require_once 'components/header.php';
+?>
+<?php
+	if (!empty($_GET['UpdateProperty'])) {
+		$ID=$_GET['ID'];
+		$Prop_Name=$_GET['Prop_Name'];
+		$Prop_Value=$_GET['Prop_Value'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+		$sql = "update properties set Prop_Name='$Prop_Name',Prop_Value='$Prop_Value' where ID=$ID";
+		$pdo->query($sql);
+		header("Refresh:0 url=properties.php");
+	}
+	elseif (!empty($_GET['EnableProperty'])) {
+		$ID=$_GET['ID'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+		$sql = "update properties set STATUS_ID=11 where ID=$ID";
+		$pdo->query($sql);
+		header("Refresh:0 url=properties.php");		
+	}
+	elseif (!empty($_GET['DisableProperty'])) {
+		$ID=$_GET['ID'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+		$sql = "update properties set STATUS_ID=12 where ID=$ID";
+		$pdo->query($sql);
+		header("Refresh:0 url=properties.php");			
+	}
+	else {
+
 ?>
 <script> 
 	$(document).ready(function() {
@@ -44,13 +74,24 @@ require_once 'components/header.php';
 							. 'join STATUS s on p.STATUS_ID=s.ID '; 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
-								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Prop_Name'] . '</td>';
-								echo '<td>'. $row['Prop_Value'] . '</td>';
+								echo '<form action="properties.php" method="get">';
+								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
+								echo '<td><input type="text" name="Prop_Name" value="'. $row['Prop_Name'] . '"></td>';
+								echo '<td><input type="text" name="Prop_Value" value="'. $row['Prop_Value'] . '"></td>';
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
-							   	echo '<td><a class="btn btn-success" href="properties.php?id='.$row['ID'].'">Update</a></td>';
-								echo '<td><a class="btn btn-danger" href="properties.php?id='.$row['ID'].'">Enable/Disable</a></td>';
-								echo '<td>'. $row['date_modified'] . '</td>';								   
+								echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="submit" class="btn btn-warning" value="Update"></td>';
+								echo '</form>';
+								if($row['STATUS_NAME'] == 'Enabled'){
+									echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
+									echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="submit" class="btn btn-danger" value="Disable"></td>';
+									echo '</form>';
+								} else {
+									echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
+									echo '<td><input type="hidden" name="EnableProperty" value="TRUE"><input type="submit" class="btn btn-success" value="Enable"></td>';
+									echo '</form>';
+								}
+								echo '<td>'. $row['date_modified'] . '</td>';
+																   
 								echo '</tr>';
 							}
 							Database::disconnect();
@@ -63,6 +104,9 @@ require_once 'components/header.php';
 	</div> <!-- /container -->
 </body>
 <?php
-require_once 'components/footer.php';
+	require_once 'components/footer.php';
+?>
+<?php
+  	}
 ?>
 </html>
