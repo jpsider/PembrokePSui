@@ -3,7 +3,9 @@ function Invoke-DeployWeb
     <#
 	.DESCRIPTION
 		Deploy .php pages to web server.
-    .PARAMETER Path
+    .PARAMETER Destination
+        A valid Path is required.
+    .PARAMETER Source
         A valid Path is required.
 	.EXAMPLE
         Invoke-DeployWeb -Destination c:\wamp\www\PembrokePS -Source c:\OpenProjects\ProjectPembroke\PembrokePSUI
