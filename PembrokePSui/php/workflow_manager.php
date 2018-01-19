@@ -8,28 +8,28 @@
 		$new_status_id=$_GET['new_status_id'];
 		include 'components/database.php';
 		// Update the database to set the test to aborted
-		$sql = "UPDATE queue_manager SET Status_ID = $new_status_id";
+		$sql = "UPDATE workflow_manager SET Status_ID = $new_status_id";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
-		header("Refresh:0 url=queue_manager.php");
+		header("Refresh:0 url=workflow_manager.php");
 	}
-	elseif(!empty($_GET['NewQueueMgr'])){
+	elseif(!empty($_GET['NewWorkflowMgr'])){
 		include 'components/database.php';
-		$Queue_Manager_Type_ID=$_GET['Queue_Manager_Type_ID'];
-		$Qman_Port_ID=$_GET['Qman_Port_ID'];
+		$workflow_manager_Type_ID=$_GET['workflow_manager_Type_ID'];
+		$WKFLW_PORT_ID=$_GET['WKFLW_PORT_ID'];
 		$Kicker_Port_ID=$_GET['Kicker_Port_ID'];
 		$Wait=$_GET['Wait'];
 		$Kicker_Wait=$_GET['Kicker_Wait'];
-		$Qman_Description=$_GET['Qman_Description'];
-		$sql = "INSERT INTO QUEUE_MANAGER (QUEUE_MANAGER_TYPE_ID,QMAN_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Log_File,QMan_Description) VALUES ('$Queue_Manager_Type_ID','$Qman_Port_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','NoLog','$Qman_Description')";
+		$Wman_Description=$_GET['Wman_Description'];
+		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Log_File,Wman_Description) VALUES ('$workflow_manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','NoLog','$Wman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
-		$sql = "update ENDPOINT_PORTS set ENDPOINT_ASSIGNED_STATUS=7 where ID in ('$Qman_Port_ID','$Kicker_Port_ID')";
+		$sql = "update ENDPOINT_PORTS set ENDPOINT_ASSIGNED_STATUS=7 where ID in ('$WKFLW_PORT_ID','$Kicker_Port_ID')";
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
-		header("Refresh:0 url=queue_manager.php");	
+		header("Refresh:0 url=workflow_manager.php");	
 	}
 	else {
 ?>
@@ -45,13 +45,13 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Queue Manager</h3>
+				<h3>PembrokePS Workflow Manager</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Queue Manager Type</th>
+							<th>Workflow Manager Type</th>
 							<th>Wait</th>
 							<th>Rest Port</th>
 							<th>TableName</th>
@@ -76,60 +76,60 @@
 							} else {
 								$Manager_ID = "%%";
 							}
-							$sql = "select qm.ID, " 
-										. "qm.Status_ID, "
-										. "qm.QUEUE_MANAGER_TYPE_ID, "
-										. "qm.Wait, "
-										. "qm.QMAN_PORT_ID, "
-										. "qm.Log_File as Qman_Log, "
-										. "qm.Heartbeat, "
-										. "qm.KICKER_PORT_ID, "
-										. "qm.KICKER_STATUS_ID, "
-										. "qm.KICKER_Heartbeat, "
-										. "qm.KICKER_Wait, "
-										. "qm.QMan_Description, "
-										. "qm.date_modified, "
-										. "s.HtmlColor as Qman_Color, "
+							$sql = "select wm.ID, " 
+										. "wm.Status_ID, "
+										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
+										. "wm.Wait, "
+										. "wm.WKFLW_PORT_ID, "
+										. "wm.Log_File as Wman_Log, "
+										. "wm.Heartbeat, "
+										. "wm.KICKER_PORT_ID, "
+										. "wm.KICKER_STATUS_ID, "
+										. "wm.KICKER_Heartbeat, "
+										. "wm.KICKER_Wait, "
+										. "wm.Wman_Description, "
+										. "wm.date_modified, "
+										. "s.HtmlColor as Wman_Color, "
 										. "ks.HtmlColor as Kicker_Color, "
-										. "s.Status_Name as Qman_Status, "
+										. "s.Status_Name as Wman_Status, "
 										. "ks.Status_Name as Kicker_Status, "
-										. "ep.Port as QMAN_PORT, "
+										. "ep.Port as WMAN_PORT, "
 										. "epk.Port as Kicker_PORT, "
-										. "qt.Name as Qman_Type, "
+										. "qt.Name as Wman_Type, "
 										. "qt.TableName "
-									. "from QUEUE_MANAGER qm "
-									. "join STATUS s on qm.Status_ID=s.ID "
-									. "join STATUS ks on qm.KICKER_STATUS_ID=ks.ID "
-									. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
-									. "join ENDPOINT_PORTS epk on qm.KICKER_PORT_ID=epk.ID "
-									. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
-									. "where qm.ID like '$Manager_ID'";
+									. "from workflow_manager wm "
+									. "join STATUS s on wm.Status_ID=s.ID "
+									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
+									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
+									. "join ENDPOINT_PORTS epk on wm.KICKER_PORT_ID=epk.ID "
+									. "join workflow_manager_TYPE qt on wm.workflow_manager_TYPE_ID=qt.ID "
+									. "where wm.ID like '$Manager_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Qman_Type'] . '</td>';
+								echo '<td>'. $row['Wman_Type'] . '</td>';
 								echo '<td>'. $row['Wait'] . '</td>';
-								echo '<td>'. $row['QMAN_PORT'] . '</td>';
+								echo '<td>'. $row['WMAN_PORT'] . '</td>';
 								echo '<td>'. $row['TableName'] . '</td>';
-								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="Log_File" value='.$row['Qman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
+								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="Log_File" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['Heartbeat'] . '</td>';
-								echo '<td style=background-color:'. $row['Qman_Color'] . '>'. $row['Qman_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['Wman_Color'] . '>'. $row['Wman_Status'] . '</td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 								echo '<td style=background-color:'. $row['Kicker_Color'] . '>'. $row['Kicker_Status'] . '</td>';
 								echo '<td>'. $row['Kicker_PORT'] . '</td>';
 								echo '<td>'. $row['KICKER_Wait'] . '</td>';
 								echo '<td>'. $row['KICKER_Heartbeat'] . '</td>';
-								echo '<td>'. $row['QMan_Description'] . '</td>';
+								echo '<td>'. $row['Wman_Description'] . '</td>';
 								echo '<td width=250>';
 								if ($row['Status_ID'] == 1) {
-									echo '<a class="btn btn-success" href="queue_manager.php?new_status_id=3">Start Manager</a>';
+									echo '<a class="btn btn-success" href="workflow_manager.php?new_status_id=3">Start Manager</a>';
 								} elseif ($row['Status_ID'] == 2) {
-									echo '<a class="btn btn-danger" href="queue_manager.php?new_status_id=4">Stop Manager</a>';
+									echo '<a class="btn btn-danger" href="workflow_manager.php?new_status_id=4">Stop Manager</a>';
 								} elseif ($row['Status_ID'] == 3) {
-									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
+									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
 								}else {
-									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
+									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
 								}
 								echo '</td>';
 								echo '</tr>';
@@ -141,11 +141,11 @@
 					<table  class="table table-striped table-bordered">
 						<tr>
 							<form>
-								<td><b>Add a New Queue Manager</b></td>
+								<td><b>Add a New Workflow Manager</b></td>
 								<td>
 									<?php
-										echo "<select name='Queue_Manager_Type_ID'>";
-										$sql = "select * from QUEUE_MANAGER_TYPE";
+										echo "<select name='Workflow_Manager_Type_ID'>";
+										$sql = "select * from Workflow_MANAGER_TYPE";
 										foreach ($pdo->query($sql) as $row) {
 											echo "<option value=". $row['ID'] .">". $row['Name'] ."</option>";
 										}
@@ -154,7 +154,7 @@
 								</td>
 								<td>
 									<?php
-										echo "<select name='Qman_Port_ID'>";
+										echo "<select name='WKFLW_PORT_ID'>";
 										$sql = "select * from ENDPOINT_PORTS where ENDPOINT_ASSIGNED_STATUS in (13)";
 										foreach ($pdo->query($sql) as $EProw) {
 											echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
@@ -173,16 +173,16 @@
 									?>								
 								</td>
 								<td>
-									<input type="text" name="Wait" value="Enter a Qman Wait">
+									<input type="text" name="Wait" value="Enter a Wman Wait">
 								</td>
 								<td>
 									<input type="text" name="Kicker_Wait" value="Enter a Kicker Wait">
 								</td>
 								<td>
-									<input type="text" name="Qman_Description" value="Enter a description">
+									<input type="text" name="Wman_Description" value="Enter a description">
 								</td>
 								<td>
-									<input type="hidden" name="NewQueueMgr" value="TRUE"><input type="submit" class="btn btn-success" value="Add Queue Manager"></td>
+									<input type="hidden" name="NewWorkflowMgr" value="TRUE"><input type="submit" class="btn btn-success" value="Add Workflow Manager"></td>
 								</td>
 							</form>
 						</tr>

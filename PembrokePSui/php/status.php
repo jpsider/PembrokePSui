@@ -15,6 +15,17 @@
 		$pdo->query($sql);
 		header("Refresh:0 url=status.php");
 	}
+	elseif (!empty($_GET['NewStatus'])){
+		$HtmlColor=$_GET['HtmlColor'];
+		$Status_Name=$_GET['Status_Name'];
+		$Html_Description=$_GET['HTML_Description'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+
+		$sql = "insert into status (Status_Name,HtmlColor,Html_Description) VALUES ('$Status_Name','$HtmlColor','$Html_Description')";
+		$pdo->query($sql);
+		header("Refresh:0 url=status.php");		
+	}
 	else {
 
 ?>		
@@ -64,6 +75,25 @@ $(document).ready(function() {
 							?>
 						</tbody>
 					</table>
+					<table  class="table table-striped table-bordered">
+						<tr>
+							<form>
+								<td><b>Add a New Status</b></td>
+								<td>
+									<input type="text" name="Status_Name" value="Enter Status Name">
+								</td>
+								<td>
+									<input type="text" name="HtmlColor" value="Enter HTML Color">
+								</td>
+								<td>
+									<input type="text" name="HTML_Description" value="Enter HTML Description">
+								</td>
+								<td>
+									<input type="hidden" name="NewStatus" value="TRUE"><input type="submit" class="btn btn-success" value="Add Status"></td>
+								</td>
+							</form>
+						</tr>
+					</table>					
 		   		</div>
 			</div>
 		</div>
