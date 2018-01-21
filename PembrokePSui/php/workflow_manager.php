@@ -6,9 +6,10 @@
 <?php
 	if (!empty($_GET['new_status_id'])) {
 		$new_status_id=$_GET['new_status_id'];
+		$ID=$_GET['ID'];
 		include 'components/database.php';
 		// Update the database to set the test to aborted
-		$sql = "UPDATE workflow_manager SET Status_ID = $new_status_id";
+		$sql = "UPDATE workflow_manager SET Status_ID = $new_status_id where ID=$ID";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
@@ -16,13 +17,14 @@
 	}
 	elseif(!empty($_GET['NewWorkflowMgr'])){
 		include 'components/database.php';
-		$workflow_manager_Type_ID=$_GET['workflow_manager_Type_ID'];
+		$Workflow_Manager_Type_ID=$_GET['Workflow_Manager_Type_ID'];
 		$WKFLW_PORT_ID=$_GET['WKFLW_PORT_ID'];
 		$Kicker_Port_ID=$_GET['Kicker_Port_ID'];
 		$Wait=$_GET['Wait'];
 		$Kicker_Wait=$_GET['Kicker_Wait'];
+		$Max_Concurrent=$_GET['Max_Concurrent'];
 		$Wman_Description=$_GET['Wman_Description'];
-		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Log_File,Wman_Description) VALUES ('$workflow_manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','NoLog','$Wman_Description')";
+		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Max_Concurrent_Tasks,Log_File,Wman_Description) VALUES ('$Workflow_Manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','$Max_Concurrent','NoLog','$Wman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
@@ -54,6 +56,7 @@
 							<th>Workflow Manager Type</th>
 							<th>Wait</th>
 							<th>Rest Port</th>
+							<th>Max Tasks</th>
 							<th>TableName</th>
 							<th>Log_File</th>
 							<th>HeartBeat</th>
@@ -76,11 +79,17 @@
 							} else {
 								$Manager_ID = "%%";
 							}
+							if(!empty($_GET['WORKFLOW_MANAGER_TYPE_ID'])){
+								$WORKFLOW_MANAGER_TYPE_ID = $_GET['WORKFLOW_MANAGER_TYPE_ID'];
+							} else {
+								$WORKFLOW_MANAGER_TYPE_ID = "%%";
+							}							
 							$sql = "select wm.ID, " 
 										. "wm.Status_ID, "
 										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
 										. "wm.Wait, "
 										. "wm.WKFLW_PORT_ID, "
+										. "wm.Max_Concurrent_Tasks, "
 										. "wm.Log_File as Wman_Log, "
 										. "wm.Heartbeat, "
 										. "wm.KICKER_PORT_ID, "
@@ -95,15 +104,15 @@
 										. "ks.Status_Name as Kicker_Status, "
 										. "ep.Port as WMAN_PORT, "
 										. "epk.Port as Kicker_PORT, "
-										. "qt.Name as Wman_Type, "
-										. "qt.TableName "
+										. "wt.Name as Wman_Type, "
+										. "wt.TableName "
 									. "from workflow_manager wm "
 									. "join STATUS s on wm.Status_ID=s.ID "
 									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
 									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
 									. "join ENDPOINT_PORTS epk on wm.KICKER_PORT_ID=epk.ID "
-									. "join workflow_manager_TYPE qt on wm.workflow_manager_TYPE_ID=qt.ID "
-									. "where wm.ID like '$Manager_ID'";
+									. "join workflow_manager_TYPE wt on wm.workflow_manager_TYPE_ID=wt.ID "
+									. "where wm.ID like '$Manager_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
@@ -111,6 +120,7 @@
 								echo '<td>'. $row['Wman_Type'] . '</td>';
 								echo '<td>'. $row['Wait'] . '</td>';
 								echo '<td>'. $row['WMAN_PORT'] . '</td>';
+								echo '<td>'. $row['Max_Concurrent_Tasks'] . '</td>';
 								echo '<td>'. $row['TableName'] . '</td>';
 								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="Log_File" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['Heartbeat'] . '</td>';
@@ -123,11 +133,11 @@
 								echo '<td>'. $row['Wman_Description'] . '</td>';
 								echo '<td width=250>';
 								if ($row['Status_ID'] == 1) {
-									echo '<a class="btn btn-success" href="workflow_manager.php?new_status_id=3">Start Manager</a>';
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
 								} elseif ($row['Status_ID'] == 2) {
-									echo '<a class="btn btn-danger" href="workflow_manager.php?new_status_id=4">Stop Manager</a>';
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
 								} elseif ($row['Status_ID'] == 3) {
-									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
 								}else {
 									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
 								}
@@ -171,6 +181,9 @@
 										}
 										echo "</select>"
 									?>								
+								</td>
+								<td>
+									<input type="text" name="Max_Concurrent" value="Enter a Max Tasks">
 								</td>
 								<td>
 									<input type="text" name="Wait" value="Enter a Wman Wait">

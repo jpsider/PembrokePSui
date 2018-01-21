@@ -6,9 +6,10 @@
 <?php
 	if (!empty($_GET['new_status_id'])) {
 		$new_status_id=$_GET['new_status_id'];
+		$ID=$_GET['ID'];
 		include 'components/database.php';
 		// Update the database to set the test to aborted
-		$sql = "UPDATE queue_manager SET Status_ID = $new_status_id";
+		$sql = "UPDATE queue_manager SET Status_ID = $new_status_id where ID=$ID";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
@@ -76,6 +77,11 @@
 							} else {
 								$Manager_ID = "%%";
 							}
+							if(!empty($_GET['QUEUE_MANAGER_TYPE_ID'])){
+								$QUEUE_MANAGER_TYPE_ID = $_GET['QUEUE_MANAGER_TYPE_ID'];
+							} else {
+								$QUEUE_MANAGER_TYPE_ID = "%%";
+							}
 							$sql = "select qm.ID, " 
 										. "qm.Status_ID, "
 										. "qm.QUEUE_MANAGER_TYPE_ID, "
@@ -103,7 +109,7 @@
 									. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
 									. "join ENDPOINT_PORTS epk on qm.KICKER_PORT_ID=epk.ID "
 									. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
-									. "where qm.ID like '$Manager_ID'";
+									. "where qm.ID like '$Manager_ID' and qm.QUEUE_MANAGER_TYPE_ID like '$QUEUE_MANAGER_TYPE_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
@@ -123,11 +129,11 @@
 								echo '<td>'. $row['QMan_Description'] . '</td>';
 								echo '<td width=250>';
 								if ($row['Status_ID'] == 1) {
-									echo '<a class="btn btn-success" href="queue_manager.php?new_status_id=3">Start Manager</a>';
+									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
 								} elseif ($row['Status_ID'] == 2) {
-									echo '<a class="btn btn-danger" href="queue_manager.php?new_status_id=4">Stop Manager</a>';
+									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
 								} elseif ($row['Status_ID'] == 3) {
-									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
+									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
 								}else {
 									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
 								}

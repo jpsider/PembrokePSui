@@ -4,7 +4,16 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['UpdateProperty'])) {
+	if (!empty($_GET['NewProperty'])) {
+		$Prop_Name=$_GET['Prop_Name'];
+		$Prop_Value=$_GET['Prop_Value'];
+		include 'components/database.php';
+		$sql = "INSERT INTO PROPERTIES (Prop_Name,Prop_Value,STATUS_ID) VALUES ('$Prop_Name','$Prop_Value',11)";
+		$pdo = Database::connect();
+        $pdo->query($sql);
+		header("Refresh:0 url=properties.php");		
+	}
+	elseif (!empty($_GET['UpdateProperty'])) {
 		$ID=$_GET['ID'];
 		$Prop_Name=$_GET['Prop_Name'];
 		$Prop_Value=$_GET['Prop_Value'];
@@ -98,6 +107,22 @@
 							?>
 						</tbody>
 					</table>
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <form>
+                                <td><b>Add a New Property</b></td>
+                                <td>
+									<input type="text" name="Prop_Name" value="Enter a Name">
+								</td>
+								<td>
+									<input type="text" name="Prop_Value" value="Enter a Value">
+								</td>
+								<td>
+									<input type="hidden" name="NewProperty" value="TRUE"><input type="submit" class="btn btn-success" value="Add Property"></td>
+								</td>
+							</form>
+						</tr>
+					</table> 					
 		   		</div>
 			</div>
 		</div>
