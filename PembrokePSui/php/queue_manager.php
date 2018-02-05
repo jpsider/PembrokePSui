@@ -20,10 +20,12 @@
 		$Queue_Manager_Type_ID=$_GET['Queue_Manager_Type_ID'];
 		$Qman_Port_ID=$_GET['Qman_Port_ID'];
 		$Kicker_Port_ID=$_GET['Kicker_Port_ID'];
+		$IP_Address=$_GET['IP_Address'];
+		$HostName=$_GET['HostName'];
 		$Wait=$_GET['Wait'];
 		$Kicker_Wait=$_GET['Kicker_Wait'];
 		$Qman_Description=$_GET['Qman_Description'];
-		$sql = "INSERT INTO QUEUE_MANAGER (QUEUE_MANAGER_TYPE_ID,QMAN_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Log_File,QMan_Description) VALUES ('$Queue_Manager_Type_ID','$Qman_Port_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','NoLog','$Qman_Description')";
+		$sql = "INSERT INTO QUEUE_MANAGER (QUEUE_MANAGER_TYPE_ID,QMAN_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HostName,IP_Address,Wait,Kicker_Wait,Log_File,QMan_Description) VALUES ('$Queue_Manager_Type_ID','$Qman_Port_ID','$Kicker_Port_ID',1,1,'$HostName','$IP_Address','$Wait','$Kicker_Wait','NoLog','$Qman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
@@ -53,6 +55,8 @@
 							<tr>
 							<th>ID</th>
 							<th>Queue Manager Type</th>
+							<th>HostName</th>
+							<th>IP_Address</th>
 							<th>Wait</th>
 							<th>Rest Port</th>
 							<th>TableName</th>
@@ -85,6 +89,8 @@
 							$sql = "select qm.ID, " 
 										. "qm.Status_ID, "
 										. "qm.QUEUE_MANAGER_TYPE_ID, "
+										. "qm.HostName, "
+										. "qm.IP_Address, "
 										. "qm.Wait, "
 										. "qm.QMAN_PORT_ID, "
 										. "qm.Log_File as Qman_Log, "
@@ -115,6 +121,8 @@
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
 								echo '<td>'. $row['Qman_Type'] . '</td>';
+								echo '<td>'. $row['HostName'] . '</td>';
+								echo '<td>'. $row['IP_Address'] . '</td>';
 								echo '<td>'. $row['Wait'] . '</td>';
 								echo '<td>'. $row['QMAN_PORT'] . '</td>';
 								echo '<td>'. $row['TableName'] . '</td>';
@@ -148,6 +156,12 @@
 						<tr>
 							<form>
 								<td><b>Add a New Queue Manager</b></td>
+								<td>
+									<input type="text" name="HostName" value="Enter a Qman Hostname">
+								</td>
+								<td>
+									<input type="text" name="IP_Address" value="Enter a Qman IP">
+								</td>																
 								<td>
 									<?php
 										echo "<select name='Queue_Manager_Type_ID'>";

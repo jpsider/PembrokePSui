@@ -20,11 +20,13 @@
 		$Workflow_Manager_Type_ID=$_GET['Workflow_Manager_Type_ID'];
 		$WKFLW_PORT_ID=$_GET['WKFLW_PORT_ID'];
 		$Kicker_Port_ID=$_GET['Kicker_Port_ID'];
+		$IP_Address=$_GET['IP_Address'];
+		$HostName=$_GET['HostName'];		
 		$Wait=$_GET['Wait'];
 		$Kicker_Wait=$_GET['Kicker_Wait'];
 		$Max_Concurrent=$_GET['Max_Concurrent'];
 		$Wman_Description=$_GET['Wman_Description'];
-		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,Wait,Kicker_Wait,Max_Concurrent_Tasks,Log_File,Wman_Description) VALUES ('$Workflow_Manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$Wait','$Kicker_Wait','$Max_Concurrent','NoLog','$Wman_Description')";
+		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HostName,IP_AddressWait,Kicker_Wait,Max_Concurrent_Tasks,Log_File,Wman_Description) VALUES ('$Workflow_Manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$HostName','$IP_Address','$Wait','$Kicker_Wait','$Max_Concurrent','NoLog','$Wman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
@@ -54,6 +56,8 @@
 							<tr>
 							<th>ID</th>
 							<th>Workflow Manager Type</th>
+							<th>HostName</th>
+							<th>IP_Address</th>
 							<th>Wait</th>
 							<th>Rest Port</th>
 							<th>Max Tasks</th>
@@ -87,6 +91,8 @@
 							$sql = "select wm.ID, " 
 										. "wm.Status_ID, "
 										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
+										. "wm.HostName, "
+										. "wm.IP_Address, "
 										. "wm.Wait, "
 										. "wm.WKFLW_PORT_ID, "
 										. "wm.Max_Concurrent_Tasks, "
@@ -118,6 +124,8 @@
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
 								echo '<td>'. $row['Wman_Type'] . '</td>';
+								echo '<td>'. $row['HostName'] . '</td>';
+								echo '<td>'. $row['IP_Address'] . '</td>';
 								echo '<td>'. $row['Wait'] . '</td>';
 								echo '<td>'. $row['WMAN_PORT'] . '</td>';
 								echo '<td>'. $row['Max_Concurrent_Tasks'] . '</td>';
@@ -152,6 +160,12 @@
 						<tr>
 							<form>
 								<td><b>Add a New Workflow Manager</b></td>
+								<td>
+									<input type="text" name="HostName" value="Enter a HostName">
+								</td>
+								<td>
+									<input type="text" name="IP_Address" value="Enter an IP">
+								</td>																
 								<td>
 									<?php
 										echo "<select name='Workflow_Manager_Type_ID'>";
