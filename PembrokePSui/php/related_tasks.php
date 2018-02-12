@@ -33,14 +33,14 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Parent Tasks</h3>
+				<h3>PembrokePS Related Tasks</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Parent Task</th>
-                            <th>Child Task</th>
+							<th>Parent Task ID</th>
+                            <th>Child Task ID</th>
                             <th>isRetry</th>
 							<th>date_modified</th>
 							</tr>
@@ -66,8 +66,8 @@
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Parent_Task_ID'] . '</td>';
-								echo '<td>'. $row['Child_Task_ID'] . '</td>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Parent_Task_ID" value="' . $row['Parent_Task_ID'] . '"><input type="submit" class="btn btn-info" value="'. $row['Parent_Task_ID'] . '"></form></td>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Child_Task_ID" value="' . $row['Child_Task_ID'] . '"><input type="submit" class="btn btn-info" value="'. $row['Child_Task_ID'] . '"></form></td>';
 								if($row['isRetry'] == 0){
 									echo '<td>False</td>';
 								} else {

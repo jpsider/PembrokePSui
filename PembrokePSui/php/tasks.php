@@ -88,10 +88,12 @@
 							<?php 
 							include 'components/database.php';
 							$pdo = Database::connect();
-							if (!empty($_GET['Target_Type_ID'])) {
-								$Target_Type_ID=$_GET['Target_Type_ID'];
+							if (!empty($_GET['Parent_Task_ID'])) {
+								$ID=$_GET['Parent_Task_ID'];
+							} elseif (!empty($_GET['Child_Task_ID'])) {
+								$ID=$_GET['Child_Task_ID'];					
 							} else {
-								$Target_Type_ID='%%';
+								$ID='%%';
 							}
 
 							$sql = "select t.ID, "
@@ -120,7 +122,7 @@
                                     . "join SYSTEMS ss on tg.System_ID=ss.ID "
 									. "join TASK_TYPES tt on t.TASK_TYPE_ID=tt.ID "
                                     . "join WORKFLOW_MANAGER w on t.WORKFLOW_MANAGER_ID=w.ID "
-                                    . "where t.Hidden=0";
+                                    . "where t.Hidden=0 and t.ID like '$ID' ";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
