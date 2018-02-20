@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once 'components/header.php';
+	require_once 'components/header.php';
 ?>
-<script> 
-$(document).ready(function() {
-  $('#example').dataTable();
-});
-</script>
+<?php
+	if (!empty($_GET['DisableWelcomeMessage'])) {
+		$ID=$_GET['ID'];
+		include 'components/database.php';
+		$pdo = Database::connect();
+		$sql = "UPDATE PROPERTIES SET STATUS_ID=12 WHERE ID=$ID";
+		$pdo->query($sql);
+		header("Refresh:0 url=index.php");		
+	} 
+	else {
+?>
 <body>
     <div class="container" style="margin-left:10px">
     	<div class="row">
@@ -15,36 +21,52 @@ $(document).ready(function() {
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Available Status</h3>
+				<h3>Welcome to PembrokePS!</h3>
+				<?php
+				include 'components/database.php';
+					$pdo = Database::connect();
+					$sql = "SELECT * FROM PROPERTIES WHERE PROP_NAME like 'WelcomeMessage'"; 
+					foreach ($pdo->query($sql) as $row) {
+						if($row['STATUS_ID'] == 11){
+							$ShowWelcomeMessage = 'true';
+						} else {
+							$ShowWelcomeMessage = 'false';
+						}
+					}
+					Database::disconnect();
+				?>
 				<div class="row">
-					<table id="example" class="table table-striped table-bordered">
+					<?php
+						if($ShowWelcomeMessage == 'true'){
+						echo '<table class="table table-striped table-bordered">';
+							echo '<thead>';
+							echo '<tr>';
+							echo '<th>Welcome Message</th>';
+							echo '<th>Hide Message</th>';
+							echo '</tr>';
+							echo '</thead>';
+							echo '<tbody>';
+							echo '<tr><td>Yes, post the welcome message!</td>';
+							echo '<td><form action="index.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
+							echo '<input type="hidden" name="DisableWelcomeMessage" value="TRUE"><input type="Submit" class="btn btn-danger" value="Hide Message">';
+							echo '</form></td></tr></br>';
+						} else {
+						}
+					?>
+								</tbody>
+							</table>
+					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
-							<th>ID</th>
-							<th>Status</th>
-							<th>HtmlColor</th>
-							<th>HTML_Description</th>
-							<th>date_modified</th>
-							<th>Action</th>
+								<th>Quick Links</th>
+								<th>Other Info</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php 
-							include 'components/database.php';
-							$pdo = Database::connect();
-							$sql = 'select * from STATUS'; 
-							foreach ($pdo->query($sql) as $row) {
-								echo '<tr>';
-								echo '<td>' . $row['ID'] . '</td>';
-								echo '<td>' . $row['Status_Name'] . '</td>';
-								echo '<td>' . $row['HtmlColor'] . '</td>';
-								echo '<td style=background-color:'. $row['HtmlColor'] . '>' . $row['HTML_Description'] . '</td>';
-								echo '<td>' . $row['date_modified'] . '</td>';
-							   	echo '<td><a class="btn btn-success" href="status.php?id=' . $row['ID'] . '">Update</a></td>';
-								echo '</tr>';
-							}
-							Database::disconnect();
-							?>
+							<tr>
+								<td>Post welcome Message area.</td>
+								<td></td>
+							</tr>
 						</tbody>
 					</table>
 		   		</div>
@@ -53,6 +75,9 @@ $(document).ready(function() {
 	</div> <!-- /container -->
 </body>
 <?php
-require_once 'components/footer.php';
+	require_once 'components/footer.php';
+?>
+<?php
+  	}
 ?>
 </html>

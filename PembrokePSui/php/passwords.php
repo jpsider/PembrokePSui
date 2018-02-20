@@ -4,22 +4,22 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['NewPassword'])) {
-		$Username=$_GET['Username'];
-		$Password=$_GET['Password'];
+	if (!empty($_GET['NewPASSWORD'])) {
+		$USERNAME=$_GET['USERNAME'];
+		$PASSWORD=$_GET['PASSWORD'];
 		include 'components/database.php';
-		$sql = "INSERT INTO PASSWORDS (Username,Password) VALUES ('$Username','$Password')";
+		$sql = "INSERT INTO PASSWORDS (USERNAME,PASSWORD) VALUES ('$USERNAME','$PASSWORD')";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=passwords.php");		
 	}
-	elseif (!empty($_GET['UpdatePassword'])) {
+	elseif (!empty($_GET['UpdatePASSWORD'])) {
 		$ID=$_GET['ID'];
-		$Username=$_GET['Username'];
-		$Password=$_GET['Password'];
+		$USERNAME=$_GET['USERNAME'];
+		$PASSWORD=$_GET['PASSWORD'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update PASSWORDS set Username='$Username',Password='$Password' where ID=$ID";
+		$sql = "UPDATE PASSWORDS SET USERNAME='$USERNAME',PASSWORD='$PASSWORD' WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=passwords.php");
 	}
@@ -38,14 +38,14 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Passwords</h3>
+				<h3>Passwords</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Username</th>
-                            <th>Password</th>
+							<th>USERNAME</th>
+                            <th>PASSWORD</th>
 							<th>Update</th>
 							<th>Targets</th>
 							<th>date_modified</th>
@@ -56,18 +56,18 @@
 							include 'components/database.php';
 							$pdo = Database::connect();
 							$sql = 'select p.ID, '
-									. 'p.Username, '
-									. 'p.Password, '
+									. 'p.USERNAME, '
+									. 'p.PASSWORD, '
 									. 'p.date_modified '
 									. 'from PASSWORDS p '; 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<form action="passwords.php" method="get">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Username" value="'. $row['Username'] . '"></td>';
-								echo '<td><input type="text" name="Password" value="'. $row['Password'] . '"></td>';
-								echo '<td><input type="hidden" name="UpdatePassword" value="TRUE"><input type="submit" class="btn btn-warning" value="Update"></form></td>';
-								echo '<td><form action="targets.php" method="get"><input type="hidden" name="Password_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="View Targets"></form></td>';
+								echo '<td><input type="text" name="USERNAME" value="'. $row['USERNAME'] . '"></td>';
+								echo '<td><input type="text" name="PASSWORD" value="'. $row['PASSWORD'] . '"></td>';
+								echo '<td><input type="hidden" name="UpdatePASSWORD" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></form></td>';
+								echo '<td><form action="targets.php" method="get"><input type="hidden" name="PASSWORD_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="View Targets"></form></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 																   
 								echo '</tr>';
@@ -79,15 +79,15 @@
                     <table class="table table-striped table-bordered">
                         <tr>
                             <form>
-                                <td><b>Add a New Password</b></td>
+                                <td><b>Add a New PASSWORD</b></td>
                                 <td>
-									<input type="text" name="Username" value="Enter a Name">
+									<input type="text" name="USERNAME" value="Enter a NAME">
 								</td>
 								<td>
-									<input type="text" name="Password" value="Enter a Value">
+									<input type="text" name="PASSWORD" value="Enter a Value">
 								</td>
 								<td>
-									<input type="hidden" name="NewPassword" value="TRUE"><input type="submit" class="btn btn-success" value="Add Password"></td>
+									<input type="hidden" name="NewPASSWORD" value="TRUE"><input type="Submit" class="btn btn-success" value="Add PASSWORD"></td>
 								</td>
 							</form>
 						</tr>

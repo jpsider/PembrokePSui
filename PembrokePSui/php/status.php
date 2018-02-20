@@ -6,23 +6,23 @@
 <?php
 	if (!empty($_GET['UpdateStatus'])) {
 		$ID=$_GET['ID'];
-		$Status_Name=$_GET['Status_Name'];
-		$HtmlColor=$_GET['HtmlColor'];
+		$STATUS_NAME=$_GET['STATUS_NAME'];
+		$HTMLCOLOR=$_GET['HTMLCOLOR'];
 		$HTML_Description=$_GET['HTML_Description'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update status set Status_Name='$Status_Name',HtmlColor='$HtmlColor',HTML_Description='$HTML_Description' where ID=$ID";
+		$sql = "UPDATE STATUS SET STATUS_NAME='$STATUS_NAME',HTMLCOLOR='$HTMLCOLOR',HTML_Description='$HTML_Description' WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=status.php");
 	}
 	elseif (!empty($_GET['NewStatus'])){
-		$HtmlColor=$_GET['HtmlColor'];
-		$Status_Name=$_GET['Status_Name'];
-		$Html_Description=$_GET['HTML_Description'];
+		$HTMLCOLOR=$_GET['HTMLCOLOR'];
+		$STATUS_NAME=$_GET['STATUS_NAME'];
+		$HTML_Description=$_GET['HTML_Description'];
 		include 'components/database.php';
 		$pdo = Database::connect();
 
-		$sql = "insert into status (Status_Name,HtmlColor,Html_Description) VALUES ('$Status_Name','$HtmlColor','$Html_Description')";
+		$sql = "INSERT INTO STATUS (STATUS_NAME,HTMLCOLOR,HTML_Description) VALUES ('$STATUS_NAME','$HTMLCOLOR','$HTML_Description')";
 		$pdo->query($sql);
 		header("Refresh:0 url=status.php");		
 	}
@@ -41,14 +41,14 @@ $(document).ready(function() {
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Available Status</h3>
+				<h3>Available Status</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
 							<th>Status</th>
-							<th>HtmlColor</th>
+							<th>HTMLCOLOR</th>
 							<th>HTML_Description</th>
 							<th>date_modified</th>
 							<th>Action</th>
@@ -58,16 +58,16 @@ $(document).ready(function() {
 							<?php 
 							include 'components/database.php';
 							$pdo = Database::connect();
-							$sql = 'select * from STATUS'; 
+							$sql = 'SELECT * FROM STATUS'; 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<form action="status.php" method="get">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">' . $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Status_Name" value="' . $row['Status_Name'] . '"></td>';
-								echo '<td><input type="text" name="HtmlColor" value="' . $row['HtmlColor'] . '"></td>';
-								echo '<td style=background-color:'. $row['HtmlColor'] . '><input type="text" name="HTML_Description" value="' . $row['HTML_Description'] . '"</td>';
+								echo '<td><input type="text" name="STATUS_NAME" value="' . $row['STATUS_NAME'] . '"></td>';
+								echo '<td><input type="text" name="HTMLCOLOR" value="' . $row['HTMLCOLOR'] . '"></td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><input type="text" name="HTML_Description" value="' . $row['HTML_Description'] . '"</td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
-							   	echo '<td><input type="hidden" name="UpdateStatus" value="TRUE"><input type="submit" class="btn btn-warning" value="Update"></td>';
+							   	echo '<td><input type="hidden" name="UpdateStatus" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></td>';
 								echo '</form>';
 								echo '</tr>';
 							}
@@ -80,16 +80,16 @@ $(document).ready(function() {
 							<form>
 								<td><b>Add a New Status</b></td>
 								<td>
-									<input type="text" name="Status_Name" value="Enter Status Name">
+									<input type="text" name="STATUS_NAME" value="Enter STATUS NAME">
 								</td>
 								<td>
-									<input type="text" name="HtmlColor" value="Enter HTML Color">
+									<input type="text" name="HTMLCOLOR" value="Enter HTML Color">
 								</td>
 								<td>
 									<input type="text" name="HTML_Description" value="Enter HTML Description">
 								</td>
 								<td>
-									<input type="hidden" name="NewStatus" value="TRUE"><input type="submit" class="btn btn-success" value="Add Status"></td>
+									<input type="hidden" name="NewStatus" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Status"></td>
 								</td>
 							</form>
 						</tr>

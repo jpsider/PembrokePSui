@@ -4,40 +4,40 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['NewTaskType'])) {
-		$Task_Name=$_GET['Task_Name'];
-		$Task_Path=$_GET['Task_Path'];
+	if (!empty($_GET['NewTASKType'])) {
+		$TASK_NAME=$_GET['TASK_NAME'];
+		$TASK_PATH=$_GET['TASK_PATH'];
 		$PRIORITY=$_GET['PRIORITY'];
 		include 'components/database.php';
-		$sql = "INSERT INTO task_types (Task_Name,Task_Path,PRIORITY,STATUS_ID) VALUES ('$Task_Name','$Task_Path','$PRIORITY',11)";
+		$sql = "INSERT INTO TASK_TYPES (TASK_NAME,TASK_PATH,PRIORITY,STATUS_ID) VALUES ('$TASK_NAME','$TASK_PATH','$PRIORITY',11)";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=task_types.php");		
 	}
-	elseif (!empty($_GET['UpdateTaskType'])) {
+	elseif (!empty($_GET['UpdateTASKType'])) {
 		$ID=$_GET['ID'];
-		$Task_Name=$_GET['Task_Name'];
-        $Task_Path=$_GET['Task_Path'];
+		$TASK_NAME=$_GET['TASK_NAME'];
+        $TASK_PATH=$_GET['TASK_PATH'];
 		$PRIORITY=$_GET['PRIORITY'];        
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update task_types set Task_Name='$Task_Name',Task_Path='$Task_Path',PRIORITY='$PRIORITY' where ID=$ID";
+		$sql = "UPDATE TASK_TYPES SET TASK_NAME='$TASK_NAME',TASK_PATH='$TASK_PATH',PRIORITY='$PRIORITY' WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=task_types.php");
 	}
-	elseif (!empty($_GET['DisableTaskType'])) {
+	elseif (!empty($_GET['DisableTASKType'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update task_types set STATUS_ID=12 where ID=$ID";
+		$sql = "UPDATE TASK_TYPES SET STATUS_ID=12 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=task_types.php");		
 	}
-	elseif (!empty($_GET['EnableTaskType'])) {
+	elseif (!empty($_GET['EnableTASKType'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update task_types set STATUS_ID=11 where ID=$ID";
+		$sql = "UPDATE TASK_TYPES SET STATUS_ID=11 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=task_types.php");			
 	}
@@ -56,13 +56,13 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Task Types</h3>
+				<h3>TASK Types</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Name</th>
+							<th>NAME</th>
                             <th>Path</th>
                             <th>Priority</th>
                             <th>Update</th>
@@ -75,31 +75,32 @@
 							include 'components/database.php';
 							$pdo = Database::connect();
 							$sql = 'select tt.ID, '
-									    . 'tt.Task_Name, '
-									    . 'tt.Task_Path, '
-									    . 'tt.Status_ID, '
+									    . 'tt.TASK_NAME, '
+									    . 'tt.TASK_PATH, '
+									    . 'tt.STATUS_ID, '
 									    . 'tt.PRIORITY, '
 									    . 'tt.date_modified, '
 									    . 's.STATUS_NAME, '
                                         . 's.HTMLCOLOR '                                    
-                                    . 'from task_types tt '                                    
-                                    . 'join status s on tt.Status_ID=s.ID'; 
+                                    . 'from TASK_TYPES tt '                                    
+                                    . 'join STATUS s on tt.STATUS_ID=s.ID'; 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
+								echo '<form action="tasks.php" method="get">';
+								echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['ID'] . '"</td></form>';
 								echo '<form action="task_types.php" method="get">';
-								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Task_Name" value="'. $row['Task_Name'] . '"></td>';
-								echo '<td><input type="text" name="Task_Path" value="'. $row['Task_Path'] . '"></td>';
+								echo '<td><input type="text" name="TASK_NAME" value="'. $row['TASK_NAME'] . '"></td>';
+								echo '<td><input type="text" name="TASK_PATH" value="'. $row['TASK_PATH'] . '"></td>';
 								echo '<td><input type="text" name="PRIORITY" value="'. $row['PRIORITY'] . '"></td>';
-                                echo '<td><input type="hidden" name="UpdateTaskType" value="TRUE"><input type="submit" class="btn btn-success" value="Update"</td>';
+                                echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
                                 echo '</form>';
 								if($row['STATUS_NAME'] == 'Enabled'){
 									echo '<form action="task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="DisableTaskType" value="TRUE"><input type="submit" class="btn btn-danger" value="Disable"></td>';
+									echo '<td><input type="hidden" name="DisableTASKType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
 								} else {
 									echo '<form action="task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="EnableTaskType" value="TRUE"><input type="submit" class="btn btn-success" value="Enable"></td>';
+									echo '<td><input type="hidden" name="EnableTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
 									echo '</form>';
 								}                                
 								echo '<td>'. $row['date_modified'] . '</td>';							   
@@ -112,18 +113,18 @@
                     <table class="table table-striped table-bordered">
                         <tr>
                             <form>
-                                <td><b>Add a New Task Type</b></td>
+                                <td><b>Add a New TASK Type</b></td>
                                 <td>
-									<input type="text" name="Task_Name" value="Enter a Name">
+									<input type="text" name="TASK_NAME" value="Enter a NAME">
 								</td>
                                 <td>
-									<input type="text" name="Task_Path" value="Enter a Path">
+									<input type="text" name="TASK_PATH" value="Enter a Path">
 								</td>
                                 <td>
 									<input type="text" name="PRIORITY" value="Enter a Priority">
 								</td>
 								<td>
-									<input type="hidden" name="NewTaskType" value="TRUE"><input type="submit" class="btn btn-success" value="Add TaskType"></td>
+									<input type="hidden" name="NewTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add TASKType"></td>
 								</td>
 							</form>
 						</tr>

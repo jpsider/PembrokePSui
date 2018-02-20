@@ -11,29 +11,29 @@
 		
 		// Need to search the Queue Manager and Workflow manager
 			// for the port ID, then go to that page and filter on that port ID
-		$sql = "select ID as Manager_ID from queue_manager where QMAN_PORT_ID like $ID or KICKER_PORT_ID like $ID";
+		$sql = "select ID as MANAGER_ID from QUEUE_MANAGER WHERE QMAN_PORT_ID like $ID or KICKER_PORT_ID like $ID";
 		foreach ($pdo->query($sql) as $returndata){
-			echo $returndata['Manager_ID'];
-			if(!empty($returndata['Manager_ID'])){
+			echo $returndata['MANAGER_ID'];
+			if(!empty($returndata['MANAGER_ID'])){
 				echo "Made it into the if";
-				$Manager_ID = $returndata['Manager_ID'];
-				header("Refresh:0 url=queue_manager.php?Manager_ID=$Manager_ID");
+				$MANAGER_ID = $returndata['MANAGER_ID'];
+				header("Refresh:0 url=queue_manager.php?MANAGER_ID=$MANAGER_ID");
 			}
 		}
-		$sql = "select ID as Manager_ID from workflow_manager where WKFLW_PORT_ID like $ID or KICKER_PORT_ID like $ID";
+		$sql = "select ID as MANAGER_ID from WORKFLOW_MANAGER WHERE WKFLW_PORT_ID like $ID or KICKER_PORT_ID like $ID";
 		foreach ($pdo->query($sql) as $returndata){
-			if(!empty($returndata['Manager_ID'])){
-				$Manager_ID = $returndata['Manager_ID'];
-				header("Refresh:0 url=workflow_manager.php?Manager_ID=$Manager_ID");
+			if(!empty($returndata['MANAGER_ID'])){
+				$MANAGER_ID = $returndata['MANAGER_ID'];
+				header("Refresh:0 url=workflow_manager.php?MANAGER_ID=$MANAGER_ID");
 			}
 		}
 	}
 	elseif (!empty($_GET['NewPort'])){
-		$PortNumber=$_GET['PortNumber'];
+		$PORTNUMBER=$_GET['PORTNUMBER'];
 		include 'components/database.php';
 		$pdo = Database::connect();
 
-		$sql = "insert into endpoint_ports (Port,Endpoint_Assigned_Status,Endpoint_Status) VALUES ('$PortNumber',13,1)";
+		$sql = "INSERT INTO ENDPOINT_PORTS (Port,ENDPOINT_ASSIGNED_STATUS,ENDPOINT_STATUS) VALUES ('$PORTNUMBER',13,1)";
 		$pdo->query($sql);
 		header("Refresh:0 url=endpoint_ports.php");		
 	}
@@ -52,15 +52,15 @@ $(document).ready(function() {
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Available Endpoint Ports</h3>
+				<h3>Available Endpoint Ports</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
 							<th>Port</th>
-							<th>Endpoint_Assigned_Status</th>
-							<th>Endpoint_Status</th>
+							<th>ENDPOINT_ASSIGNED_STATUS</th>
+							<th>ENDPOINT_STATUS</th>
 							<th>date_modified</th>
 							<th>Action</th>
 							</tr>
@@ -70,26 +70,26 @@ $(document).ready(function() {
 							include 'components/database.php';
 							$pdo = Database::connect();
 							$sql = 'select ep.ID, '
-										. 'ep.Port, '
-										. 'ep.Endpoint_Assigned_Status, '
-										. 'ep.Endpoint_Status, '
+										. 'ep.PORT, '
+										. 'ep.ENDPOINT_ASSIGNED_STATUS, '
+										. 'ep.ENDPOINT_STATUS, '
 										. 'ep.date_modified, '
-										. 's.HtmlColor, '
-										. 'ss.HtmlColor as Ep_Status_Color, '
-										. 's.Status_Name, '
-										. 'ss.Status_Name as Ep_Status '
-									. 'from Endpoint_Ports ep '
-									. 'join status s on ep.Endpoint_Assigned_Status=s.ID '
-									. 'join status ss on ep.Endpoint_Status=ss.ID ';
+										. 's.HTMLCOLOR, '
+										. 'ss.HTMLCOLOR as EP_STATUS_COLOR, '
+										. 's.STATUS_NAME, '
+										. 'ss.STATUS_NAME as Ep_Status '
+									. 'from ENDPOINT_PORTS ep '
+									. 'join STATUS s on ep.ENDPOINT_ASSIGNED_STATUS=s.ID '
+									. 'join STATUS ss on ep.ENDPOINT_STATUS=ss.ID ';
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<form action="endpoint_ports.php" method="get">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">' . $row['ID'] . '</td>';
-								echo '<td>' . $row['Port'] . '</td>';
-								echo '<td style=background-color:'. $row['HtmlColor'] . '>'. $row['Status_Name'] . '</td>';
-								echo '<td style=background-color:'. $row['Ep_Status_Color'] . '>'. $row['Ep_Status'] . '</td>';
+								echo '<td>' . $row['PORT'] . '</td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
+								echo '<td style=background-color:'. $row['EP_STATUS_COLOR'] . '>'. $row['Ep_Status'] . '</td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
-							   	echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="submit" class="btn btn-info" value="View Manager"></td>';
+							   	echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info" value="View Manager"></td>';
 								echo '</form>';
 								echo '</tr>';
 							}
@@ -102,10 +102,10 @@ $(document).ready(function() {
 							<form>
 								<td><b>Add a New Port</b></td>
 								<td>
-									<input type="text" name="PortNumber" value="Enter Port Number">
+									<input type="text" name="PORTNUMBER" value="Enter Port Number">
 								</td>
 								<td>
-									<input type="hidden" name="NewPort" value="TRUE"><input type="submit" class="btn btn-success" value="Add Port"></td>
+									<input type="hidden" name="NewPort" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Port"></td>
 								</td>
 							</form>
 						</tr>

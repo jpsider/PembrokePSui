@@ -4,12 +4,12 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['new_status_id'])) {
-		$new_status_id=$_GET['new_status_id'];
+	if (!empty($_GET['new_STATUS_ID'])) {
+		$new_STATUS_ID=$_GET['new_STATUS_ID'];
 		$ID=$_GET['ID'];
 		include 'components/database.php';
-		// Update the database to set the test to aborted
-		$sql = "UPDATE workflow_manager SET Status_ID = $new_status_id where ID=$ID";
+		// Update the database to SET the test to aborted
+		$sql = "UPDATE WORKFLOW_MANAGER SET STATUS_ID = $new_STATUS_ID WHERE ID=$ID";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
@@ -17,20 +17,20 @@
 	}
 	elseif(!empty($_GET['NewWorkflowMgr'])){
 		include 'components/database.php';
-		$Workflow_Manager_Type_ID=$_GET['Workflow_Manager_Type_ID'];
+		$WORKFLOW_MANAGER_TYPE_ID=$_GET['WORKFLOW_MANAGER_TYPE_ID'];
 		$WKFLW_PORT_ID=$_GET['WKFLW_PORT_ID'];
-		$Kicker_Port_ID=$_GET['Kicker_Port_ID'];
-		$IP_Address=$_GET['IP_Address'];
-		$HostName=$_GET['HostName'];		
-		$Wait=$_GET['Wait'];
-		$Kicker_Wait=$_GET['Kicker_Wait'];
-		$Max_Concurrent=$_GET['Max_Concurrent'];
+		$KICKER_PORT_ID=$_GET['KICKER_PORT_ID'];
+		$IP_ADDRESS=$_GET['IP_ADDRESS'];
+		$HOSTNAME=$_GET['HOSTNAME'];		
+		$WAIT=$_GET['WAIT'];
+		$KICKER_WAIT=$_GET['KICKER_WAIT'];
+		$MAX_CONCURRENT=$_GET['MAX_CONCURRENT'];
 		$Wman_Description=$_GET['Wman_Description'];
-		$sql = "INSERT INTO workflow_manager (workflow_manager_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HostName,IP_AddressWait,Kicker_Wait,Max_Concurrent_Tasks,Log_File,Wman_Description) VALUES ('$Workflow_Manager_Type_ID','$WKFLW_PORT_ID','$Kicker_Port_ID',1,1,'$HostName','$IP_Address','$Wait','$Kicker_Wait','$Max_Concurrent','NoLog','$Wman_Description')";
+		$sql = "INSERT INTO WORKFLOW_MANAGER (WORKFLOW_MANAGER_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HOSTNAME,IP_ADDRESSWAIT,KICKER_WAIT,MAX_CONCURRENT_TASKS,LOG_FILE,Wman_Description) VALUES ('$WORKFLOW_MANAGER_TYPE_ID','$WKFLW_PORT_ID','$KICKER_PORT_ID',1,1,'$HOSTNAME','$IP_ADDRESS','$WAIT','$KICKER_WAIT','$MAX_CONCURRENT','NoLog','$Wman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
-		$sql = "update ENDPOINT_PORTS set ENDPOINT_ASSIGNED_STATUS=7 where ID in ('$WKFLW_PORT_ID','$Kicker_Port_ID')";
+		$sql = "UPDATE ENDPOINT_PORTS SET ENDPOINT_ASSIGNED_STATUS=7 WHERE ID in ('$WKFLW_PORT_ID','$KICKER_PORT_ID')";
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
 		header("Refresh:0 url=workflow_manager.php");	
@@ -49,27 +49,27 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Workflow Manager</h3>
+				<h3>Workflow Manager</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
 							<th>Workflow Manager Type</th>
-							<th>HostName</th>
-							<th>IP_Address</th>
-							<th>Wait</th>
+							<th>HOSTNAME</th>
+							<th>IP_ADDRESS</th>
+							<th>WAIT</th>
 							<th>Rest Port</th>
 							<th>Max Tasks</th>
-							<th>TableName</th>
-							<th>Log_File</th>
-							<th>HeartBeat</th>
+							<th>TABLENAME</th>
+							<th>LOG_FILE</th>
+							<th>HEARTBEAT</th>
 							<th>Status</th>
 							<th>date_modified</th>
 							<th>Kicker Status</th>
 							<th>Kicker Port</th>
-							<th>Kicker Wait</th>
-							<th>Kicker Heartbeat</th>
+							<th>Kicker WAIT</th>
+							<th>Kicker HEARTBEAT</th>
 							<th>Description</th>
 							<th>Action</th>
 							</tr>
@@ -78,10 +78,10 @@
 							<?php 
 							include 'components/database.php';
 							$pdo = Database::connect();
-							if(!empty($_GET['Manager_ID'])){
-								$Manager_ID = $_GET['Manager_ID'];
+							if(!empty($_GET['MANAGER_ID'])){
+								$MANAGER_ID = $_GET['MANAGER_ID'];
 							} else {
-								$Manager_ID = "%%";
+								$MANAGER_ID = "%%";
 							}
 							if(!empty($_GET['WORKFLOW_MANAGER_TYPE_ID'])){
 								$WORKFLOW_MANAGER_TYPE_ID = $_GET['WORKFLOW_MANAGER_TYPE_ID'];
@@ -89,19 +89,19 @@
 								$WORKFLOW_MANAGER_TYPE_ID = "%%";
 							}							
 							$sql = "select wm.ID, " 
-										. "wm.Status_ID, "
+										. "wm.STATUS_ID, "
 										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
-										. "wm.HostName, "
-										. "wm.IP_Address, "
-										. "wm.Wait, "
+										. "wm.HOSTNAME, "
+										. "wm.IP_ADDRESS, "
+										. "wm.WAIT, "
 										. "wm.WKFLW_PORT_ID, "
-										. "wm.Max_Concurrent_Tasks, "
-										. "wm.Log_File as Wman_Log, "
-										. "wm.Heartbeat, "
+										. "wm.MAX_CONCURRENT_TASKS, "
+										. "wm.LOG_FILE as Wman_Log, "
+										. "wm.HEARTBEAT, "
 										. "wm.KICKER_PORT_ID, "
 										. "wm.KICKER_STATUS_ID, "
-										. "wm.KICKER_Heartbeat, "
-										. "wm.KICKER_Wait, "
+										. "wm.KICKER_HEARTBEAT, "
+										. "wm.KICKER_WAIT, "
 										. "wm.Wman_Description, "
 										. "wm.date_modified, "
 										. "s.HtmlColor as Wman_Color, "
@@ -109,43 +109,43 @@
 										. "s.Status_Name as Wman_Status, "
 										. "ks.Status_Name as Kicker_Status, "
 										. "ep.Port as WMAN_PORT, "
-										. "epk.Port as Kicker_PORT, "
+										. "epk.Port as KICKER_PORT, "
 										. "wt.Name as Wman_Type, "
-										. "wt.TableName "
-									. "from workflow_manager wm "
-									. "join STATUS s on wm.Status_ID=s.ID "
+										. "wt.TABLENAME "
+									. "from WORKFLOW_MANAGER wm "
+									. "join STATUS s on wm.STATUS_ID=s.ID "
 									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
 									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
 									. "join ENDPOINT_PORTS epk on wm.KICKER_PORT_ID=epk.ID "
-									. "join workflow_manager_TYPE wt on wm.workflow_manager_TYPE_ID=wt.ID "
-									. "where wm.ID like '$Manager_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
+									. "join WORKFLOW_MANAGER_TYPE wt on wm.WORKFLOW_MANAGER_TYPE_ID=wt.ID "
+									. "where wm.ID like '$MANAGER_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
 								echo '<td>'. $row['Wman_Type'] . '</td>';
-								echo '<td>'. $row['HostName'] . '</td>';
-								echo '<td>'. $row['IP_Address'] . '</td>';
-								echo '<td>'. $row['Wait'] . '</td>';
+								echo '<td>'. $row['HOSTNAME'] . '</td>';
+								echo '<td>'. $row['IP_ADDRESS'] . '</td>';
+								echo '<td>'. $row['WAIT'] . '</td>';
 								echo '<td>'. $row['WMAN_PORT'] . '</td>';
-								echo '<td>'. $row['Max_Concurrent_Tasks'] . '</td>';
-								echo '<td>'. $row['TableName'] . '</td>';
-								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="Log_File" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
-								echo '<td>'. $row['Heartbeat'] . '</td>';
+								echo '<td>'. $row['MAX_CONCURRENT_TASKS'] . '</td>';
+								echo '<td>'. $row['TABLENAME'] . '</td>';
+								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
+								echo '<td>'. $row['HEARTBEAT'] . '</td>';
 								echo '<td style=background-color:'. $row['Wman_Color'] . '>'. $row['Wman_Status'] . '</td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 								echo '<td style=background-color:'. $row['Kicker_Color'] . '>'. $row['Kicker_Status'] . '</td>';
-								echo '<td>'. $row['Kicker_PORT'] . '</td>';
-								echo '<td>'. $row['KICKER_Wait'] . '</td>';
-								echo '<td>'. $row['KICKER_Heartbeat'] . '</td>';
+								echo '<td>'. $row['KICKER_PORT'] . '</td>';
+								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
+								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
 								echo '<td>'. $row['Wman_Description'] . '</td>';
 								echo '<td width=250>';
-								if ($row['Status_ID'] == 1) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
-								} elseif ($row['Status_ID'] == 2) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
-								} elseif ($row['Status_ID'] == 3) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_status_id" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
+								if ($row['STATUS_ID'] == 1) {
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
+								} elseif ($row['STATUS_ID'] == 2) {
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
+								} elseif ($row['STATUS_ID'] == 3) {
+									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
 								}else {
 									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
 								}
@@ -161,15 +161,15 @@
 							<form>
 								<td><b>Add a New Workflow Manager</b></td>
 								<td>
-									<input type="text" name="HostName" value="Enter a HostName">
+									<input type="text" name="HOSTNAME" value="Enter a HOSTNAME">
 								</td>
 								<td>
-									<input type="text" name="IP_Address" value="Enter an IP">
+									<input type="text" name="IP_ADDRESS" value="Enter an IP">
 								</td>																
 								<td>
 									<?php
-										echo "<select name='Workflow_Manager_Type_ID'>";
-										$sql = "select * from Workflow_MANAGER_TYPE";
+										echo "<select name='WORKFLOW_MANAGER_TYPE_ID'>";
+										$sql = "SELECT * FROM WORKFLOW_MANAGER_TYPE";
 										foreach ($pdo->query($sql) as $row) {
 											echo "<option value=". $row['ID'] .">". $row['Name'] ."</option>";
 										}
@@ -179,7 +179,7 @@
 								<td>
 									<?php
 										echo "<select name='WKFLW_PORT_ID'>";
-										$sql = "select * from ENDPOINT_PORTS where ENDPOINT_ASSIGNED_STATUS in (13)";
+										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
 										foreach ($pdo->query($sql) as $EProw) {
 											echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
 										}
@@ -188,8 +188,8 @@
 								</td>
 								<td>
 									<?php
-										echo "<select name='Kicker_Port_ID'>";
-										$sql = "select * from ENDPOINT_PORTS where ENDPOINT_ASSIGNED_STATUS in (13)";
+										echo "<select name='KICKER_PORT_ID'>";
+										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
 										foreach ($pdo->query($sql) as $KProw) {
 											echo "<option value=". $KProw['ID'] .">". $KProw['PORT'] ."</option>";
 										}
@@ -197,13 +197,13 @@
 									?>								
 								</td>
 								<td>
-									<input type="text" name="Max_Concurrent" value="Enter a Max Tasks">
+									<input type="text" name="MAX_CONCURRENT" value="Enter a Max Tasks">
 								</td>
 								<td>
-									<input type="text" name="Wait" value="Enter a Wman Wait">
+									<input type="text" name="WAIT" value="Enter a Wman WAIT">
 								</td>
 								<td>
-									<input type="text" name="Kicker_Wait" value="Enter a Kicker Wait">
+									<input type="text" name="KICKER_WAIT" value="Enter a Kicker WAIT">
 								</td>
 								<td>
 									<input type="text" name="Wman_Description" value="Enter a description">

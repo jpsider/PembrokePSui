@@ -4,31 +4,30 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['NewSubtask'])) {
-		$TASK_TYPE_ID=$_GET['TASK_TYPE_ID'];
-		$Pass_SubTask_ID=$_GET['Pass_SubTask_ID'];
-		$Fail_SubTask_ID=$_GET['Fail_SubTask_ID'];
+	if (!empty($_GET['NewWmModule'])) {
+		$ADDL_MODULE_ID=$_GET['ADDL_MODULE_ID'];
+		$WORKFLOW_MANAGER_TYPE_ID=$_GET['WORKFLOW_MANAGER_TYPE_ID'];
 		include 'components/database.php';
-		$sql = "INSERT INTO subtask_generator (TASK_TYPE_ID,Pass_SubTask_ID,Fail_SubTask_ID,STATUS_ID) VALUES ('$TASK_TYPE_ID','$Pass_SubTask_ID','$Fail_SubTask_ID',11)";
+		$sql = "INSERT INTO ADDL_MODULES_WMAN_GROUPS (ADDL_MODULE_ID,WORKFLOW_MANAGER_TYPE_ID,STATUS_ID) VALUES ('$ADDL_MODULE_ID','$WORKFLOW_MANAGER_TYPE_ID',11)";
 		$pdo = Database::connect();
         $pdo->query($sql);
-		header("Refresh:0 url=subtask_generator.php");		
+		header("Refresh:0 url=workflow_mgr_module_groups.php");		
 	}
-	elseif (!empty($_GET['DisableSubtask'])) {
+	elseif (!empty($_GET['DisableWmModule'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update subtask_generator set STATUS_ID=12 where ID=$ID";
+		$sql = "UPDATE ADDL_MODULES_WMAN_GROUPS SET STATUS_ID=12 WHERE ID=$ID";
 		$pdo->query($sql);
-		header("Refresh:0 url=subtask_generator.php");		
+		header("Refresh:0 url=workflow_mgr_module_groups.php");		
 	}
-	elseif (!empty($_GET['EnableSubtask'])) {
+	elseif (!empty($_GET['EnableWmModule'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update subtask_generator set STATUS_ID=11 where ID=$ID";
+		$sql = "UPDATE ADDL_MODULES_WMAN_GROUPS SET STATUS_ID=11 WHERE ID=$ID";
 		$pdo->query($sql);
-		header("Refresh:0 url=subtask_generator.php");			
+		header("Refresh:0 url=workflow_mgr_module_groups.php");			
 	}
 	else {
 
@@ -45,51 +44,62 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Subtask Generator</h3>
+				<h3>Wman Module Groups</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Primary Task</th>
-                            <th>Pass Task</th>
-                            <th>Fail Task</th>
+							<th>Module NAME</th>
+                            <th>Module Version</th>
+                            <th>Wman Type</th>
                             <th>Status</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php 
+							<?php
+							if (!empty($_GET['WORKFLOW_MANAGER_TYPE_ID'])) {
+								$WORKFLOW_MANAGER_TYPE_ID=$_GET['WORKFLOW_MANAGER_TYPE_ID'];
+							} else {
+								$WORKFLOW_MANAGER_TYPE_ID='%%';
+							}
+							if (!empty($_GET['ADDL_MODULE_ID'])) {
+								$ADDL_MODULE_ID=$_GET['ADDL_MODULE_ID'];
+							} else {
+								$ADDL_MODULE_ID='%%';
+							}
+
 							include 'components/database.php';
 							$pdo = Database::connect();
-							$sql = 'select sg.ID, '
-									    . 'sg.TASK_TYPE_ID, '
-									    . 'sg.Pass_SubTask_ID, '
-									    . 'sg.Fail_SubTask_ID, '
-									    . 'sg.date_modified, '
-									    . 'tt.Task_Name as Primary_Task, '
-									    . 'pt.Task_Name as Pass_Task, '
-									    . 'ft.Task_Name as Fail_Task, '
-									    . 's.STATUS_NAME, '
-                                        . 's.HTMLCOLOR '                                    
-                                    . 'from SUBTASK_GENERATOR sg '                                    
-                                    . 'join status s on sg.Status_ID=s.ID ' 
-                                    . 'join TASK_TYPES tt on sg.TASK_TYPE_ID=tt.ID '
-                                    . 'join TASK_TYPES pt on sg.Pass_SubTask_ID=pt.ID ' 
-                                    . 'join TASK_TYPES ft on sg.Fail_SubTask_ID=ft.ID ';
+							$sql = "select wmad.ID, "
+									    . "wmad.ADDL_MODULE_ID, "
+									    . "wmad.WORKFLOW_MANAGER_TYPE_ID, "
+									    . "wmad.STATUS_ID, "
+									    . "wmad.date_modified, "
+									    . "wmt.NAME, "
+									    . "apm.GALLERY_NAME, "
+									    . "apm.MODULE_VERSION, "
+									    . "s.STATUS_NAME, "
+                                        . "s.HTMLCOLOR "            
+                                    . "from ADDL_MODULES_WMAN_GROUPS wmad "
+                                    . "join STATUS s on wmad.STATUS_ID=s.ID "
+                                    . "join WORKFLOW_MANAGER_TYPE wmt on wmad.WORKFLOW_MANAGER_TYPE_ID=wmt.ID "
+									. "join ADDITIONAL_PS_MODULES apm on wmad.ADDL_MODULE_ID=apm.ID "
+									. "where wmad.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID' and wmad.ADDL_MODULE_ID like '$ADDL_MODULE_ID'";
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Primary_Task'] . '</td>';
-								echo '<td>'. $row['Pass_Task'] . '</td>';
-								echo '<td>'. $row['Fail_Task'] . '</td>';
-								if($row['STATUS_NAME'] == 'Enabled'){
-									echo '<form action="subtask_generator.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="DisableSubtask" value="TRUE"><input type="submit" class="btn btn-danger" value="Disable"></td>';
+								echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['GALLERY_NAME'] . '"></form></td>';
+								echo '<td>'. $row['MODULE_VERSION'] . '</td>';
+								echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['WORKFLOW_MANAGER_TYPE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['NAME'] . '"></form></td>';
+								if($row['STATUS_ID'] == 11){
+									echo '<form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
+									echo '<td><input type="hidden" name="DisableWmModule" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
 								} else {
-									echo '<form action="subtask_generator.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="EnableSubtask" value="TRUE"><input type="submit" class="btn btn-success" value="Enable"></td>';
+									echo '<form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
+									echo '<td><input type="hidden" name="EnableWmModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
 									echo '</form>';
 								}                                
 								echo '<td>'. $row['date_modified'] . '</td>';
@@ -101,10 +111,9 @@
 					</table>
                     <table class="table table-striped table-bordered">
                         <tr>
-                            <td><b>Add a New Subtask</b></td>
-                            <td><b>Primary Task</b></td>
-                            <td><b>Passed Subtask</b></td>
-                            <td><b>Failed Subtask</b></td>
+                            <td><b>Add a New Wman Module</b></td>
+                            <td><b>Module NAME,Version</b></td>
+                            <td><b>Wman Type</b></td>
                             <td><b>Submit</b></td>
                         </tr>
                         <tr>
@@ -112,36 +121,26 @@
                                 <td><b>Select:</b></td>
 								<td>
                                     <?php
-                                        echo "<select name='TASK_TYPE_ID'>";
-                                        $sql = "select * from task_types";
+                                        echo "<select name='ADDL_MODULE_ID'>";
+                                        $sql = "SELECT * FROM ADDITIONAL_PS_MODULES";
                                         foreach ($pdo->query($sql) as $row) {
-                                            echo "<option value=". $row['ID'] .">". $row['Task_Name'] ."</option>";
+                                            echo "<option value=". $row['ID'] .">". $row['GALLERY_NAME'] .",". $row['MODULE_VERSION'] ."</option>";
                                         }
                                         echo "</select>"
                                     ?>
                                 </td>
 								<td>
                                     <?php
-                                        echo "<select name='Pass_SubTask_ID'>";
-                                        $sql = "select * from task_types";
+                                        echo "<select name='WORKFLOW_MANAGER_TYPE_ID'>";
+                                        $sql = "SELECT * FROM WORKFLOW_MANAGER_TYPE";
                                         foreach ($pdo->query($sql) as $row) {
-                                            echo "<option value=". $row['ID'] .">". $row['Task_Name'] ."</option>";
+                                            echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
                                         }
                                         echo "</select>"
                                     ?>
                                 </td>
 								<td>
-                                    <?php
-                                        echo "<select name='Fail_SubTask_ID'>";
-                                        $sql = "select * from task_types";
-                                        foreach ($pdo->query($sql) as $row) {
-                                            echo "<option value=". $row['ID'] .">". $row['Task_Name'] ."</option>";
-                                        }
-                                        echo "</select>"
-                                    ?>
-                                </td>
-								<td>
-									<input type="hidden" name="NewSubtask" value="TRUE"><input type="submit" class="btn btn-success" value="Add SubTask"></td>
+									<input type="hidden" name="NewWmModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Wman Module"></td>
 								</td>
 							</form>
 						</tr>

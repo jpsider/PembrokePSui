@@ -4,49 +4,49 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['NewTask'])) {
+	if (!empty($_GET['NewTASK'])) {
 		$TARGET_ID=$_GET['TARGET_ID'];
 		$TASK_TYPE_ID=$_GET['TASK_TYPE_ID'];
-		$Arguments=$_GET['Arguments'];
+		$ARGUMENTS=$_GET['ARGUMENTS'];
 		include 'components/database.php';
-		$sql = "INSERT INTO tasks (TARGET_ID,TASK_TYPE_ID,STATUS_ID,RESULT_ID,Arguments,Hidden) VALUES ('$TARGET_ID',$TASK_TYPE_ID,5,6'$Arguments',0)";
+		$sql = "INSERT INTO TASKS (TARGET_ID,TASK_TYPE_ID,STATUS_ID,RESULT_ID,ARGUMENTS,HIDDEN) VALUES ('$TARGET_ID',$TASK_TYPE_ID,5,6'$ARGUMENTS',0)";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=tasks.php");		
 	}
-	elseif (!empty($_GET['AbortTask'])) {
+	elseif (!empty($_GET['AbortTASK'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update tasks set STATUS_ID=9,RESULT_ID=5 where ID=$ID";
+		$sql = "UPDATE TASKS SET STATUS_ID=9,RESULT_ID=5 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=tasks.php");
 	}
-	elseif (!empty($_GET['HideTask'])) {
+	elseif (!empty($_GET['HideTASK'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update tasks set hidden=1 where ID=$ID";
+		$sql = "UPDATE TASKS SET HIDDEN=1 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=tasks.php");		
 	}
-	elseif (!empty($_GET['RerunTask'])) {
+	elseif (!empty($_GET['RerunTASK'])) {
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update tasks set hidden=1 where ID=$ID";
+		$sql = "UPDATE TASKS SET HIDDEN=1 WHERE ID=$ID";
         $pdo->query($sql);
 		$TARGET_ID=$_GET['TARGET_ID'];
 		$TASK_TYPE_ID=$_GET['TASK_TYPE_ID'];
-        $Arguments=$_GET['Arguments'];
-        // TODO: Determine if the Task is over the retry limit for the Target_Task_Type
-        // Insert the new task 
-        $sql2 = "INSERT INTO tasks (STATUS_ID,RESULT_ID,Log_File,WORKFLOW_MANAGER_ID,TASK_TYPE_ID,TARGET_ID,Arguments,Hidden) VALUES (5,6,'nolog',9999,$TASK_TYPE_ID,$TARGET_ID,'$Arguments',0)";
+        $ARGUMENTS=$_GET['ARGUMENTS'];
+        // TODO: Determine if the TASK is over the retry limit for the Target_TASK_Type
+        // Insert the new TASK 
+        $sql2 = "INSERT INTO TASKS (STATUS_ID,RESULT_ID,LOG_FILE,WORKFLOW_MANAGER_ID,TASK_TYPE_ID,TARGET_ID,ARGUMENTS,HIDDEN) VALUES (5,6,'nolog',9999,$TASK_TYPE_ID,$TARGET_ID,'$ARGUMENTS',0)";
         $pdo->exec($sql2);
         // Grab the last ID inserted.
         $Last_ID = $pdo->lastInsertId();
-        //Mark the Original as a parent with this new child task.
-        $sql = "INSERT INTO PARENT_TASKS (Parent_Task_ID,Child_Task_ID,isRetry) VALUES ($ID,$Last_ID,1)";
+        //Mark the Original as a parent with this new child TASK.
+        $sql = "INSERT INTO PARENT_TASKS (PARENT_TASK_ID,CHILD_TASK_ID,isRetry) VALUES ($ID,$Last_ID,1)";
         $pdo->query($sql);
 		header("Refresh:0 url=tasks.php");			
 	}
@@ -65,21 +65,21 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Tasks</h3>
+				<h3>TASKs</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Target Name</th>
+							<th>Target NAME</th>
 							<th>System</th>
-							<th>Task Name</th>
-							<th>Task Args</th>
+							<th>TASK NAME</th>
+							<th>TASK Args</th>
                             <th>WorkFlow Manager</th>
 							<th>Status</th>
 							<th>Result</th>
 							<th>Action</th>
-                            <th>Parent Task</th>
+                            <th>Parent TASK</th>
 							<th>date_modified</th>
 							<th>Hide</th>
 							</tr>
@@ -88,63 +88,77 @@
 							<?php 
 							include 'components/database.php';
 							$pdo = Database::connect();
-							if (!empty($_GET['Parent_Task_ID'])) {
-								$ID=$_GET['Parent_Task_ID'];
-							} elseif (!empty($_GET['Child_Task_ID'])) {
-								$ID=$_GET['Child_Task_ID'];					
+							if (!empty($_GET['PARENT_TASK_ID'])) {
+								$ID=$_GET['PARENT_TASK_ID'];
+							} elseif (!empty($_GET['CHILD_TASK_ID'])) {
+								$ID=$_GET['CHILD_TASK_ID'];					
 							} else {
 								$ID='%%';
+							}
+							if (!empty($_GET['TARGET_ID'])){
+								$TARGET_ID=$_GET['TARGET_ID'];
+							} else {
+								$TARGET_ID='%%';
+							}
+							if (!empty($_GET['TASK_TYPE_ID'])){
+								$TASK_TYPE_ID=$_GET['TASK_TYPE_ID'];
+							} else {
+								$TASK_TYPE_ID='%%';
 							}
 
 							$sql = "select t.ID, "
 									    . "t.TARGET_ID, "
 									    . "t.TASK_TYPE_ID, "
-									    . "t.Log_File, "
-									    . "t.Status_ID, "
+									    . "t.LOG_FILE, "
+									    . "t.STATUS_ID, "
 									    . "t.Result_ID, "
 									    . "t.WORKFLOW_MANAGER_ID, "
-									    . "t.Arguments, "
-									    . "t.Hidden, "
+									    . "t.ARGUMENTS, "
+									    . "t.HIDDEN, "
 									    . "t.date_modified, "
-									    . "tg.Target_Name, "
-									    . "tg.System_ID, "
-									    . "tt.Task_Name, "
+									    . "tg.TARGET_NAME, "
+									    . "tg.SYSTEM_ID, "
+									    . "tt.TASK_NAME, "
 									    . "ss.SYSTEM_NAME, "
-									    . "w.HostName, "
+									    . "w.HOSTNAME, "
 									    . "s.STATUS_NAME, "
 									    . "r.RESULT_NAME, "
-                                        . "s.HTMLCOLOR as StatusColor, "                                 
+                                        . "s.HTMLCOLOR as STATUSCOLOR, "                                 
                                         . "r.HTMLCOLOR "                                 
-                                    . "from tasks t "                                   
-                                    . "join status s on t.Status_ID=s.ID "
+                                    . "from TASKS t "                                   
+                                    . "join STATUS s on t.STATUS_ID=s.ID "
                                     . "join results r on t.Result_ID=r.ID "
                                     . "join targets tg on t.TARGET_ID=tg.ID "
-                                    . "join SYSTEMS ss on tg.System_ID=ss.ID "
+                                    . "join SYSTEMS ss on tg.SYSTEM_ID=ss.ID "
 									. "join TASK_TYPES tt on t.TASK_TYPE_ID=tt.ID "
                                     . "join WORKFLOW_MANAGER w on t.WORKFLOW_MANAGER_ID=w.ID "
-                                    . "where t.Hidden=0 and t.ID like '$ID' ";
+                                    . "where t.HIDDEN=0 and t.ID like '$ID' and t.TARGET_ID like '$TARGET_ID' and t.TASK_TYPE_ID like '$TASK_TYPE_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
+								echo '<form action="targets.php" method="get">';
+								echo '<td>'. $row['ID'] . '</td>';
+								echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '"><input type="Submit" class="btn btn-primary" value="'. $row['TARGET_NAME'] . '"></td>';
+								echo '</form>';
 								echo '<form action="tasks.php" method="get">';
-								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '">'. $row['Target_Name'] . '</td>';
-								echo '<td><input type="hidden" name="System_ID" value="' . $row['System_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
-								echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['TASK_TYPE_ID'] . '">'. $row['Task_Name'] . '</td>';
-								echo '<td><input type="hidden" name="Arguments" value="' . $row['Arguments'] . '">'. $row['Arguments'] . '</td>';
-                                echo '<td>'. $row['HostName'] . '</td>';
-                                echo '<td style=background-color:'. $row['StatusColor'] . '>' . $row['STATUS_NAME'] . '</td>';
-                                echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
-								if($row['Status_ID'] == 9){
-									echo '<td><input type="hidden" name="RerunTask" value="TRUE"><input type="submit" class="btn btn-warning" value="Rerun"></td>';
+								echo '<td><input type="hidden" name="SYSTEM_ID" value="' . $row['SYSTEM_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
+								echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['TASK_TYPE_ID'] . '">'. $row['TASK_NAME'] . '</td>';
+								echo '<td><input type="hidden" name="ARGUMENTS" value="' . $row['ARGUMENTS'] . '">'. $row['ARGUMENTS'] . '</td>';
+                                echo '<td>'. $row['HOSTNAME'] . '</td>';
+                                echo '<td style=background-color:'. $row['STATUSCOLOR'] . '>' . $row['STATUS_NAME'] . '</td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
+								echo '<input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '">';
+								echo '<input type="hidden" name="ID" value="' . $row['ID'] . '">';
+								if($row['STATUS_ID'] == 9){
+									echo '<td><input type="hidden" name="RerunTASK" value="TRUE"><input type="Submit" class="btn btn-warning" value="Rerun"></td>';
 									echo '</form>';
 								} else {
-									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="submit" class="btn btn-primary" value="Refresh"></td>';
+									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-primary" value="Refresh"></td>';
 									echo '</form>';
 								}                                
-                                echo '<td><form action="related_tasks.php" method="get"><input type="hidden" name="Related_Task_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="Related Tasks"></form></td>';
+                                echo '<td><form action="related_tasks.php" method="get"><input type="hidden" name="Related_TASK_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Related TASKs"></form></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
-                                echo '<td><form action="tasks.php" method="get"><input type="hidden" name="HideTask" value="TRUE"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="Hide"></form></td>';
+                                echo '<td><form action="tasks.php" method="get"><input type="hidden" name="HideTASK" value="TRUE"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Hide"></form></td>';
 								echo '</tr>';
 							}
 							Database::disconnect();

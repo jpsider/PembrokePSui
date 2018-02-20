@@ -5,21 +5,21 @@
 ?>
 <?php
 	if (!empty($_GET['NewProperty'])) {
-		$Prop_Name=$_GET['Prop_Name'];
-		$Prop_Value=$_GET['Prop_Value'];
+		$PROP_NAME=$_GET['PROP_NAME'];
+		$PROP_VALUE=$_GET['PROP_VALUE'];
 		include 'components/database.php';
-		$sql = "INSERT INTO PROPERTIES (Prop_Name,Prop_Value,STATUS_ID) VALUES ('$Prop_Name','$Prop_Value',11)";
+		$sql = "INSERT INTO PROPERTIES (PROP_NAME,PROP_VALUE,STATUS_ID) VALUES ('$PROP_NAME','$PROP_VALUE',11)";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=properties.php");		
 	}
 	elseif (!empty($_GET['UpdateProperty'])) {
 		$ID=$_GET['ID'];
-		$Prop_Name=$_GET['Prop_Name'];
-		$Prop_Value=$_GET['Prop_Value'];
+		$PROP_NAME=$_GET['PROP_NAME'];
+		$PROP_VALUE=$_GET['PROP_VALUE'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update properties set Prop_Name='$Prop_Name',Prop_Value='$Prop_Value' where ID=$ID";
+		$sql = "UPDATE PROPERTIES SET PROP_NAME='$PROP_NAME',PROP_VALUE='$PROP_VALUE' WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=properties.php");
 	}
@@ -27,7 +27,7 @@
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update properties set STATUS_ID=11 where ID=$ID";
+		$sql = "UPDATE PROPERTIES SET STATUS_ID=11 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=properties.php");		
 	}
@@ -35,7 +35,7 @@
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update properties set STATUS_ID=12 where ID=$ID";
+		$sql = "UPDATE PROPERTIES SET STATUS_ID=12 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=properties.php");			
 	}
@@ -54,13 +54,13 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Properties</h3>
+				<h3>Properties</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Name</th>
+							<th>NAME</th>
 							<th>Value</th>
 							<th>Status</th>
 							<th>Update</th>
@@ -73,8 +73,8 @@
 							include 'components/database.php';
 							$pdo = Database::connect();
 							$sql = 'select p.ID, '
-									. 'p.Prop_Name, '
-									. 'p.Prop_Value, '
+									. 'p.PROP_NAME, '
+									. 'p.PROP_VALUE, '
 									. 'p.date_modified, '
 									. 'p.STATUS_ID, '
 									. 's.STATUS_NAME, '
@@ -85,18 +85,18 @@
 								echo '<tr>';
 								echo '<form action="properties.php" method="get">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Prop_Name" value="'. $row['Prop_Name'] . '"></td>';
-								echo '<td><input type="text" name="Prop_Value" value="'. $row['Prop_Value'] . '"></td>';
+								echo '<td><input type="text" name="PROP_NAME" value="'. $row['PROP_NAME'] . '"></td>';
+								echo '<td><input type="text" name="PROP_VALUE" value="'. $row['PROP_VALUE'] . '"></td>';
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
-								echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="submit" class="btn btn-warning" value="Update"></td>';
+								echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></td>';
 								echo '</form>';
 								if($row['STATUS_NAME'] == 'Enabled'){
 									echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="submit" class="btn btn-danger" value="Disable"></td>';
+									echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
 								} else {
 									echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="EnableProperty" value="TRUE"><input type="submit" class="btn btn-success" value="Enable"></td>';
+									echo '<td><input type="hidden" name="EnableProperty" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
 									echo '</form>';
 								}
 								echo '<td>'. $row['date_modified'] . '</td>';
@@ -112,13 +112,13 @@
                             <form>
                                 <td><b>Add a New Property</b></td>
                                 <td>
-									<input type="text" name="Prop_Name" value="Enter a Name">
+									<input type="text" name="PROP_NAME" value="Enter a NAME">
 								</td>
 								<td>
-									<input type="text" name="Prop_Value" value="Enter a Value">
+									<input type="text" name="PROP_VALUE" value="Enter a Value">
 								</td>
 								<td>
-									<input type="hidden" name="NewProperty" value="TRUE"><input type="submit" class="btn btn-success" value="Add Property"></td>
+									<input type="hidden" name="NewProperty" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Property"></td>
 								</td>
 							</form>
 						</tr>

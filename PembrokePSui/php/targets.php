@@ -5,29 +5,29 @@
 ?>
 <?php
 	if (!empty($_GET['NewTarget'])) {
-		$Target_Name=$_GET['Target_Name'];
-		$Target_Type_ID=$_GET['Target_Type_ID'];
-		$IP_Address=$_GET['IP_Address'];
-		$Password_ID=$_GET['Password_ID'];
-		$System_ID=$_GET['System_ID'];
+		$TARGET_NAME=$_GET['TARGET_NAME'];
+		$TARGET_TYPE_ID=$_GET['TARGET_TYPE_ID'];
+		$IP_ADDRESS=$_GET['IP_ADDRESS'];
+		$PASSWORD_ID=$_GET['PASSWORD_ID'];
+		$SYSTEM_ID=$_GET['SYSTEM_ID'];
 		$Target_Description=$_GET['Target_Description'];
 		include 'components/database.php';
-		$sql = "INSERT INTO targets (Target_Name,Target_Type_ID,IP_Address,STATUS_ID,Password_ID,System_ID,Target_Description) VALUES ('$Target_Name',$Target_Type_ID,'$IP_Address',11,$Password_ID,$System_ID,'$Target_Description')";
+		$sql = "INSERT INTO TARGETS (TARGET_NAME,TARGET_TYPE_ID,IP_ADDRESS,STATUS_ID,PASSWORD_ID,SYSTEM_ID,Target_Description) VALUES ('$TARGET_NAME',$TARGET_TYPE_ID,'$IP_ADDRESS',11,$PASSWORD_ID,$SYSTEM_ID,'$Target_Description')";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=targets.php");		
 	}
 	elseif (!empty($_GET['UpdateTarget'])) {
 		$ID=$_GET['ID'];
-		$Target_Name=$_GET['Target_Name'];
-		$Target_Type_ID=$_GET['Target_Type_ID'];
-		$IP_Address=$_GET['IP_Address'];
-		$Password_ID=$_GET['Password_ID'];
-		$System_ID=$_GET['System_ID'];
+		$TARGET_NAME=$_GET['TARGET_NAME'];
+		$TARGET_TYPE_ID=$_GET['TARGET_TYPE_ID'];
+		$IP_ADDRESS=$_GET['IP_ADDRESS'];
+		$PASSWORD_ID=$_GET['PASSWORD_ID'];
+		$SYSTEM_ID=$_GET['SYSTEM_ID'];
 		$Target_Description=$_GET['Target_Description'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update targets set Target_Name='$Target_Name',Target_Type_ID='$Target_Type_ID',IP_Address='$IP_Address',Password_ID='$Password_ID',System_ID='$System_ID',Target_Description='$Target_Description' where ID=$ID";
+		$sql = "UPDATE TARGETS SET TARGET_NAME='$TARGET_NAME',TARGET_TYPE_ID='$TARGET_TYPE_ID',IP_ADDRESS='$IP_ADDRESS',PASSWORD_ID='$PASSWORD_ID',SYSTEM_ID='$SYSTEM_ID',Target_Description='$Target_Description' WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=targets.php");
 	}
@@ -35,7 +35,7 @@
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update targets set STATUS_ID=12 where ID=$ID";
+		$sql = "UPDATE TARGETS SET STATUS_ID=12 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=targets.php");		
 	}
@@ -43,7 +43,7 @@
 		$ID=$_GET['ID'];
 		include 'components/database.php';
 		$pdo = Database::connect();
-		$sql = "update targets set STATUS_ID=11 where ID=$ID";
+		$sql = "UPDATE TARGETS SET STATUS_ID=11 WHERE ID=$ID";
 		$pdo->query($sql);
 		header("Refresh:0 url=targets.php");			
 	}
@@ -62,21 +62,22 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Targets</h3>
+				<h3>Targets</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Name</th>
+							<th>NAME</th>
 							<th>IP Address</th>
 							<th>Target Type</th>
-                            <th>Password Info</th>
+                            <th>PASSWORD Info</th>
                             <th>Target_Description</th>
                             <th>System</th>
 							<th>Update</th>
 							<th>Status</th>
-							<th>Tasks</th>
+							<th>TASKs</th>
+							<th>New TASK</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -84,57 +85,63 @@
 							<?php 
 							include 'components/database.php';
 							$pdo = Database::connect();
-							if (!empty($_GET['Target_Type_ID'])) {
-								$Target_Type_ID=$_GET['Target_Type_ID'];
+							if (!empty($_GET['TARGET_TYPE_ID'])) {
+								$TARGET_TYPE_ID=$_GET['TARGET_TYPE_ID'];
 							} else {
-								$Target_Type_ID='%%';
+								$TARGET_TYPE_ID='%%';
+							}
+							if (!empty($_GET['TARGET_ID'])) {
+								$TARGET_ID=$_GET['TARGET_ID'];
+							} else {
+								$TARGET_ID='%%';
 							}
 
 							$sql = "select t.ID, "
-									    . "t.Target_Name, "
-									    . "t.Target_Type_ID, "
-									    . "t.IP_Address, "
-									    . "t.Status_ID, "
-									    . "t.Password_ID, "
-									    . "t.System_ID, "
+									    . "t.TARGET_NAME, "
+									    . "t.TARGET_TYPE_ID, "
+									    . "t.IP_ADDRESS, "
+									    . "t.STATUS_ID, "
+									    . "t.PASSWORD_ID, "
+									    . "t.SYSTEM_ID, "
 									    . "t.Target_Description, "
 									    . "t.date_modified, "
 									    . "tt.NAME as Target_Type, "
 									    . "ss.SYSTEM_NAME, "
-									    . "p.Username, "
+									    . "p.USERNAME, "
 									    . "s.STATUS_NAME, "
                                         . "s.HTMLCOLOR "                                 
-                                    . "from targets t "                                   
-                                    . "join status s on t.Status_ID=s.ID "
-                                    . "join PASSWORDS p on t.Password_ID=p.ID "
-                                    . "join SYSTEMS ss on t.System_ID=ss.ID "
-									. "join Target_Types tt on t.Target_Type_ID=tt.ID "
-									. "where t.Target_Type_ID like '$Target_Type_ID'";
+                                    . "from TARGETS t "                                   
+                                    . "join STATUS s on t.STATUS_ID=s.ID "
+                                    . "join PASSWORDS p on t.PASSWORD_ID=p.ID "
+                                    . "join SYSTEMS ss on t.SYSTEM_ID=ss.ID "
+									. "join TARGET_TYPES tt on t.TARGET_TYPE_ID=tt.ID "
+									. "where t.TARGET_TYPE_ID like '$TARGET_TYPE_ID' and t.ID like '$TARGET_ID'";
 
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
+								echo '<form action="tasks.php" method="get">';
+								echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['ID'] . '"</td></form>';
 								echo '<form action="targets.php" method="get">';
-								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Target_Name" value="'. $row['Target_Name'] . '"></td>';
-								echo '<td><input type="text" name="IP_Address" value="'. $row['IP_Address'] . '"></td>';
-								echo '<td><input type="hidden" name="Target_Type_ID" value="' . $row['Target_Type_ID'] . '">'. $row['Target_Type'] . '</td>';
-								echo '<td><input type="hidden" name="Password_ID" value="' . $row['Password_ID'] . '">'. $row['Username'] . '</td>';
+								echo '<td><input type="text" name="TARGET_NAME" value="'. $row['TARGET_NAME'] . '"></td>';
+								echo '<td><input type="text" name="IP_ADDRESS" value="'. $row['IP_ADDRESS'] . '"></td>';
+								echo '<td><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '">'. $row['Target_Type'] . '</td>';
+								echo '<td><input type="hidden" name="PASSWORD_ID" value="' . $row['PASSWORD_ID'] . '">'. $row['USERNAME'] . '</td>';
 								echo '<td><input type="text" name="Target_Description" value="'. $row['Target_Description'] . '"></td>';
-								echo '<td><input type="hidden" name="System_ID" value="' . $row['System_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
-                                echo '<td><input type="hidden" name="UpdateTarget" value="TRUE"><input type="submit" class="btn btn-success" value="Update"</td>';
+								echo '<td><input type="hidden" name="SYSTEM_ID" value="' . $row['SYSTEM_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
+                                echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
                                 echo '</form>';
 								if($row['STATUS_NAME'] == 'Enabled'){
 									echo '<form action="targets.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="DisableTarget" value="TRUE"><input type="submit" class="btn btn-danger" value="Disable"></td>';
+									echo '<td><input type="hidden" name="DisableTarget" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
 								} else {
 									echo '<form action="targets.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="submit" class="btn btn-success" value="Enable"></td>';
+									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
 									echo '</form>';
 								}                                
-								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Target_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="Tasks"></form></td>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Target_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="TASKs"></form></td>';
+								echo '<td><form action="create_new_task.php" method="get"><input type="hidden" name="TARGET_NAME" value="' . $row['TARGET_NAME'] . '"><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-warning" value="New TASK"></td></form>';
 								echo '<td>'. $row['date_modified'] . '</td>';
-																   
 								echo '</tr>';
 							}
 							Database::disconnect();
@@ -146,37 +153,37 @@
                             <form>
                                 <td><b>Add a New Target</b></td>
                                 <td>
-									<input type="text" name="Target_Name" value="Enter a Name">
+									<input type="text" name="TARGET_NAME" value="Enter a NAME">
 								</td>
                                 <td>
 									<?php
-										echo "<select name='Target_Type_ID'>";
-										$sql = "select * from Target_Types";
+										echo "<select name='TARGET_TYPE_ID'>";
+										$sql = "SELECT * FROM TARGET_TYPES";
 										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['Name'] ."</option>";
+											echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
 										}
 										echo "</select>"
 									?>
 								</td>
                                 <td>
-									<input type="text" name="IP_Address" value="IP Address">
+									<input type="text" name="IP_ADDRESS" value="IP Address">
 								</td>
                                 <td>
 									<?php
-										echo "<select name='Password_ID'>";
-										$sql = "select * from passwords";
+										echo "<select name='PASSWORD_ID'>";
+										$sql = "SELECT * FROM PASSWORDS";
 										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['Username'] ."</option>";
+											echo "<option value=". $row['ID'] .">". $row['USERNAME'] ."</option>";
 										}
 										echo "</select>"
 									?>									
 								</td>
                                 <td>
 									<?php
-										echo "<select name='System_ID'>";
-										$sql = "select * from systems";
+										echo "<select name='SYSTEM_ID'>";
+										$sql = "SELECT * FROM SYSTEMS";
 										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['SYSTEM_Name'] ."</option>";
+											echo "<option value=". $row['ID'] .">". $row['SYSTEM_NAME'] ."</option>";
 										}
 										echo "</select>"
 									?>										
@@ -185,7 +192,7 @@
 									<input type="text" name="Target_Description" value="Description">
 								</td>
 								<td>
-									<input type="hidden" name="NewTarget" value="TRUE"><input type="submit" class="btn btn-success" value="Add Target"></td>
+									<input type="hidden" name="NewTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Target"></td>
 								</td>
 							</form>
 						</tr>

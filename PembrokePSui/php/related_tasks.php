@@ -4,16 +4,16 @@
 	require_once 'components/header.php';
 ?>
 <?php
-	if (!empty($_GET['NewParentTask'])) {
-		$Parent_Task_ID=$_GET['Parent_Task_ID'];
-        $Child_Task_ID=$_GET['Child_Task_ID'];
+	if (!empty($_GET['NewParentTASK'])) {
+		$PARENT_TASK_ID=$_GET['PARENT_TASK_ID'];
+        $CHILD_TASK_ID=$_GET['CHILD_TASK_ID'];
         if (!empty($_GET['isRetry'])){
             $isRetry=$_GET['isRetry'];
         } else {
             $isRetry=0;
         }
 		include 'components/database.php';
-		$sql = "INSERT INTO PARENT_TASKS (Parent_Task_ID,Child_Task_ID,STATUS_ID) VALUES ('$Parent_Task_ID','$Child_Task_ID',$isRetry)";
+		$sql = "INSERT INTO PARENT_TASKS (PARENT_TASK_ID,CHILD_TASK_ID,STATUS_ID) VALUES ('$PARENT_TASK_ID','$CHILD_TASK_ID',$isRetry)";
 		$pdo = Database::connect();
         $pdo->query($sql);
 		header("Refresh:0 url=parent_target_types.php");		
@@ -33,14 +33,14 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>PembrokePS Related Tasks</h3>
+				<h3>Related TASKs</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Parent Task ID</th>
-                            <th>Child Task ID</th>
+							<th>Parent TASK ID</th>
+                            <th>Child TASK ID</th>
                             <th>isRetry</th>
 							<th>date_modified</th>
 							</tr>
@@ -49,25 +49,25 @@
 							<?php 
 							include 'components/database.php';
                             $pdo = Database::connect();
-                            if (!empty($_GET['Related_Task_ID'])){
-                                $Related_Task_ID=$_GET['Related_Task_ID'];
+                            if (!empty($_GET['Related_TASK_ID'])){
+                                $Related_TASK_ID=$_GET['Related_TASK_ID'];
                             } else {
-                                $Related_Task_ID="%%";
+                                $Related_TASK_ID="%%";
                             }                           
 							$sql = "select pt.ID, "
-									    . "pt.Parent_Task_ID, "
-									    . "pt.Child_Task_ID, "
+									    . "pt.PARENT_TASK_ID, "
+									    . "pt.CHILD_TASK_ID, "
 									    . "pt.isRetry, "
 									    . "pt.date_modified "
                                     . "from PARENT_TASKS pt "                                    
-                                    . "join tasks pts on pt.Parent_Task_ID=pts.ID "
-                                    . "join tasks ct on pt.Child_Task_ID=ct.ID "
-                                    . "where pt.Parent_Task_ID like '$Related_Task_ID' or pt.Child_Task_ID like '$Related_Task_ID'";
+                                    . "join TASKS pts on pt.PARENT_TASK_ID=pts.ID "
+                                    . "join TASKS ct on pt.CHILD_TASK_ID=ct.ID "
+                                    . "where pt.PARENT_TASK_ID like '$Related_TASK_ID' or pt.CHILD_TASK_ID like '$Related_TASK_ID'";
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr>';
 								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Parent_Task_ID" value="' . $row['Parent_Task_ID'] . '"><input type="submit" class="btn btn-info" value="'. $row['Parent_Task_ID'] . '"></form></td>';
-								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Child_Task_ID" value="' . $row['Child_Task_ID'] . '"><input type="submit" class="btn btn-info" value="'. $row['Child_Task_ID'] . '"></form></td>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="PARENT_TASK_ID" value="' . $row['PARENT_TASK_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['PARENT_TASK_ID'] . '"></form></td>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="CHILD_TASK_ID" value="' . $row['CHILD_TASK_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['CHILD_TASK_ID'] . '"></form></td>';
 								if($row['isRetry'] == 0){
 									echo '<td>False</td>';
 								} else {
