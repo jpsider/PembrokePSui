@@ -4,9 +4,9 @@ function Invoke-DeployWeb
 	.DESCRIPTION
 		Deploy .php pages to web server.
     .PARAMETER Destination
-        A valid Path is required.
+        A valid Path String is required.
     .PARAMETER Source
-        A valid Path is required.
+        A valid Path String is required.
 	.EXAMPLE
         Invoke-DeployWeb -Destination c:\wamp\www\PembrokePS -Source c:\OpenProjects\ProjectPembroke\PembrokePSUI
 	.NOTES
@@ -15,8 +15,8 @@ function Invoke-DeployWeb
     [CmdletBinding()]
     [OutputType([boolean])]
     param(
-        [System.IO.Path]$Destination,
-        [System.IO.Path]$Source
+        [String]$Destination = 'C:\wamp\www\PembrokePS',
+        [Parameter(Mandatory = $true)][String]$Source
     )
     try
     {
@@ -27,7 +27,7 @@ function Invoke-DeployWeb
         $ErrorMessage = $_.Exception.Message
         $FailedItem = $_.Exception.ItemName		
         Write-Error "Error: $ErrorMessage $FailedItem"
-        BREAK
+        Throw $_
     }
 
 }
