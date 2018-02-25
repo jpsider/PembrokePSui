@@ -51,10 +51,11 @@
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>Primary TASK</th>
-                            <th>PASS TASK</th>
-                            <th>FAIL TASK</th>
+							<th>Primary task</th>
+                            <th>PASS task</th>
+                            <th>FAIL task</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -66,6 +67,7 @@
 									    . 'sg.TASK_TYPE_ID, '
 									    . 'sg.PASS_SUBTASK_ID, '
 									    . 'sg.FAIL_SUBTASK_ID, '
+									    . 'sg.STATUS_ID, '
 									    . 'sg.date_modified, '
 									    . 'tt.TASK_NAME as Primary_TASK, '
 									    . 'pt.TASK_NAME as PASS_TASK, '
@@ -83,7 +85,8 @@
 								echo '<td>'. $row['Primary_TASK'] . '</td>';
 								echo '<td>'. $row['PASS_TASK'] . '</td>';
 								echo '<td>'. $row['FAIL_TASK'] . '</td>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="subtask_generator.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableSUBTASK" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
@@ -101,10 +104,10 @@
 					</table>
                     <table class="table table-striped table-bordered">
                         <tr>
-                            <td><b>Add a New SUBTASK</b></td>
-                            <td><b>Primary TASK</b></td>
-                            <td><b>PASSed SUBTASK</b></td>
-                            <td><b>FAILed SUBTASK</b></td>
+                            <td><b>Add a New subtask</b></td>
+                            <td><b>Primary Task</b></td>
+                            <td><b>Passed subtask</b></td>
+                            <td><b>Failed subtask</b></td>
                             <td><b>Submit</b></td>
                         </tr>
                         <tr>
@@ -141,7 +144,7 @@
                                     ?>
                                 </td>
 								<td>
-									<input type="hidden" name="NewSUBTASK" value="TRUE"><input type="Submit" class="btn btn-success" value="Add SUBTASK"></td>
+									<input type="hidden" name="NewSUBTASK" value="TRUE"><input type="Submit" class="btn btn-success" value="Add SubTask"></td>
 								</td>
 							</form>
 						</tr>

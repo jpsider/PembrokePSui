@@ -54,6 +54,7 @@
                             <th>TASK NAME</th>
                             <th>Table NAME</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -64,6 +65,7 @@
 							$sql = 'select wtt.ID, '
 									    . 'wtt.WORKFLOW_MANAGER_TYPE_ID, '
 									    . 'wtt.TASK_TYPE_ID, '
+									    . 'wtt.STATUS_ID, '
 									    . 'wtt.date_modified, '
 									    . 'wt.NAME, '
 									    . 'wt.TABLENAME, '
@@ -80,7 +82,8 @@
 								echo '<td>'. $row['NAME'] . '</td>';
 								echo '<td>'. $row['TASK_NAME'] . '</td>';
 								echo '<td>'. $row['TABLENAME'] . '</td>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="wman_tasks.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableWmanTASK" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';

@@ -55,6 +55,7 @@
                             <th>Gallery NAME</th>
                             <th>Version</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -78,6 +79,7 @@
 								echo '<td>'. $row['NAME'] . '</td>';
 								echo '<td>'. $row['GALLERY_NAME'] . '</td>';
 								echo '<td>'. $row['MODULE_VERSION'] . '</td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 								if($row['STATUS_ID'] == 11){
 									echo '<form action="additional_ps_modules.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableModule" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';

@@ -67,7 +67,9 @@
                             <th>File Path</th>
                             <th>File Hash</th>
                             <th>Reboot Required</th>
+                            <th>Update</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -95,8 +97,9 @@
 								echo '<td>'. $row['FILE_HASH'] . '</td>';
 								echo '<td><input type="text" name="REBOOT_REQUIRED" value="'. $row['REBOOT_REQUIRED'] . '"></td>';
                                 echo '<td><input type="hidden" name="UpdateManagedFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
-                                echo '</form>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '</form>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="managed_files.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableManagedFile" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
@@ -113,6 +116,13 @@
 						</tbody>
 					</table>
                     <table class="table table-striped table-bordered">
+						<tr>
+							<th></th>
+							<th>Name:</th>
+							<th>Path:</th>
+							<th>Restart Required:</th>
+							<th>Submit</th>
+						</tr>
                         <tr>
                             <form>
                                 <td><b>Add a New Managed File</b></td>

@@ -145,8 +145,8 @@
 								echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['TASK_TYPE_ID'] . '">'. $row['TASK_NAME'] . '</td>';
 								echo '<td><input type="hidden" name="ARGUMENTS" value="' . $row['ARGUMENTS'] . '">'. $row['ARGUMENTS'] . '</td>';
                                 echo '<td>'. $row['HOSTNAME'] . '</td>';
-                                echo '<td style=background-color:'. $row['STATUSCOLOR'] . '>' . $row['STATUS_NAME'] . '</td>';
-								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
+                                echo '<td style=background-color:'. $row['STATUSCOLOR'] . '><b>' . $row['STATUS_NAME'] . '</b></td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>' . $row['RESULT_NAME'] . '</b></td>';
 								echo '<input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '">';
 								echo '<input type="hidden" name="ID" value="' . $row['ID'] . '">';
 								if($row['STATUS_ID'] == 9){

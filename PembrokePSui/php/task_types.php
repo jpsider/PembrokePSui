@@ -67,6 +67,7 @@
                             <th>Priority</th>
                             <th>Update</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -93,8 +94,9 @@
 								echo '<td><input type="text" name="TASK_PATH" value="'. $row['TASK_PATH'] . '"></td>';
 								echo '<td><input type="text" name="PRIORITY" value="'. $row['PRIORITY'] . '"></td>';
                                 echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
-                                echo '</form>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '</form>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableTASKType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';
@@ -111,6 +113,13 @@
 						</tbody>
 					</table>
                     <table class="table table-striped table-bordered">
+						<tr>
+							<th></th>
+							<th>Name:</th>
+							<th>Path:</th>
+							<th>Priority:</th>
+							<th>Submit</th>
+						</tr>
                         <tr>
                             <form>
                                 <td><b>Add a New TASK Type</b></td>

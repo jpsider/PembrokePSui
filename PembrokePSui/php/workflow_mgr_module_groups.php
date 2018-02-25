@@ -54,6 +54,7 @@
                             <th>Module Version</th>
                             <th>Wman Type</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -93,6 +94,7 @@
 								echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['GALLERY_NAME'] . '"></form></td>';
 								echo '<td>'. $row['MODULE_VERSION'] . '</td>';
 								echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['WORKFLOW_MANAGER_TYPE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['NAME'] . '"></form></td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 								if($row['STATUS_ID'] == 11){
 									echo '<form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableWmModule" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';

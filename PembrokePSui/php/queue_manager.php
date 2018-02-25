@@ -128,9 +128,9 @@
 								echo '<td>'. $row['TABLENAME'] . '</td>';
 								echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Qman_Color'] . '>'. $row['Qman_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['Qman_Color'] . '><b>'. $row['Qman_Status'] . '</b></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '>'. $row['Kicker_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['Kicker_Color'] . '><b>'. $row['Kicker_Status'] . '</b></td>';
 								echo '<td>'. $row['KICKER_PORT'] . '</td>';
 								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
 								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';

@@ -59,8 +59,9 @@
 							<tr>
 							<th>ID</th>
 							<th>NAME</th>
-                            <th>Action</th>
+                            <th>Update</th>
                             <th>Status</th>
+                            <th>Action</th>
                             <th>Targets</th>
 							<th>date_modified</th>
 							</tr>
@@ -83,8 +84,9 @@
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 								echo '<td><input type="text" name="SYSTEM_NAME" value="'. $row['SYSTEM_NAME'] . '"></td>';
                                 echo '<td><input type="hidden" name="UpdateSystem" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
-                                echo '</form>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '</form>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="systems.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableSystem" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';

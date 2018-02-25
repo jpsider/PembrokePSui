@@ -68,7 +68,7 @@
 						<thead>
 							<tr>
 							<th>ID</th>
-							<th>NAME</th>
+							<th>Name</th>
 							<th>IP Address</th>
 							<th>Target Type</th>
                             <th>PASSWORD Info</th>
@@ -76,8 +76,8 @@
                             <th>System</th>
 							<th>Update</th>
 							<th>Status</th>
-							<th>TASKs</th>
-							<th>New TASK</th>
+							<th>Tasks</th>
+							<th>New Task</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -139,8 +139,8 @@
 									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
 									echo '</form>';
 								}                                
-								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Target_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="TASKs"></form></td>';
-								echo '<td><form action="create_new_task.php" method="get"><input type="hidden" name="TARGET_NAME" value="' . $row['TARGET_NAME'] . '"><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-warning" value="New TASK"></td></form>';
+								echo '<td><form action="tasks.php" method="get"><input type="hidden" name="Target_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Tasks"></form></td>';
+								echo '<td><form action="create_new_task.php" method="get"><input type="hidden" name="TARGET_NAME" value="' . $row['TARGET_NAME'] . '"><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-warning" value="New Task"></td></form>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 								echo '</tr>';
 							}
@@ -149,11 +149,21 @@
 						</tbody>
 					</table>
                     <table class="table table-striped table-bordered">
+							<tr>
+								<th></th>
+								<th>Name:</th>
+								<th>Target Type:</th>
+								<th>IP Address</th>
+								<th>User/PWD</th>
+								<th>System</th>
+								<th>Description</th>
+								<th>Submit</th>
+							</tr>
                         <tr>
                             <form>
-                                <td><b>Add a New Target</b></td>
+                                <td><b>Enter Information:</b></td>
                                 <td>
-									<input type="text" name="TARGET_NAME" value="Enter a NAME">
+									<input type="text" name="TARGET_NAME" value="Enter a Name">
 								</td>
                                 <td>
 									<?php

@@ -59,8 +59,9 @@
 							<tr>
 							<th>ID</th>
 							<th>NAME</th>
-                            <th>Action</th>
+                            <th>Update</th>
                             <th>Status</th>
+                            <th>Action</th>
                             <th>Targets</th>
 							<th>date_modified</th>
 							</tr>
@@ -82,9 +83,10 @@
 								echo '<form action="target_types.php" method="get">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 								echo '<td><input type="text" name="NAME" value="'. $row['NAME'] . '"></td>';
-                                echo '<td><input type="hidden" name="UpdateTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+								echo '<td><input type="hidden" name="UpdateTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
                                 echo '</form>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="target_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableTargetType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';

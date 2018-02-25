@@ -87,7 +87,7 @@
 							foreach ($pdo->query($sql) as $row) {
 								echo '<tr><form action="manager_types.php" method="get"><input type="hidden" name="UpdateQMType" value="TRUE">';
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
-								echo '<td><input type="text" name="Name" value="'. $row['Name'] . '"></td>';
+								echo '<td><input type="text" name="Name" value="'. $row['NAME'] . '"></td>';
 								echo '<td><input type="text" name="TABLENAME" value="'. $row['TABLENAME'] . '"></td>';
 								echo '<td><input type="submit" class="btn btn-success" value="UPDATE Data"></form></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';

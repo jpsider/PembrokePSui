@@ -87,10 +87,10 @@
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 								echo '<td><input type="text" name="PROP_NAME" value="'. $row['PROP_NAME'] . '"></td>';
 								echo '<td><input type="text" name="PROP_VALUE" value="'. $row['PROP_VALUE'] . '"></td>';
-								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 								echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></td>';
 								echo '</form>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';

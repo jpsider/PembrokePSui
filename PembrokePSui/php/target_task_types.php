@@ -55,6 +55,7 @@
                             <th>TASK NAME</th>
                             <th>Max Retries</th>
                             <th>Status</th>
+                            <th>Action</th>
 							<th>date_modified</th>
 							</tr>
 						</thead>
@@ -82,7 +83,8 @@
 								echo '<td>'. $row['NAME'] . '</td>';
 								echo '<td>'. $row['TASK_NAME'] . '</td>';
 								echo '<td>'. $row['MAX_Retries'] . '</td>';
-								if($row['STATUS_NAME'] == 'Enabled'){
+								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
+								if($row['STATUS_ID'] == 11){
 									echo '<form action="target_task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 									echo '<td><input type="hidden" name="DisableParentTargetType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
 									echo '</form>';

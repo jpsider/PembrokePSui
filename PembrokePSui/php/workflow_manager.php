@@ -132,9 +132,9 @@
 								echo '<td>'. $row['TABLENAME'] . '</td>';
 								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Wman_Color'] . '>'. $row['Wman_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['Wman_Color'] . '><b>'. $row['Wman_Status'] . '</b></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '>'. $row['Kicker_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['Kicker_Color'] . '><b>'. $row['Kicker_Status'] . '</b></td>';
 								echo '<td>'. $row['KICKER_PORT'] . '</td>';
 								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
 								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
@@ -171,7 +171,7 @@
 										echo "<select name='WORKFLOW_MANAGER_TYPE_ID'>";
 										$sql = "SELECT * FROM WORKFLOW_MANAGER_TYPE";
 										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['Name'] ."</option>";
+											echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
 										}
 										echo "</select>"
 									?>

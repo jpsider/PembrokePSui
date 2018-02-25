@@ -87,7 +87,7 @@ $(document).ready(function() {
 								echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">' . $row['ID'] . '</td>';
 								echo '<td>' . $row['PORT'] . '</td>';
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
-								echo '<td style=background-color:'. $row['EP_STATUS_COLOR'] . '>'. $row['Ep_Status'] . '</td>';
+								echo '<td style=background-color:'. $row['EP_STATUS_COLOR'] . '><b>'. $row['Ep_Status'] . '</b></td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
 							   	echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info" value="View Manager"></td>';
 								echo '</form>';
