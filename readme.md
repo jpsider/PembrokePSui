@@ -2,6 +2,10 @@
 
 Powershell/PHP framework to manage PembrokePS components
 
+## Build Status
+
+![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/PembrokePSui?branch=master&svg=true)
+
 ## GitPitch PitchMe presentation
 
 * [gitpitch.com/jpsider/PembrokePSui](https://gitpitch.com/jpsider/PembrokePSui)
