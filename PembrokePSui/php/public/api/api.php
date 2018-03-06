@@ -2500,7 +2500,7 @@ $api = new PHP_CRUD_API(array(
 	'hostname'=>'localhost',
 	'username'=>'root',
 	'password'=>'',
-	'database'=>'xesterui',
+	'database'=>'PembrokePS',
 	'charset'=>'utf8'
 ));
 $api->executeCommand();
