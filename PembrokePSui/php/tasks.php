@@ -65,7 +65,7 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>TASKs</h3>
+				<h3>Task Status</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
@@ -79,6 +79,7 @@
 							<th>Status</th>
 							<th>Result</th>
 							<th>Action</th>
+							<th>LogFile</th>
                             <th>Parent TASK</th>
 							<th>date_modified</th>
 							<th>Hide</th>
@@ -155,7 +156,8 @@
 								} else {
 									echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-primary" value="Refresh"></td>';
 									echo '</form>';
-								}                                
+								}
+								echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['LOG_FILE'].'><input type="Submit" class="btn btn-default" value="View Log"></form></td>';                             
                                 echo '<td><form action="related_tasks.php" method="get"><input type="hidden" name="Related_TASK_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Related TASKs"></form></td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
                                 echo '<td><form action="tasks.php" method="get"><input type="hidden" name="HideTASK" value="TRUE"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Hide"></form></td>';

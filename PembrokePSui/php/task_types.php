@@ -56,7 +56,7 @@
 				require_once 'components/Side_Bar.html';
 			?>
 			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>TASK Types</h3>
+				<h3>Task Types</h3>
 				<div class="row">
 					<table id="example" class="table table-striped table-bordered">
 						<thead>
@@ -122,7 +122,7 @@
 						</tr>
                         <tr>
                             <form>
-                                <td><b>Add a New TASK Type</b></td>
+                                <td><b>Add a New Task Type</b></td>
                                 <td>
 									<input type="text" name="TASK_NAME" value="Enter a NAME">
 								</td>
@@ -133,7 +133,7 @@
 									<input type="text" name="PRIORITY" value="Enter a Priority">
 								</td>
 								<td>
-									<input type="hidden" name="NewTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add TASKType"></td>
+									<input type="hidden" name="NewTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add TaskType"></td>
 								</td>
 							</form>
 						</tr>
