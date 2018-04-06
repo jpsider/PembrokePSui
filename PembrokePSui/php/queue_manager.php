@@ -69,7 +69,7 @@
 							<th>Kicker WAIT</th>
 							<th>Kicker HEARTBEAT</th>
 							<th>Description</th>
-							<th>Action</th>
+							<th>Registration</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -88,6 +88,7 @@
 							}
 							$sql = "select qm.ID, " 
 										. "qm.STATUS_ID, "
+										. "qm.REGISTRATION_STATUS_ID, "
 										. "qm.QUEUE_MANAGER_TYPE_ID, "
 										. "qm.HOSTNAME, "
 										. "qm.IP_ADDRESS, "
@@ -103,8 +104,10 @@
 										. "qm.date_modified, "
 										. "s.HTMLCOLOR as Qman_Color, "
 										. "ks.HTMLCOLOR as Kicker_Color, "
+										. "rs.HTMLCOLOR as Regis_Color, "
 										. "s.STATUS_NAME as Qman_Status, "
 										. "ks.STATUS_NAME as Kicker_Status, "
+										. "rs.STATUS_NAME as Regis_Status, "
 										. "ep.Port as QMAN_PORT, "
 										. "epk.Port as KICKER_PORT, "
 										. "qt.NAME as Qman_Type, "
@@ -112,6 +115,7 @@
 									. "from QUEUE_MANAGER qm "
 									. "join STATUS s on qm.STATUS_ID=s.ID "
 									. "join STATUS ks on qm.KICKER_STATUS_ID=ks.ID "
+									. "join STATUS rs on qm.REGISTRATION_STATUS_ID=rs.ID "
 									. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
 									. "join ENDPOINT_PORTS epk on qm.KICKER_PORT_ID=epk.ID "
 									. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
@@ -128,14 +132,7 @@
 								echo '<td>'. $row['TABLENAME'] . '</td>';
 								echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Qman_Color'] . '><b>'. $row['Qman_Status'] . '</b></td>';
-								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '><b>'. $row['Kicker_Status'] . '</b></td>';
-								echo '<td>'. $row['KICKER_PORT'] . '</td>';
-								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
-								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
-								echo '<td>'. $row['QMan_Description'] . '</td>';
-								echo '<td width=250>';
+								echo '<td style=background-color:'. $row['Qman_Color'] . '><h4><b><center>'. $row['Qman_Status'] . '</center></b></h4>';
 								if ($row['STATUS_ID'] == 1) {
 									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="3"><input type="Submit" class="btn btn-success" value="Start Manager"></form>';
 								} elseif ($row['STATUS_ID'] == 2) {
@@ -146,6 +143,13 @@
 									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
 								}
 								echo '</td>';
+								echo '<td>'. $row['date_modified'] . '</td>';
+								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
+								echo '<td>'. $row['KICKER_PORT'] . '</td>';
+								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
+								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
+								echo '<td>'. $row['QMan_Description'] . '</td>';
+								echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
 								echo '</tr>';
 							}
 							Database::disconnect();

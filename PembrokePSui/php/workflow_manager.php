@@ -71,7 +71,7 @@
 							<th>Kicker WAIT</th>
 							<th>Kicker HEARTBEAT</th>
 							<th>Description</th>
-							<th>Action</th>
+							<th>Registration</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -90,6 +90,7 @@
 							}							
 							$sql = "select wm.ID, " 
 										. "wm.STATUS_ID, "
+										. "wm.REGISTRATION_STATUS_ID, "
 										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
 										. "wm.HOSTNAME, "
 										. "wm.IP_ADDRESS, "
@@ -106,8 +107,10 @@
 										. "wm.date_modified, "
 										. "s.HtmlColor as Wman_Color, "
 										. "ks.HtmlColor as Kicker_Color, "
+										. "rs.HtmlColor as Regis_Color, "
 										. "s.Status_Name as Wman_Status, "
 										. "ks.Status_Name as Kicker_Status, "
+										. "rs.Status_Name as Regis_Status, "
 										. "ep.Port as WMAN_PORT, "
 										. "epk.Port as KICKER_PORT, "
 										. "wt.Name as Wman_Type, "
@@ -115,6 +118,7 @@
 									. "from WORKFLOW_MANAGER wm "
 									. "join STATUS s on wm.STATUS_ID=s.ID "
 									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
+									. "join STATUS rs on wm.REGISTRATION_STATUS_ID=rs.ID "
 									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
 									. "join ENDPOINT_PORTS epk on wm.KICKER_PORT_ID=epk.ID "
 									. "join WORKFLOW_MANAGER_TYPE wt on wm.WORKFLOW_MANAGER_TYPE_ID=wt.ID "
@@ -132,14 +136,7 @@
 								echo '<td>'. $row['TABLENAME'] . '</td>';
 								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
 								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Wman_Color'] . '><b>'. $row['Wman_Status'] . '</b></td>';
-								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '><b>'. $row['Kicker_Status'] . '</b></td>';
-								echo '<td>'. $row['KICKER_PORT'] . '</td>';
-								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
-								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
-								echo '<td>'. $row['Wman_Description'] . '</td>';
-								echo '<td width=250>';
+								echo '<td style=background-color:'. $row['Wman_Color'] . '><h4><b><center>'. $row['Wman_Status'] . '</center></b></h4>';
 								if ($row['STATUS_ID'] == 1) {
 									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
 								} elseif ($row['STATUS_ID'] == 2) {
@@ -150,7 +147,16 @@
 									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
 								}
 								echo '</td>';
+								echo '<td>'. $row['date_modified'] . '</td>';
+								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
+								echo '<td>'. $row['KICKER_PORT'] . '</td>';
+								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
+								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
+								echo '<td>'. $row['Wman_Description'] . '</td>';
+								echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
 								echo '</tr>';
+								//echo '<tr>';
+								//echo '</tr>';
 							}
 							Database::disconnect();
 							?>
