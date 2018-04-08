@@ -4,7 +4,7 @@ function Invoke-DeployWeb
 	.DESCRIPTION
 		Deploy .php pages to web server.
     .PARAMETER Destination
-        A valid Path String is required.
+        A valid Path String is required for destination.
     .PARAMETER Source
         A valid Path String is required.
 	.EXAMPLE
