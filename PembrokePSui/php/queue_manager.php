@@ -19,17 +19,16 @@
 		include 'components/database.php';
 		$Queue_Manager_Type_ID=$_GET['Queue_Manager_Type_ID'];
 		$QMAN_PORT_ID=$_GET['QMAN_PORT_ID'];
-		$KICKER_PORT_ID=$_GET['KICKER_PORT_ID'];
 		$IP_ADDRESS=$_GET['IP_ADDRESS'];
 		$HOSTNAME=$_GET['HOSTNAME'];
 		$WAIT=$_GET['WAIT'];
 		$KICKER_WAIT=$_GET['KICKER_WAIT'];
 		$Qman_Description=$_GET['Qman_Description'];
-		$sql = "INSERT INTO QUEUE_MANAGER (QUEUE_MANAGER_TYPE_ID,QMAN_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HOSTNAME,IP_ADDRESS,WAIT,KICKER_WAIT,LOG_FILE,QMan_Description) VALUES ('$Queue_Manager_Type_ID','$QMAN_PORT_ID','$KICKER_PORT_ID',1,1,'$HOSTNAME','$IP_ADDRESS','$WAIT','$KICKER_WAIT','NoLog','$Qman_Description')";
+		$sql = "INSERT INTO QUEUE_MANAGER (QUEUE_MANAGER_TYPE_ID,QMAN_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HOSTNAME,IP_ADDRESS,WAIT,KICKER_WAIT,LOG_FILE,QMan_Description) VALUES ('$Queue_Manager_Type_ID','$QMAN_PORT_ID','$KICKER_PORT_ID',1,1,'$HOSTNAME','$IP_ADDRESS','$WAIT','$KICKER_WAIT','NoLog','$Qman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
-		$sql = "UPDATE ENDPOINT_PORTS SET ENDPOINT_ASSIGNED_STATUS=7 WHERE ID in ('$QMAN_PORT_ID','$KICKER_PORT_ID')";
+		$sql = "UPDATE ENDPOINT_PORTS SET ENDPOINT_ASSIGNED_STATUS=7 WHERE ID in ('$QMAN_PORT_ID'";
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
 		header("Refresh:0 url=queue_manager.php");	
@@ -65,7 +64,6 @@
 							<th>Status</th>
 							<th>date_modified</th>
 							<th>Kicker Status</th>
-							<th>Kicker Port</th>
 							<th>Kicker WAIT</th>
 							<th>Kicker HEARTBEAT</th>
 							<th>Description</th>
@@ -96,7 +94,6 @@
 										. "qm.QMAN_PORT_ID, "
 										. "qm.LOG_FILE as Qman_Log, "
 										. "qm.HEARTBEAT, "
-										. "qm.KICKER_PORT_ID, "
 										. "qm.KICKER_STATUS_ID, "
 										. "qm.KICKER_HEARTBEAT, "
 										. "qm.KICKER_WAIT, "
@@ -109,7 +106,6 @@
 										. "ks.STATUS_NAME as Kicker_Status, "
 										. "rs.STATUS_NAME as Regis_Status, "
 										. "ep.Port as QMAN_PORT, "
-										. "epk.Port as KICKER_PORT, "
 										. "qt.NAME as Qman_Type, "
 										. "qt.TABLENAME "
 									. "from QUEUE_MANAGER qm "
@@ -117,7 +113,6 @@
 									. "join STATUS ks on qm.KICKER_STATUS_ID=ks.ID "
 									. "join STATUS rs on qm.REGISTRATION_STATUS_ID=rs.ID "
 									. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
-									. "join ENDPOINT_PORTS epk on qm.KICKER_PORT_ID=epk.ID "
 									. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
 									. "where qm.ID like '$MANAGER_ID' and qm.QUEUE_MANAGER_TYPE_ID like '$QUEUE_MANAGER_TYPE_ID'";
 
@@ -145,7 +140,6 @@
 								echo '</td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
-								echo '<td>'. $row['KICKER_PORT'] . '</td>';
 								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
 								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
 								echo '<td>'. $row['QMan_Description'] . '</td>';
@@ -185,16 +179,6 @@
 										}
 										echo "</select>"
 									?>
-								</td>
-								<td>
-									<?php
-										echo "<select name='KICKER_PORT_ID'>";
-										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
-										foreach ($pdo->query($sql) as $KProw) {
-											echo "<option value=". $KProw['ID'] .">". $KProw['PORT'] ."</option>";
-										}
-										echo "</select>"
-									?>								
 								</td>
 								<td>
 									<input type="text" name="WAIT" value="Enter a Qman WAIT">

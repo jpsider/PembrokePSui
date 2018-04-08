@@ -19,18 +19,17 @@
 		include 'components/database.php';
 		$WORKFLOW_MANAGER_TYPE_ID=$_GET['WORKFLOW_MANAGER_TYPE_ID'];
 		$WKFLW_PORT_ID=$_GET['WKFLW_PORT_ID'];
-		$KICKER_PORT_ID=$_GET['KICKER_PORT_ID'];
 		$IP_ADDRESS=$_GET['IP_ADDRESS'];
 		$HOSTNAME=$_GET['HOSTNAME'];		
 		$WAIT=$_GET['WAIT'];
 		$KICKER_WAIT=$_GET['KICKER_WAIT'];
 		$MAX_CONCURRENT=$_GET['MAX_CONCURRENT'];
 		$Wman_Description=$_GET['Wman_Description'];
-		$sql = "INSERT INTO WORKFLOW_MANAGER (WORKFLOW_MANAGER_TYPE_ID,WKFLW_PORT_ID,KICKER_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HOSTNAME,IP_ADDRESSWAIT,KICKER_WAIT,MAX_CONCURRENT_TASKS,LOG_FILE,Wman_Description) VALUES ('$WORKFLOW_MANAGER_TYPE_ID','$WKFLW_PORT_ID','$KICKER_PORT_ID',1,1,'$HOSTNAME','$IP_ADDRESS','$WAIT','$KICKER_WAIT','$MAX_CONCURRENT','NoLog','$Wman_Description')";
+		$sql = "INSERT INTO WORKFLOW_MANAGER (WORKFLOW_MANAGER_TYPE_ID,WKFLW_PORT_ID,STATUS_ID,KICKER_STATUS_ID,HOSTNAME,IP_ADDRESSWAIT,KICKER_WAIT,MAX_CONCURRENT_TASKS,LOG_FILE,Wman_Description) VALUES ('$WORKFLOW_MANAGER_TYPE_ID','$WKFLW_PORT_ID','$KICKER_PORT_ID',1,1,'$HOSTNAME','$IP_ADDRESS','$WAIT','$KICKER_WAIT','$MAX_CONCURRENT','NoLog','$Wman_Description')";
 		$pdo = Database::connect();
 		$pdo->query($sql);
 		//Set the endpoint ports to assigned
-		$sql = "UPDATE ENDPOINT_PORTS SET ENDPOINT_ASSIGNED_STATUS=7 WHERE ID in ('$WKFLW_PORT_ID','$KICKER_PORT_ID')";
+		$sql = "UPDATE ENDPOINT_PORTS SET ENDPOINT_ASSIGNED_STATUS=7 WHERE ID in ('$WKFLW_PORT_ID')";
 		$pdo->query($sql);
 		//Send the user back to the same page (without get)
 		header("Refresh:0 url=workflow_manager.php");	
@@ -67,7 +66,6 @@
 							<th>Status</th>
 							<th>date_modified</th>
 							<th>Kicker Status</th>
-							<th>Kicker Port</th>
 							<th>Kicker WAIT</th>
 							<th>Kicker HEARTBEAT</th>
 							<th>Description</th>
@@ -99,7 +97,6 @@
 										. "wm.MAX_CONCURRENT_TASKS, "
 										. "wm.LOG_FILE as Wman_Log, "
 										. "wm.HEARTBEAT, "
-										. "wm.KICKER_PORT_ID, "
 										. "wm.KICKER_STATUS_ID, "
 										. "wm.KICKER_HEARTBEAT, "
 										. "wm.KICKER_WAIT, "
@@ -112,7 +109,6 @@
 										. "ks.Status_Name as Kicker_Status, "
 										. "rs.Status_Name as Regis_Status, "
 										. "ep.Port as WMAN_PORT, "
-										. "epk.Port as KICKER_PORT, "
 										. "wt.Name as Wman_Type, "
 										. "wt.TABLENAME "
 									. "from WORKFLOW_MANAGER wm "
@@ -120,7 +116,6 @@
 									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
 									. "join STATUS rs on wm.REGISTRATION_STATUS_ID=rs.ID "
 									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
-									. "join ENDPOINT_PORTS epk on wm.KICKER_PORT_ID=epk.ID "
 									. "join WORKFLOW_MANAGER_TYPE wt on wm.WORKFLOW_MANAGER_TYPE_ID=wt.ID "
 									. "where wm.ID like '$MANAGER_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
 
@@ -149,7 +144,6 @@
 								echo '</td>';
 								echo '<td>'. $row['date_modified'] . '</td>';
 								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
-								echo '<td>'. $row['KICKER_PORT'] . '</td>';
 								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
 								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
 								echo '<td>'. $row['Wman_Description'] . '</td>';
@@ -191,16 +185,6 @@
 										}
 										echo "</select>"
 									?>
-								</td>
-								<td>
-									<?php
-										echo "<select name='KICKER_PORT_ID'>";
-										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
-										foreach ($pdo->query($sql) as $KProw) {
-											echo "<option value=". $KProw['ID'] .">". $KProw['PORT'] ."</option>";
-										}
-										echo "</select>"
-									?>								
 								</td>
 								<td>
 									<input type="text" name="MAX_CONCURRENT" value="Enter a Max Tasks">
