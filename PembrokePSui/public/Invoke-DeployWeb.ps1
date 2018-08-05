@@ -21,7 +21,6 @@ function Invoke-DeployWeb
     try
     {
         New-WebDirectory -Destination $Destination
-        
         if(Test-Path -Path "$Source") {
             Copy-Item -Path "$Source\*" -Destination $Destination -Recurse -Confirm:$false -Force
             $Directories = Get-ChildItem -Path $Source -Directory | Select-Object Name
@@ -40,9 +39,7 @@ function Invoke-DeployWeb
     catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
-        Throw "Invoke-DeployWeb: $ErrorMessage $FailedItem"
-        
+        $FailedItem = $_.Exception.ItemName
+        Throw "Invoke-DeployWeb: $ErrorMessage $FailedItem"   
     }
-
 }

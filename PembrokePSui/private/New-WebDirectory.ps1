@@ -22,7 +22,7 @@ function New-WebDirectory
     {
         # Nothing to see here.
     }
-    process 
+    process
     {
         if ($pscmdlet.ShouldProcess("Creating New Directory."))
         {
@@ -37,9 +37,8 @@ function New-WebDirectory
             catch
             {
                 $ErrorMessage = $_.Exception.Message
-                $FailedItem = $_.Exception.ItemName		
+                $FailedItem = $_.Exception.ItemName
                 Throw "Invoke-CreateWebDirectory: $ErrorMessage $FailedItem"
-
             }
         }
         else
