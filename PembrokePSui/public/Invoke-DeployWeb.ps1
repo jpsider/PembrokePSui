@@ -40,6 +40,6 @@ function Invoke-DeployWeb
     {
         $ErrorMessage = $_.Exception.Message
         $FailedItem = $_.Exception.ItemName
-        Throw "Invoke-DeployWeb: $ErrorMessage $FailedItem"   
+        Throw "Invoke-DeployWeb: $ErrorMessage $FailedItem"
     }
 }
