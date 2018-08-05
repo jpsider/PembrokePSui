@@ -1,5 +1,9 @@
 $script:ModuleName = 'PembrokePSui'
 
+$here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$script:ModuleName"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
+. "$here\$sut"
+
 Describe "New-WebDirectory function for $moduleName" {
     function Test-Path{}
     function New-Item{}
