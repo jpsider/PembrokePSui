@@ -1,11 +1,11 @@
 site_name: PembrokePSui
 repo_url: https://github.com/jpsider/PembrokePSui
 theme: readthedocs
+edit_uri: edit/master/docs/
 pages:
 - Home: index.md
 - PembrokePSui Basics:
   - What is PembrokePSui: about.md
   - Quick Start: Quick-Start-Installation-and-Example.md
-- Basic Commands:
-- Examples:
-- Acknowledgements: acknowledgements.md
+- Public Functions:
+  - Invoke-DeployWeb: Invoke-DeployWeb.md
