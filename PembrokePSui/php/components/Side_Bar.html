@@ -1,66 +1,63 @@
-<div id="navSidebar" class="col-sm-3 col-md-2 col-lg-2 sidebar">
-    <h4>User</h4>
-    <div>
-        <ul class="nav nav-sidebar">
-            <li>
-                <a id="home" href="index.php">Home</a>
-                <a id="properties" href="properties.php">Properties</a>
-                <a id="tasks" href="tasks.php">Tasks</a>
-                <a id="Related Tasks" href="Related_tasks.php">Related Tasks</a>
-            </li>
+<section id="navSidebar" class="sidenav-content" >
+    <a href="index.php" class="nav-link active">
+        Home
+    </a>
+    <section class="nav-group collapsible">
+        <input id="User" type="checkbox">
+        <label for="User">User</label>
+		<ul class="nav-list">
+            <li><a id="properties" href="properties.php">Properties</a></li>
+            <li><a id="tasks" href="tasks.php">Tasks</a></li>
+            <li><a id="Related Tasks" href="Related_tasks.php">Related Tasks</a></li>
         </ul>
-    </div>
-    <h4>Targets</h4>
-    <div>
-        <ul class="nav nav-sidebar">
-            <li>
-                <a id="Target Types" href="target_types.php">Target Types</a>
-                <a id="Targets" href="targets.php">Targets</a>
-                <a id="Parent Target Types" href="parent_target_types.php">Parent Target Types</a>
-                <a id="Target Task Types" href="target_task_types.php">Target Task Types</a>
-                <a id="Task Types" href="task_types.php">Task Types</a>
-                <a id="SubTask Generator" href="subtask_generator.php">SubTask Generator</a>
-                <a id="Create New Task" href="create_new_task.php">Create New Task</a>
-            </li>
+    </section>
+    <section class="nav-group collapsible">
+        <input id="Targets" type="checkbox" checked>
+        <label for="Targets">Targets</label>
+		<ul class="nav-list">
+            <li><a id="Target Types" href="target_types.php">Target Types</a></li>
+            <li><a id="Targets" href="targets.php">Targets</a></li>
+            <li><a id="Parent Target Types" href="parent_target_types.php">Parent Target Types</a></li>
+            <li><a id="Target Task Types" href="target_task_types.php">Target Task Types</a></li>
+            <li><a id="Task Types" href="task_types.php">Task Types</a></li>
+            <li><a id="SubTask Generator" href="subtask_generator.php">SubTask Generator</a></li>
+            <li><a id="Create New Task" href="create_new_task.php">Create New Task</a></li>
         </ul>
-    </div>
-    <h4>Queue Manager</h4>
-    <div>
-        <ul class="nav nav-sidebar">
-            <li>
-                <a id="Queue Manager" href="queue_manager.php">Queue Manager</a>
-                <a id="Qman Tasks" href="qman_tasks.php">Qman Tasks</a>
-                <a id="Qman Files" href="qman_files.php">Qman Files</a>
-                <a id="Queue MGR File Groups" href="queue_mgr_file_groups.php">Queue MGR File Groups</a>
-            </li>
+    </section>
+    <section class="nav-group collapsible">
+        <input id="qman" type="checkbox" checked>
+        <label for="qman">Queue Manager</label>
+		<ul class="nav-list">
+            <li><a id="Queue Manager" href="queue_manager.php">Queue Manager</a></li>
+            <li><a id="Qman Tasks" href="qman_tasks.php">Qman Tasks</a></li>
+            <li><a id="Qman Files" href="qman_files.php">Qman Files</a></li>
+            <li><a id="Queue MGR File Groups" href="queue_mgr_file_groups.php">Queue MGR File Groups</a></li>
         </ul>
-    </div>
-    <h4>Workflow Manager</h4>
-    <div>
-        <ul class="nav nav-sidebar">
-            <li>
-                <a id="Workflow Manager" href="workflow_manager.php">Workflow Manager</a>
-                <a id="Wman Tasks" href="Wman_tasks.php">Wman Tasks</a>
-                <a id="Wman Files" href="Wman_files.php">Wman Files</a>
-                <a id="Workflow MGR File Groups" href="workflow_mgr_file_groups.php">Workflow MGR File Groups</a>
-                <a id="Workflow MGR Module Groups" href="workflow_mgr_module_groups.php">Workflow MGR Module Groups</a>
-                <a id="Workflow MGR Modules" href="wman_modules.php">Workflow MGR Modules</a>
-            </li>
+    </section>
+    <section class="nav-group collapsible">
+        <input id="wfman" type="checkbox" checked>
+        <label for="wfman">Workflow Manager</label>
+		<ul class="nav-list">
+            <li><a id="Workflow Manager" href="workflow_manager.php">Workflow Manager</a></li>
+            <li><a id="Wman Tasks" href="Wman_tasks.php">Wman Tasks</a></li>
+            <li><a id="Wman Files" href="Wman_files.php">Wman Files</a></li>
+            <li><a id="Workflow MGR File Groups" href="workflow_mgr_file_groups.php">Workflow MGR File Groups</a></li>
+            <li><a id="Workflow MGR Module Groups" href="workflow_mgr_module_groups.php">Workflow MGR Module Groups</a></li>
+            <li><a id="Workflow MGR Modules" href="wman_modules.php">Workflow MGR Modules</a></li>
         </ul>
-    </div>
-    <h4>Admin</h4>
-    <div>
-        <ul class="nav nav-sidebar">
-            <li>
-                <a id="Status" href="status.php">Status</a>
-                <a id="Results" href="results.php">Results</a>
-                <a id="Manager Types" href="manager_types.php">Manager Types</a>
-                <a id="Endpoints" href="endpoint_ports.php">Endpoint Ports</a>
-                <a id="Passwords" href="passwords.php">Passwords</a>
-                <a id="Systems" href="systems.php">Systems</a>
-                <a id="Additional PS Modules" href="additional_ps_modules.php">Additional PS Modules</a>
-                <a id="Managed Files" href="managed_files.php">Managed Files</a>
-            </li>
+    </section>
+    <section class="nav-group collapsible">
+        <input id="Admin" type="checkbox" checked>
+        <label for="Admin">Admin</label>
+		<ul class="nav-list">
+            <li><a id="Status" href="status.php">Status</a></li>
+            <li><a id="Results" href="results.php">Results</a></li>
+            <li><a id="Manager Types" href="manager_types.php">Manager Types</a></li>
+            <li><a id="Endpoints" href="endpoint_ports.php">Endpoint Ports</a></li>
+            <li><a id="Passwords" href="passwords.php">Passwords</a></li>
+            <li><a id="Systems" href="systems.php">Systems</a></li>
+            <li><a id="Additional PS Modules" href="additional_ps_modules.php">Additional PS Modules</a></li>
+            <li><a id="Managed Files" href="managed_files.php">Managed Files</a></li>
         </ul>
-    </div>
-</div>
+    </section>
+</section>
