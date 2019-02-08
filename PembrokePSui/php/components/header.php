@@ -2,8 +2,6 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Need to Create one! -->
         <link rel="icon" href="img/favicon.jpg">
         <!-- CLARITY CSS-->
@@ -22,7 +20,7 @@
         <title>PembrokePS</title>
     </head>
     <body onload="set_style_from_cookie()">
-        <div class="main-container" style="margin-left:10px">
+        <div class="main-container">
 	    	<header class="header header-3">
                 <div class="branding">
                     <a href="index.php" class="nav-link">
