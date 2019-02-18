@@ -3,6 +3,7 @@
 <?php
 	require_once 'components/header.php';
 ?>
+<!-- Insert Head PHP -->
 <?php
 	if (!empty($_GET['NewModule'])) {
 		$NAME=$_GET['NAME'];
@@ -33,21 +34,10 @@
 	else {
 
 ?>
-<script> 
-	$(document).ready(function() {
-  		$('#example').dataTable();
-	});
-</script>
-<body>
-    <div class="container" style="margin-left:10px">
-    	<div class="row">
-			<?php
-				require_once 'components/Side_Bar.html';
-			?>
-			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>Additional PS Modules</h3>
-				<div class="row">
-					<table id="example" class="table table-striped table-bordered">
+<!-- End Head PHP -->
+	<div class="content-area"><!-- Start content-area -->
+	<h3>Additional PS Modules</h3>
+					<table id="example" class="table table-compact">
 						<thead>
 							<tr>
 							<th>ID</th>
@@ -82,11 +72,11 @@
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 								if($row['STATUS_ID'] == 11){
 									echo '<form action="additional_ps_modules.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="DisableModule" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+									echo '<td><input type="hidden" name="DisableModule" value="TRUE"><input type="Submit" class="btn btn-danger-outline btn-sm" value="Disable"></td>';
 									echo '</form>';
 								} else {
 									echo '<form action="additional_ps_modules.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-									echo '<td><input type="hidden" name="EnableModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+									echo '<td><input type="hidden" name="EnableModule" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 									echo '</form>';
 								}                                
 								echo '<td>'. $row['date_modified'] . '</td>';							   
@@ -96,7 +86,7 @@
 							?>
 						</tbody>
 					</table>
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-compact">
                         <tr>
                             <form>
                                 <td><b>Add a New Module</b></td>
@@ -110,20 +100,24 @@
 									<input type="text" name="MODULE_VERSION" value="Enter a Version">
 								</td>
 								<td>
-									<input type="hidden" name="NewModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Module"></td>
+									<input type="hidden" name="NewModule" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Module"></td>
 								</td>
 							</form>
 						</tr>
 					</table> 					
-		   		</div>
-			</div>
-		</div>
-	</div> <!-- /container -->
+	
+	
+	</div><!-- End content-area -->
+    <nav class="sidenav">
+		<?php
+			require_once 'components/Side_Bar.html';
+		?>
+	</nav>
+</div><!-- End content-container (From Header) -->
 </body>
-<?php
-	require_once 'components/footer.php';
-?>
+<!-- Insert if there is Head PHP -->
 <?php
   	}
 ?>
+<!-- End Head PHP closing statement -->
 </html>

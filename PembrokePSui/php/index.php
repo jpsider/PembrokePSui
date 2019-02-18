@@ -3,6 +3,7 @@
 <?php
 	require_once 'components/header.php';
 ?>
+<!-- Insert Head PHP -->
 <?php
 	if (!empty($_GET['DisableWelcomeMessage'])) {
 		$ID=$_GET['ID'];
@@ -14,6 +15,7 @@
 	} 
 	else {
 ?>
+<!-- End Head PHP -->
 	<div class="content-area"><!-- Start content-area -->
 
 		<h3>Welcome to PembrokePS!</h3>
@@ -42,9 +44,8 @@
 					echo '</thead>';
 					echo '<tbody>';
 					echo '<tr><td>Yes, post the welcome message!</td>';
-					echo '<td><form action="index.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-					echo '<input type="hidden" name="DisableWelcomeMessage" value="TRUE"><input type="Submit" class="btn btn-danger" value="Hide Message">';
-					echo '</form></td></tr></br>';
+					echo '<td><form action="index.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="DisableWelcomeMessage" value="TRUE"><input type="Submit" class="btn btn-danger-outline btn-sm" value="Hide Message"></form></td>';
+					echo '</tr></br>';
 				} else {
 				}
 			?>
