@@ -1,0 +1,63 @@
+/* Orange Button */
+
+.btn.btn-orange,
+.btn-orange .btn {
+  border-color: #ff9933;
+  background-color: #ff9933;
+  color: #000; }
+  .btn.btn-orange:visited,
+  .btn-orange .btn:visited {
+    color: #000; }
+  .btn.btn-orange:hover,
+  .btn-orange .btn:hover {
+    background-color: #ff9933;
+    color: #000; }
+  .btn.btn-orange:active,
+  .btn-orange .btn:active {
+    box-shadow: 0 1px 0 0 #0065ab inset; }
+  .btn.btn-orange.disabled, .btn.btn-orange:disabled,
+  .btn-orange .btn.disabled,
+  .btn-orange .btn:disabled {
+    color: #000;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #fff;
+    opacity: 0.4; }
+
+    .btn.btn-orange-outline,
+    .btn.btn-outline-orange,
+    .btn-orange-outline .btn,
+    .btn-outline-orange .btn {
+      border-color: #ff9933;
+      background-color: transparent;
+      color: #ff9933; }
+      .btn.btn-orange-outline:visited,
+      .btn.btn-outline-orange:visited,
+      .btn-orange-outline .btn:visited,
+      .btn-outline-orange .btn:visited {
+        color: #ff9933; }
+      .btn.btn-orange-outline:hover,
+      .btn.btn-outline-orange:hover,
+      .btn-orange-outline .btn:hover,
+      .btn-outline-orange .btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #ff9933; }
+      .btn.btn-orange-outline:active,
+      .btn.btn-outline-orange:active,
+      .btn-orange-outline .btn:active,
+      .btn-outline-orange .btn:active {
+        box-shadow: 0 1px 0 0 #000 inset; }
+      .btn.btn-orange-outline.disabled, .btn.btn-orange-outline:disabled,
+      .btn.btn-outline-orange.disabled,
+      .btn.btn-outline-orange:disabled,
+      .btn-orange-outline .btn.disabled,
+      .btn-orange-outline .btn:disabled,
+      .btn-outline-orange .btn.disabled,
+      .btn-outline-orange .btn:disabled {
+        color: #fff;
+        cursor: not-allowed;
+        background-color: transparent;
+        border-color: #fff;
+        opacity: 0.4; }
+
+/* Orange Button */ 
