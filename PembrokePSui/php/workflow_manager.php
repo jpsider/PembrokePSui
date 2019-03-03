@@ -3,6 +3,7 @@
 <?php
 	require_once 'components/header.php';
 ?>
+<!-- Insert Head PHP -->
 <?php
 	if (!empty($_GET['new_STATUS_ID'])) {
 		$new_STATUS_ID=$_GET['new_STATUS_ID'];
@@ -36,183 +37,173 @@
 	}
 	else {
 ?>
-<script> 
-	$(document).ready(function() {
-		$('#example').dataTable();
-	});
-</script>
-<body>
-    <div class="container" style="margin-left:10px">
-    	<div class="row">
-			<?php
-				require_once 'components/Side_Bar.html';
-			?>
-			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>Workflow Manager</h3>
-				<div class="row">
-					<table id="example" class="table table-striped table-bordered">
-						<thead>
-							<tr>
-							<th>ID</th>
-							<th>Workflow Manager Type</th>
-							<th>HOSTNAME</th>
-							<th>IP_ADDRESS</th>
-							<th>WAIT</th>
-							<th>Rest Port</th>
-							<th>Max Tasks</th>
-							<th>TABLENAME</th>
-							<th>LOG_FILE</th>
-							<th>HEARTBEAT</th>
-							<th>Status</th>
-							<th>date_modified</th>
-							<th>Kicker Status</th>
-							<th>Kicker WAIT</th>
-							<th>Kicker HEARTBEAT</th>
-							<th>Description</th>
-							<th>Registration</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php 
-							include 'components/database.php';
-							$pdo = Database::connect();
-							if(!empty($_GET['MANAGER_ID'])){
-								$MANAGER_ID = $_GET['MANAGER_ID'];
-							} else {
-								$MANAGER_ID = "%%";
-							}
-							if(!empty($_GET['WORKFLOW_MANAGER_TYPE_ID'])){
-								$WORKFLOW_MANAGER_TYPE_ID = $_GET['WORKFLOW_MANAGER_TYPE_ID'];
-							} else {
-								$WORKFLOW_MANAGER_TYPE_ID = "%%";
-							}							
-							$sql = "select wm.ID, " 
-										. "wm.STATUS_ID, "
-										. "wm.REGISTRATION_STATUS_ID, "
-										. "wm.WORKFLOW_MANAGER_TYPE_ID, "
-										. "wm.HOSTNAME, "
-										. "wm.IP_ADDRESS, "
-										. "wm.WAIT, "
-										. "wm.WKFLW_PORT_ID, "
-										. "wm.MAX_CONCURRENT_TASKS, "
-										. "wm.LOG_FILE as Wman_Log, "
-										. "wm.HEARTBEAT, "
-										. "wm.KICKER_STATUS_ID, "
-										. "wm.KICKER_HEARTBEAT, "
-										. "wm.KICKER_WAIT, "
-										. "wm.Wman_Description, "
-										. "wm.date_modified, "
-										. "s.HtmlColor as Wman_Color, "
-										. "ks.HtmlColor as Kicker_Color, "
-										. "rs.HtmlColor as Regis_Color, "
-										. "s.Status_Name as Wman_Status, "
-										. "ks.Status_Name as Kicker_Status, "
-										. "rs.Status_Name as Regis_Status, "
-										. "ep.Port as WMAN_PORT, "
-										. "wt.Name as Wman_Type, "
-										. "wt.TABLENAME "
-									. "from WORKFLOW_MANAGER wm "
-									. "join STATUS s on wm.STATUS_ID=s.ID "
-									. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
-									. "join STATUS rs on wm.REGISTRATION_STATUS_ID=rs.ID "
-									. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
-									. "join WORKFLOW_MANAGER_TYPE wt on wm.WORKFLOW_MANAGER_TYPE_ID=wt.ID "
-									. "where wm.ID like '$MANAGER_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
-
+<!-- End Head PHP -->
+	<div class="content-area"><!-- Start content-area -->
+	<h3>Workflow Manager</h3>
+		<table id="example" class="table table-compact">
+			<thead>
+				<tr>
+				<th>ID</th>
+				<th>Workflow Manager Type</th>
+				<th>HOSTNAME</th>
+				<th>IP_ADDRESS</th>
+				<th>WAIT</th>
+				<th>Rest Port</th>
+				<th>Max Tasks</th>
+				<th>TABLENAME</th>
+				<th>LOG_FILE</th>
+				<th>HEARTBEAT</th>
+				<th>Status</th>
+				<th>date_modified</th>
+				<th>Kicker Status</th>
+				<th>Kicker WAIT</th>
+				<th>Kicker HEARTBEAT</th>
+				<th>Description</th>
+				<th>Registration</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php 
+				include 'components/database.php';
+				$pdo = Database::connect();
+				if(!empty($_GET['MANAGER_ID'])){
+					$MANAGER_ID = $_GET['MANAGER_ID'];
+				} else {
+					$MANAGER_ID = "%%";
+				}
+				if(!empty($_GET['WORKFLOW_MANAGER_TYPE_ID'])){
+					$WORKFLOW_MANAGER_TYPE_ID = $_GET['WORKFLOW_MANAGER_TYPE_ID'];
+				} else {
+					$WORKFLOW_MANAGER_TYPE_ID = "%%";
+				}							
+				$sql = "select wm.ID, " 
+							. "wm.STATUS_ID, "
+							. "wm.REGISTRATION_STATUS_ID, "
+							. "wm.WORKFLOW_MANAGER_TYPE_ID, "
+							. "wm.HOSTNAME, "
+							. "wm.IP_ADDRESS, "
+							. "wm.WAIT, "
+							. "wm.WKFLW_PORT_ID, "
+							. "wm.MAX_CONCURRENT_TASKS, "
+							. "wm.LOG_FILE as Wman_Log, "
+							. "wm.HEARTBEAT, "
+							. "wm.KICKER_STATUS_ID, "
+							. "wm.KICKER_HEARTBEAT, "
+							. "wm.KICKER_WAIT, "
+							. "wm.Wman_Description, "
+							. "wm.date_modified, "
+							. "s.HtmlColor as Wman_Color, "
+							. "ks.HtmlColor as Kicker_Color, "
+							. "rs.HtmlColor as Regis_Color, "
+							. "s.Status_Name as Wman_Status, "
+							. "ks.Status_Name as Kicker_Status, "
+							. "rs.Status_Name as Regis_Status, "
+							. "ep.Port as WMAN_PORT, "
+							. "wt.Name as Wman_Type, "
+							. "wt.TABLENAME "
+						. "from WORKFLOW_MANAGER wm "
+						. "join STATUS s on wm.STATUS_ID=s.ID "
+						. "join STATUS ks on wm.KICKER_STATUS_ID=ks.ID "
+						. "join STATUS rs on wm.REGISTRATION_STATUS_ID=rs.ID "
+						. "join ENDPOINT_PORTS ep on wm.WKFLW_PORT_ID=ep.ID "
+						. "join WORKFLOW_MANAGER_TYPE wt on wm.WORKFLOW_MANAGER_TYPE_ID=wt.ID "
+						. "where wm.ID like '$MANAGER_ID' and wm.WORKFLOW_MANAGER_TYPE_ID like '$WORKFLOW_MANAGER_TYPE_ID'";
+				foreach ($pdo->query($sql) as $row) {
+					echo '<tr>';
+					echo '<td>'. $row['ID'] . '</td>';
+					echo '<td>'. $row['Wman_Type'] . '</td>';
+					echo '<td>'. $row['HOSTNAME'] . '</td>';
+					echo '<td>'. $row['IP_ADDRESS'] . '</td>';
+					echo '<td>'. $row['WAIT'] . '</td>';
+					echo '<td>'. $row['WMAN_PORT'] . '</td>';
+					echo '<td>'. $row['MAX_CONCURRENT_TASKS'] . '</td>';
+					echo '<td>'. $row['TABLENAME'] . '</td>';
+					echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
+					echo '<td>'. $row['HEARTBEAT'] . '</td>';
+					echo '<td style=background-color:'. $row['Wman_Color'] . '><h4><b><center>'. $row['Wman_Status'] . '</center></b></h4>';
+					if ($row['STATUS_ID'] == 1) {
+						echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
+					} elseif ($row['STATUS_ID'] == 2) {
+						echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
+					} elseif ($row['STATUS_ID'] == 3) {
+						echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
+					}else {
+						echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
+					}
+					echo '</td>';
+					echo '<td>'. $row['date_modified'] . '</td>';
+					echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
+					echo '<td>'. $row['KICKER_WAIT'] . '</td>';
+					echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
+					echo '<td>'. $row['Wman_Description'] . '</td>';
+					echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
+					echo '</tr>';
+					//echo '<tr>';
+					//echo '</tr>';
+				}
+				Database::disconnect();
+				?>
+			</tbody>
+		</table>
+		<table  class="table table-compact">
+			<tr>
+				<form>
+					<td><b>Add a New Workflow Manager</b></td>
+					<td>
+						<input type="text" name="HOSTNAME" value="Enter a HOSTNAME">
+					</td>
+					<td>
+						<input type="text" name="IP_ADDRESS" value="Enter an IP">
+					</td>																
+					<td>
+						<?php
+							echo "<select name='WORKFLOW_MANAGER_TYPE_ID'>";
+							$sql = "SELECT * FROM WORKFLOW_MANAGER_TYPE";
 							foreach ($pdo->query($sql) as $row) {
-								echo '<tr>';
-								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Wman_Type'] . '</td>';
-								echo '<td>'. $row['HOSTNAME'] . '</td>';
-								echo '<td>'. $row['IP_ADDRESS'] . '</td>';
-								echo '<td>'. $row['WAIT'] . '</td>';
-								echo '<td>'. $row['WMAN_PORT'] . '</td>';
-								echo '<td>'. $row['MAX_CONCURRENT_TASKS'] . '</td>';
-								echo '<td>'. $row['TABLENAME'] . '</td>';
-								echo '<td><form action="singleLogByName.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Wman_Log'].'><input type="submit" class="btn btn-info" value="View Log"></form></td>';
-								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Wman_Color'] . '><h4><b><center>'. $row['Wman_Status'] . '</center></b></h4>';
-								if ($row['STATUS_ID'] == 1) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="3"><input type="submit" class="btn btn-success" value="Start Manager"></form>';
-								} elseif ($row['STATUS_ID'] == 2) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
-								} elseif ($row['STATUS_ID'] == 3) {
-									echo '<form action="workflow_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="new_STATUS_ID" value="4"><input type="submit" class="btn btn-danger" value="Stop Manager"></form>';
-								}else {
-									echo '<a class="btn btn-info" href="workflow_manager.php">Refresh</a>';
-								}
-								echo '</td>';
-								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
-								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
-								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
-								echo '<td>'. $row['Wman_Description'] . '</td>';
-								echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
-								echo '</tr>';
-								//echo '<tr>';
-								//echo '</tr>';
+								echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
 							}
-							Database::disconnect();
-							?>
-						</tbody>
-					</table>
-					<table  class="table table-striped table-bordered">
-						<tr>
-							<form>
-								<td><b>Add a New Workflow Manager</b></td>
-								<td>
-									<input type="text" name="HOSTNAME" value="Enter a HOSTNAME">
-								</td>
-								<td>
-									<input type="text" name="IP_ADDRESS" value="Enter an IP">
-								</td>																
-								<td>
-									<?php
-										echo "<select name='WORKFLOW_MANAGER_TYPE_ID'>";
-										$sql = "SELECT * FROM WORKFLOW_MANAGER_TYPE";
-										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
-										}
-										echo "</select>"
-									?>
-								</td>
-								<td>
-									<?php
-										echo "<select name='WKFLW_PORT_ID'>";
-										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
-										foreach ($pdo->query($sql) as $EProw) {
-											echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
-										}
-										echo "</select>"
-									?>
-								</td>
-								<td>
-									<input type="text" name="MAX_CONCURRENT" value="Enter a Max Tasks">
-								</td>
-								<td>
-									<input type="text" name="WAIT" value="Enter a Wman WAIT">
-								</td>
-								<td>
-									<input type="text" name="KICKER_WAIT" value="Enter a Kicker WAIT">
-								</td>
-								<td>
-									<input type="text" name="Wman_Description" value="Enter a description">
-								</td>
-								<td>
-									<input type="hidden" name="NewWorkflowMgr" value="TRUE"><input type="submit" class="btn btn-success" value="Add Workflow Manager"></td>
-								</td>
-							</form>
-						</tr>
-					</table>
-		   		</div>
-			</div>
-		</div>
-	</div> <!-- /container -->
+							echo "</select>"
+						?>
+					</td>
+					<td>
+						<?php
+							echo "<select name='WKFLW_PORT_ID'>";
+							$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
+							foreach ($pdo->query($sql) as $EProw) {
+								echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
+							}
+							echo "</select>"
+						?>
+					</td>
+					<td>
+						<input type="text" name="MAX_CONCURRENT" value="Enter a Max Tasks">
+					</td>
+					<td>
+						<input type="text" name="WAIT" value="Enter a Wman WAIT">
+					</td>
+					<td>
+						<input type="text" name="KICKER_WAIT" value="Enter a Kicker WAIT">
+					</td>
+					<td>
+						<input type="text" name="Wman_Description" value="Enter a description">
+					</td>
+					<td>
+						<input type="hidden" name="NewWorkflowMgr" value="TRUE"><input type="submit" class="btn btn-success" value="Add Workflow Manager"></td>
+					</td>
+				</form>
+			</tr>
+		</table>
+	</div><!-- End content-area -->
+    <nav class="sidenav">
+		<?php
+			require_once 'components/Side_Bar.html';
+		?>
+	</nav>
+</div><!-- End content-container (From Header) -->
 </body>
+<!-- Insert if there is Head PHP -->
 <?php
-	require_once 'components/footer.php';
+  	}
 ?>
-<?php
-  }
-?>
+<!-- End Head PHP closing statement -->
 </html>

@@ -3,58 +3,46 @@
 <?php
 	require_once 'components/header.php';
 ?>
+<!-- Insert Head PHP -->
 <?php
-	if (!empty($_GET['ViewManager'])) {
-		$ID=$_GET['ID'];
-		include 'components/database.php';
-		$pdo = Database::connect();
-		
-		// Need to search the Queue Manager and Workflow manager
-			// for the port ID, then go to that page and filter on that port ID
-		$sql = "select ID as MANAGER_ID from QUEUE_MANAGER WHERE QMAN_PORT_ID like $ID or KICKER_PORT_ID like $ID";
-		foreach ($pdo->query($sql) as $returndata){
-			echo $returndata['MANAGER_ID'];
-			if(!empty($returndata['MANAGER_ID'])){
-				echo "Made it into the if";
-				$MANAGER_ID = $returndata['MANAGER_ID'];
-				header("Refresh:0 url=queue_manager.php?MANAGER_ID=$MANAGER_ID");
-			}
+		if (!empty($_GET['ViewManager'])) {
+				$ID=$_GET['ID'];
+				include 'components/database.php';
+				$pdo = Database::connect();
+				// Need to search the Queue Manager and Workflow manager
+					// for the port ID, then go to that page and filter on that port ID
+				$sql = "select ID as MANAGER_ID from QUEUE_MANAGER WHERE QMAN_PORT_ID like $ID or KICKER_PORT_ID like $ID";
+				foreach ($pdo->query($sql) as $returndata){
+					echo $returndata['MANAGER_ID'];
+					if(!empty($returndata['MANAGER_ID'])){
+						echo "Made it into the if";
+						$MANAGER_ID = $returndata['MANAGER_ID'];
+						header("Refresh:0 url=queue_manager.php?MANAGER_ID=$MANAGER_ID");
+					}
+				}
+				$sql = "select ID as MANAGER_ID from WORKFLOW_MANAGER WHERE WKFLW_PORT_ID like $ID or KICKER_PORT_ID like $ID";
+				foreach ($pdo->query($sql) as $returndata){
+					if(!empty($returndata['MANAGER_ID'])){
+						$MANAGER_ID = $returndata['MANAGER_ID'];
+						header("Refresh:0 url=workflow_manager.php?MANAGER_ID=$MANAGER_ID");
+					}
+				}
 		}
-		$sql = "select ID as MANAGER_ID from WORKFLOW_MANAGER WHERE WKFLW_PORT_ID like $ID or KICKER_PORT_ID like $ID";
-		foreach ($pdo->query($sql) as $returndata){
-			if(!empty($returndata['MANAGER_ID'])){
-				$MANAGER_ID = $returndata['MANAGER_ID'];
-				header("Refresh:0 url=workflow_manager.php?MANAGER_ID=$MANAGER_ID");
-			}
+		elseif (!empty($_GET['NewPort'])){
+				$PORTNUMBER=$_GET['PORTNUMBER'];
+				include 'components/database.php';
+				$pdo = Database::connect();
+				$sql = "INSERT INTO ENDPOINT_PORTS (Port,ENDPOINT_ASSIGNED_STATUS,ENDPOINT_STATUS) VALUES ('$PORTNUMBER',13,1)";
+				$pdo->query($sql);
+				header("Refresh:0 url=endpoint_ports.php");		
 		}
-	}
-	elseif (!empty($_GET['NewPort'])){
-		$PORTNUMBER=$_GET['PORTNUMBER'];
-		include 'components/database.php';
-		$pdo = Database::connect();
-
-		$sql = "INSERT INTO ENDPOINT_PORTS (Port,ENDPOINT_ASSIGNED_STATUS,ENDPOINT_STATUS) VALUES ('$PORTNUMBER',13,1)";
-		$pdo->query($sql);
-		header("Refresh:0 url=endpoint_ports.php");		
-	}
-	else {
+		else {
 
 ?>
-<script> 
-$(document).ready(function() {
-  $('#example').dataTable();
-});
-</script>
-<body>
-    <div class="container" style="margin-left:10px">
-    	<div class="row">
-			<?php
-				require_once 'components/Side_Bar.html';
-			?>
-			<div class="col-sm-9 col-md-10 col-lg-10 main">
+<!-- End Head PHP -->
+	<div class="content-area"><!-- Start content-area -->
 				<h3>Available Endpoint Ports</h3>
-				<div class="row">
-					<table id="example" class="table table-striped table-bordered">
+					<table id="example" class="table table-compact">
 						<thead>
 							<tr>
 							<th>ID</th>
@@ -89,7 +77,7 @@ $(document).ready(function() {
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
 								echo '<td style=background-color:'. $row['EP_STATUS_COLOR'] . '><b>'. $row['Ep_Status'] . '</b></td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
-							   	echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info" value="View Manager"></td>';
+							  echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info" value="View Manager"></td>';
 								echo '</form>';
 								echo '</tr>';
 							}
@@ -97,7 +85,7 @@ $(document).ready(function() {
 							?>
 						</tbody>
 					</table>
-					<table  class="table table-striped table-bordered">
+					<table  class="table table-compact">
 						<tr>
 							<form>
 								<td><b>Add a New Port</b></td>
@@ -110,15 +98,17 @@ $(document).ready(function() {
 							</form>
 						</tr>
 					</table>
-		   		</div>
-			</div>
-		</div>
-	</div> <!-- /container -->
+	</div><!-- End content-area -->
+    <nav class="sidenav">
+		<?php
+			require_once 'components/Side_Bar.html';
+		?>
+	</nav>
+</div><!-- End content-container (From Header) -->
 </body>
-<?php
-	require_once 'components/footer.php';
-?>
+<!-- Insert if there is Head PHP -->
 <?php
   	}
 ?>
+<!-- End Head PHP closing statement -->
 </html>

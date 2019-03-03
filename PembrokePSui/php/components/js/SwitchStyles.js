@@ -2,7 +2,7 @@
 
 var style_cookie_name = "style" ;
 var style_cookie_duration = 30 ;
-var style_domain = "mystyle.com" ;
+var style_domain = "PembrokePS" ;
 
 // *** END OF CUSTOMIZABLE SECTION ***
 // You do not need to customize anything below this line

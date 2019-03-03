@@ -44,7 +44,7 @@
 					echo '</thead>';
 					echo '<tbody>';
 					echo '<tr><td>Yes, post the welcome message!</td>';
-					echo '<td><form action="index.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="DisableWelcomeMessage" value="TRUE"><input type="Submit" class="btn btn-danger-outline btn-sm" value="Hide Message"></form></td>';
+					echo '<td><form action="index.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="DisableWelcomeMessage" value="TRUE"><input type="Submit" class="btn btn-orange-outline btn-sm" value="Hide Message"></form></td>';
 					echo '</tr></br>';
 				} else {
 				}

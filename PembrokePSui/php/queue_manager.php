@@ -3,6 +3,7 @@
 <?php
 	require_once 'components/header.php';
 ?>
+<!-- Insert Head PHP -->
 <?php
 	if (!empty($_GET['NEW_STATUS_ID'])) {
 		$NEW_STATUS_ID=$_GET['NEW_STATUS_ID'];
@@ -35,175 +36,165 @@
 	}
 	else {
 ?>
-<script> 
-	$(document).ready(function() {
-		$('#example').dataTable();
-	});
-</script>
-<body>
-    <div class="container" style="margin-left:10px">
-    	<div class="row">
-			<?php
-				require_once 'components/Side_Bar.html';
-			?>
-			<div class="col-sm-9 col-md-10 col-lg-10 main">
-				<h3>Queue Manager</h3>
-				<div class="row">
-					<table id="example" class="table table-striped table-bordered">
-						<thead>
-							<tr>
-							<th>ID</th>
-							<th>Queue Manager Type</th>
-							<th>HOSTNAME</th>
-							<th>IP_ADDRESS</th>
-							<th>WAIT</th>
-							<th>Rest Port</th>
-							<th>TABLENAME</th>
-							<th>LOG_FILE</th>
-							<th>HEARTBEAT</th>
-							<th>Status</th>
-							<th>date_modified</th>
-							<th>Kicker Status</th>
-							<th>Kicker WAIT</th>
-							<th>Kicker HEARTBEAT</th>
-							<th>Description</th>
-							<th>Registration</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php 
-							include 'components/database.php';
-							$pdo = Database::connect();
-							if(!empty($_GET['MANAGER_ID'])){
-								$MANAGER_ID = $_GET['MANAGER_ID'];
-							} else {
-								$MANAGER_ID = "%%";
-							}
-							if(!empty($_GET['QUEUE_MANAGER_TYPE_ID'])){
-								$QUEUE_MANAGER_TYPE_ID = $_GET['QUEUE_MANAGER_TYPE_ID'];
-							} else {
-								$QUEUE_MANAGER_TYPE_ID = "%%";
-							}
-							$sql = "select qm.ID, " 
-										. "qm.STATUS_ID, "
-										. "qm.REGISTRATION_STATUS_ID, "
-										. "qm.QUEUE_MANAGER_TYPE_ID, "
-										. "qm.HOSTNAME, "
-										. "qm.IP_ADDRESS, "
-										. "qm.WAIT, "
-										. "qm.QMAN_PORT_ID, "
-										. "qm.LOG_FILE as Qman_Log, "
-										. "qm.HEARTBEAT, "
-										. "qm.KICKER_STATUS_ID, "
-										. "qm.KICKER_HEARTBEAT, "
-										. "qm.KICKER_WAIT, "
-										. "qm.QMan_Description, "
-										. "qm.date_modified, "
-										. "s.HTMLCOLOR as Qman_Color, "
-										. "ks.HTMLCOLOR as Kicker_Color, "
-										. "rs.HTMLCOLOR as Regis_Color, "
-										. "s.STATUS_NAME as Qman_Status, "
-										. "ks.STATUS_NAME as Kicker_Status, "
-										. "rs.STATUS_NAME as Regis_Status, "
-										. "ep.Port as QMAN_PORT, "
-										. "qt.NAME as Qman_Type, "
-										. "qt.TABLENAME "
-									. "from QUEUE_MANAGER qm "
-									. "join STATUS s on qm.STATUS_ID=s.ID "
-									. "join STATUS ks on qm.KICKER_STATUS_ID=ks.ID "
-									. "join STATUS rs on qm.REGISTRATION_STATUS_ID=rs.ID "
-									. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
-									. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
-									. "where qm.ID like '$MANAGER_ID' and qm.QUEUE_MANAGER_TYPE_ID like '$QUEUE_MANAGER_TYPE_ID'";
-
+<!-- End Head PHP -->
+	<div class="content-area"><!-- Start content-area -->
+	<h3>Queue Manager</h3>
+		<table id="example" class="table table-compact">
+			<thead>
+				<tr>
+				<th>ID</th>
+				<th>Queue Manager Type</th>
+				<th>HOSTNAME</th>
+				<th>IP_ADDRESS</th>
+				<th>WAIT</th>
+				<th>Rest Port</th>
+				<th>TABLENAME</th>
+				<th>LOG_FILE</th>
+				<th>HEARTBEAT</th>
+				<th>Status</th>
+				<th>date_modified</th>
+				<th>Kicker Status</th>
+				<th>Kicker WAIT</th>
+				<th>Kicker HEARTBEAT</th>
+				<th>Description</th>
+				<th>Registration</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php 
+				include 'components/database.php';
+				$pdo = Database::connect();
+				if(!empty($_GET['MANAGER_ID'])){
+					$MANAGER_ID = $_GET['MANAGER_ID'];
+				} else {
+					$MANAGER_ID = "%%";
+				}
+				if(!empty($_GET['QUEUE_MANAGER_TYPE_ID'])){
+					$QUEUE_MANAGER_TYPE_ID = $_GET['QUEUE_MANAGER_TYPE_ID'];
+				} else {
+					$QUEUE_MANAGER_TYPE_ID = "%%";
+				}
+				$sql = "select qm.ID, " 
+							. "qm.STATUS_ID, "
+							. "qm.REGISTRATION_STATUS_ID, "
+							. "qm.QUEUE_MANAGER_TYPE_ID, "
+							. "qm.HOSTNAME, "
+							. "qm.IP_ADDRESS, "
+							. "qm.WAIT, "
+							. "qm.QMAN_PORT_ID, "
+							. "qm.LOG_FILE as Qman_Log, "
+							. "qm.HEARTBEAT, "
+							. "qm.KICKER_STATUS_ID, "
+							. "qm.KICKER_HEARTBEAT, "
+							. "qm.KICKER_WAIT, "
+							. "qm.QMan_Description, "
+							. "qm.date_modified, "
+							. "s.HTMLCOLOR as Qman_Color, "
+							. "ks.HTMLCOLOR as Kicker_Color, "
+							. "rs.HTMLCOLOR as Regis_Color, "
+							. "s.STATUS_NAME as Qman_Status, "
+							. "ks.STATUS_NAME as Kicker_Status, "
+							. "rs.STATUS_NAME as Regis_Status, "
+							. "ep.Port as QMAN_PORT, "
+							. "qt.NAME as Qman_Type, "
+							. "qt.TABLENAME "
+						. "from QUEUE_MANAGER qm "
+						. "join STATUS s on qm.STATUS_ID=s.ID "
+						. "join STATUS ks on qm.KICKER_STATUS_ID=ks.ID "
+						. "join STATUS rs on qm.REGISTRATION_STATUS_ID=rs.ID "
+						. "join ENDPOINT_PORTS ep on qm.QMAN_PORT_ID=ep.ID "
+						. "join QUEUE_MANAGER_TYPE qt on qm.QUEUE_MANAGER_TYPE_ID=qt.ID "
+						. "where qm.ID like '$MANAGER_ID' and qm.QUEUE_MANAGER_TYPE_ID like '$QUEUE_MANAGER_TYPE_ID'";
+				foreach ($pdo->query($sql) as $row) {
+					echo '<tr>';
+					echo '<td>'. $row['ID'] . '</td>';
+					echo '<td>'. $row['Qman_Type'] . '</td>';
+					echo '<td>'. $row['HOSTNAME'] . '</td>';
+					echo '<td>'. $row['IP_ADDRESS'] . '</td>';
+					echo '<td>'. $row['WAIT'] . '</td>';
+					echo '<td>'. $row['QMAN_PORT'] . '</td>';
+					echo '<td>'. $row['TABLENAME'] . '</td>';
+					echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info" value="View Log"></form></td>';
+					echo '<td>'. $row['HEARTBEAT'] . '</td>';
+					echo '<td style=background-color:'. $row['Qman_Color'] . '><h4><b><center>'. $row['Qman_Status'] . '</center></b></h4>';
+					if ($row['STATUS_ID'] == 1) {
+						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="3"><input type="Submit" class="btn btn-success" value="Start Manager"></form>';
+					} elseif ($row['STATUS_ID'] == 2) {
+						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
+					} elseif ($row['STATUS_ID'] == 3) {
+						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
+					}else {
+						echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
+					}
+					echo '</td>';
+					echo '<td>'. $row['date_modified'] . '</td>';
+					echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
+					echo '<td>'. $row['KICKER_WAIT'] . '</td>';
+					echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
+					echo '<td>'. $row['QMan_Description'] . '</td>';
+					echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
+					echo '</tr>';
+				}
+				Database::disconnect();
+				?>
+			</tbody>
+		</table>
+		<table  class="table table-compact">
+			<tr>
+				<form>
+					<td><b>Add a New Queue Manager</b></td>
+					<td>
+						<input type="text" name="HOSTNAME" value="Enter a Qman HOSTNAME">
+					</td>
+					<td>
+						<input type="text" name="IP_ADDRESS" value="Enter a Qman IP">
+					</td>																
+					<td>
+						<?php
+							echo "<select name='Queue_Manager_Type_ID'>";
+							$sql = "SELECT * FROM QUEUE_MANAGER_TYPE";
 							foreach ($pdo->query($sql) as $row) {
-								echo '<tr>';
-								echo '<td>'. $row['ID'] . '</td>';
-								echo '<td>'. $row['Qman_Type'] . '</td>';
-								echo '<td>'. $row['HOSTNAME'] . '</td>';
-								echo '<td>'. $row['IP_ADDRESS'] . '</td>';
-								echo '<td>'. $row['WAIT'] . '</td>';
-								echo '<td>'. $row['QMAN_PORT'] . '</td>';
-								echo '<td>'. $row['TABLENAME'] . '</td>';
-								echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info" value="View Log"></form></td>';
-								echo '<td>'. $row['HEARTBEAT'] . '</td>';
-								echo '<td style=background-color:'. $row['Qman_Color'] . '><h4><b><center>'. $row['Qman_Status'] . '</center></b></h4>';
-								if ($row['STATUS_ID'] == 1) {
-									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="3"><input type="Submit" class="btn btn-success" value="Start Manager"></form>';
-								} elseif ($row['STATUS_ID'] == 2) {
-									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
-								} elseif ($row['STATUS_ID'] == 3) {
-									echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
-								}else {
-									echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
-								}
-								echo '</td>';
-								echo '<td>'. $row['date_modified'] . '</td>';
-								echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
-								echo '<td>'. $row['KICKER_WAIT'] . '</td>';
-								echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
-								echo '<td>'. $row['QMan_Description'] . '</td>';
-								echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
-								echo '</tr>';
+								echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
 							}
-							Database::disconnect();
-							?>
-						</tbody>
-					</table>
-					<table  class="table table-striped table-bordered">
-						<tr>
-							<form>
-								<td><b>Add a New Queue Manager</b></td>
-								<td>
-									<input type="text" name="HOSTNAME" value="Enter a Qman HOSTNAME">
-								</td>
-								<td>
-									<input type="text" name="IP_ADDRESS" value="Enter a Qman IP">
-								</td>																
-								<td>
-									<?php
-										echo "<select name='Queue_Manager_Type_ID'>";
-										$sql = "SELECT * FROM QUEUE_MANAGER_TYPE";
-										foreach ($pdo->query($sql) as $row) {
-											echo "<option value=". $row['ID'] .">". $row['NAME'] ."</option>";
-										}
-										echo "</select>"
-									?>
-								</td>
-								<td>
-									<?php
-										echo "<select name='QMAN_PORT_ID'>";
-										$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
-										foreach ($pdo->query($sql) as $EProw) {
-											echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
-										}
-										echo "</select>"
-									?>
-								</td>
-								<td>
-									<input type="text" name="WAIT" value="Enter a Qman WAIT">
-								</td>
-								<td>
-									<input type="text" name="KICKER_WAIT" value="Enter a Kicker WAIT">
-								</td>
-								<td>
-									<input type="text" name="Qman_Description" value="Enter a description">
-								</td>
-								<td>
-									<input type="hidden" name="NewQueueMgr" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Queue Manager"></td>
-								</td>
-							</form>
-						</tr>
-					</table>
-		   		</div>
-			</div>
-		</div>
-	</div> <!-- /container -->
+							echo "</select>"
+						?>
+					</td>
+					<td>
+						<?php
+							echo "<select name='QMAN_PORT_ID'>";
+							$sql = "SELECT * FROM ENDPOINT_PORTS WHERE ENDPOINT_ASSIGNED_STATUS in (13)";
+							foreach ($pdo->query($sql) as $EProw) {
+								echo "<option value=". $EProw['ID'] .">". $EProw['PORT'] ."</option>";
+							}
+							echo "</select>"
+						?>
+					</td>
+					<td>
+						<input type="text" name="WAIT" value="Enter a Qman WAIT">
+					</td>
+					<td>
+						<input type="text" name="KICKER_WAIT" value="Enter a Kicker WAIT">
+					</td>
+					<td>
+						<input type="text" name="Qman_Description" value="Enter a description">
+					</td>
+					<td>
+						<input type="hidden" name="NewQueueMgr" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Queue Manager"></td>
+					</td>
+				</form>
+			</tr>
+		</table>
+	</div><!-- End content-area -->
+    <nav class="sidenav">
+		<?php
+			require_once 'components/Side_Bar.html';
+		?>
+	</nav>
+</div><!-- End content-container (From Header) -->
 </body>
+<!-- Insert if there is Head PHP -->
 <?php
-	require_once 'components/footer.php';
+  	}
 ?>
-<?php
-  }
-?>
+<!-- End Head PHP closing statement -->
 </html>
