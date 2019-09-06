@@ -107,7 +107,7 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<form action="tasks.php" method="get">';
-					echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['ID'] . '"</td></form>';
+					echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['ID'] . '"</td></form>';
 					echo '<form action="targets.php" method="get">';
 					echo '<td><input type="text" name="TARGET_NAME" value="'. $row['TARGET_NAME'] . '"></td>';
 					echo '<td><input type="text" name="IP_ADDRESS" value="'. $row['IP_ADDRESS'] . '"></td>';
@@ -115,22 +115,22 @@
 					echo '<td><input type="hidden" name="PASSWORD_ID" value="' . $row['PASSWORD_ID'] . '">'. $row['USERNAME'] . '</td>';
 					echo '<td><input type="text" name="Target_Description" value="'. $row['Target_Description'] . '"></td>';
 					echo '<td><input type="hidden" name="SYSTEM_ID" value="' . $row['SYSTEM_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
-                    echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+                    echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTarget" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Update"</td>';
                     echo '</form>';
 					if($row['STATUS_NAME'] == 'Enabled'){
 						echo '<form action="targets.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableTarget" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableTarget" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="targets.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<form action="tasks.php" method="get"><input type="hidden" name="Target_ID" value="' . $row['ID'] . '">';
-					echo '<td><input type="Submit" class="btn btn-info" value="Tasks"></td>';
+					echo '<td><input type="Submit" class="btn btn-info btn-sm" value="Tasks"></td>';
 					echo '</form>';
 					echo '<form action="create_new_task.php" method="get"><input type="hidden" name="TARGET_NAME" value="' . $row['TARGET_NAME'] . '">';
-					echo '<td><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-warning" value="New Task"></td>';
+					echo '<td><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['TARGET_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-success-outline btn-sm" value="New Task"></td>';
 					echo '</form>';
 					echo '<td>'. $row['date_modified'] . '</td>';
 					echo '</tr>';
@@ -193,7 +193,7 @@
 						<input type="text" name="Target_Description" value="Description">
 					</td>
 					<td>
-						<input type="hidden" name="NewTarget" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Target"></td>
+						<input type="hidden" name="NewTarget" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Target"></td>
 					</td>
 				</form>
 			</tr>

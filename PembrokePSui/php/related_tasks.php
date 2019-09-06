@@ -55,8 +55,8 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><form action="tasks.php" method="get"><input type="hidden" name="PARENT_TASK_ID" value="' . $row['PARENT_TASK_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['PARENT_TASK_ID'] . '"></form></td>';
-					echo '<td><form action="tasks.php" method="get"><input type="hidden" name="CHILD_TASK_ID" value="' . $row['CHILD_TASK_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['CHILD_TASK_ID'] . '"></form></td>';
+					echo '<form action="tasks.php" method="get"><td><input type="hidden" name="PARENT_TASK_ID" value="' . $row['PARENT_TASK_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['PARENT_TASK_ID'] . '"></td></form>';
+					echo '<form action="tasks.php" method="get"><td><input type="hidden" name="CHILD_TASK_ID" value="' . $row['CHILD_TASK_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['CHILD_TASK_ID'] . '"></td></form>';
 					if($row['isRetry'] == 0){
 						echo '<td>False</td>';
 					} else {

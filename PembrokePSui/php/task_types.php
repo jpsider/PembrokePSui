@@ -77,21 +77,21 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<form action="tasks.php" method="get">';
-					echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['ID'] . '"</td></form>';
+					echo '<td><input type="hidden" name="TASK_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['ID'] . '"</td></form>';
 					echo '<form action="task_types.php" method="get">';
 					echo '<td><input type="text" name="TASK_NAME" value="'. $row['TASK_NAME'] . '"></td>';
 					echo '<td><input type="text" name="TASK_PATH" value="'. $row['TASK_PATH'] . '"></td>';
 					echo '<td><input type="text" name="PRIORITY" value="'. $row['PRIORITY'] . '"></td>';
-                    echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+                    echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="hidden" name="UpdateTASKType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Update"</td>';
 					echo '</form>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableTASKType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableTASKType" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableTASKType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';							   
@@ -122,7 +122,7 @@
 						<input type="text" name="PRIORITY" value="Enter a Priority">
 					</td>
 					<td>
-						<input type="hidden" name="NewTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add TaskType"></td>
+						<input type="hidden" name="NewTASKType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add TaskType"></td>
 					</td>
 				</form>
 			</tr>

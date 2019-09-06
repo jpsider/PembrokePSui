@@ -75,11 +75,11 @@
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="target_task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableParentTargetType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableParentTargetType" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="target_task_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableParentTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableParentTargetType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';
@@ -124,7 +124,7 @@
 						<input type="text" name="MAX_Retries" value="Enter a Max Retry">
 					</td>
 					<td>
-						<input type="hidden" name="NewTargetTASKType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Target TASK Type Combo"></td>
+						<input type="hidden" name="NewTargetTASKType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Target TASK Type Combo"></td>
 					</td>
 				</form>
 			</tr>

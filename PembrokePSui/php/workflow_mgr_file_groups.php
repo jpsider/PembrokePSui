@@ -66,16 +66,16 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><form action="wman_files.php" method="get"><input type="hidden" name="MANAGED_FILE_ID" value="' . $row['MANAGED_FILE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['FILE_NAME'] . '"></form></td>';
+					echo '<form action="wman_files.php" method="get"><td><input type="hidden" name="MANAGED_FILE_ID" value="' . $row['MANAGED_FILE_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['FILE_NAME'] . '"></td></form>';
 					echo '<td>'. $row['NAME'] . '</td>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="workflow_mgr_file_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableWMgroupFile" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableWMgroupFile" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="workflow_mgr_file_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableWMgroupFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableWMgroupFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';
@@ -116,7 +116,7 @@
                         ?>
                     </td>
 					<td>
-						<input type="hidden" name="NewwmgroupFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Managed File"></td>
+						<input type="hidden" name="NewwmgroupFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Managed File"></td>
 					</td>
 				</form>
 			</tr>

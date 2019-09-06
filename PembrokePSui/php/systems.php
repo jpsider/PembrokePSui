@@ -72,19 +72,19 @@
 					echo '<form action="systems.php" method="get">';
 					echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 					echo '<td><input type="text" name="SYSTEM_NAME" value="'. $row['SYSTEM_NAME'] . '"></td>';
-                    echo '<td><input type="hidden" name="UpdateSystem" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+                    echo '<td><input type="hidden" name="UpdateSystem" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Update"</td>';
 					echo '</form>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="systems.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableSystem" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableSystem" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="systems.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableSystem" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableSystem" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
-					echo '<td><form action="targets.php" method="get"><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="View Targets"></form></td>';
+					echo '<form action="targets.php" method="get"><td><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="View Targets"></td></form>';
 					echo '<td>'. $row['date_modified'] . '</td>';
 					echo '</tr>';
 				}
@@ -100,7 +100,7 @@
 						<input type="text" name="SYSTEM_NAME" value="Enter a NAME">
 					</td>
 					<td>
-						<input type="hidden" name="NewSystem" value="TRUE"><input type="Submit" class="btn btn-success" value="Add System"></td>
+						<input type="hidden" name="NewSystem" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add System"></td>
 					</td>
 				</form>
 			</tr>

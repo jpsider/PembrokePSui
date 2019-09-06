@@ -55,8 +55,8 @@
 					echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 					echo '<td><input type="text" name="USERNAME" value="'. $row['USERNAME'] . '"></td>';
 					echo '<td><input type="text" name="PASSWORD" value="'. $row['PASSWORD'] . '"></td>';
-					echo '<td><input type="hidden" name="UpdatePASSWORD" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></form></td>';
-					echo '<td><form action="targets.php" method="get"><input type="hidden" name="PASSWORD_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="View Targets"></form></td>';
+					echo '<td><input type="hidden" name="UpdatePASSWORD" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Update"></form></td>';
+					echo '<form action="targets.php" method="get"><td><input type="hidden" name="PASSWORD_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="View Targets"></td></form>';
 					echo '<td>'. $row['date_modified'] . '</td>';
 					echo '</tr>';
 				}
@@ -75,7 +75,7 @@
 						<input type="text" name="PASSWORD" value="Enter a Value">
 					</td>
 					<td>
-						<input type="hidden" name="NewPASSWORD" value="TRUE"><input type="Submit" class="btn btn-success" value="Add PASSWORD"></td>
+						<input type="hidden" name="NewPASSWORD" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add PASSWORD"></td>
 					</td>
 				</form>
 			</tr>

@@ -72,19 +72,19 @@
 					echo '<form action="target_types.php" method="get">';
 					echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 					echo '<td><input type="text" name="NAME" value="'. $row['NAME'] . '"></td>';
-					echo '<td><input type="hidden" name="UpdateTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+					echo '<td><input type="hidden" name="UpdateTargetType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Update"</td>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
                         echo '</form>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="target_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableTargetType" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableTargetType" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="target_types.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableTargetType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
-					echo '<td><form action="targets.php" method="get"><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="View Targets"></form></td>';
+					echo '<form action="targets.php" method="get"><td><input type="hidden" name="TARGET_TYPE_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="View Targets"></td></form>';
 					echo '<td>'. $row['date_modified'] . '</td>';
 					echo '</tr>';
 				}
@@ -100,7 +100,7 @@
 						<input type="text" name="TARGETTYPE_NAME" value="Enter a NAME">
 					</td>
 					<td>
-						<input type="hidden" name="NewTargetType" value="TRUE"><input type="Submit" class="btn btn-success" value="Add TargetType"></td>
+						<input type="hidden" name="NewTargetType" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add TargetType"></td>
 					</td>
 				</form>
 			</tr>

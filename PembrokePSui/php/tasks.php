@@ -126,7 +126,7 @@
 					echo '<tr>';
 					echo '<form action="targets.php" method="get">';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '"><input type="Submit" class="btn btn-primary" value="'. $row['TARGET_NAME'] . '"></td>';
+					echo '<td><input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['TARGET_NAME'] . '"></td>';
 					echo '</form>';
 					echo '<form action="tasks.php" method="get">';
 					echo '<td><input type="hidden" name="SYSTEM_ID" value="' . $row['SYSTEM_ID'] . '">'. $row['SYSTEM_NAME'] . '</td>';
@@ -138,16 +138,16 @@
 					echo '<input type="hidden" name="TARGET_ID" value="' . $row['TARGET_ID'] . '">';
 					echo '<input type="hidden" name="ID" value="' . $row['ID'] . '">';
 					if($row['STATUS_ID'] == 9){
-						echo '<td><input type="hidden" name="RerunTASK" value="TRUE"><input type="Submit" class="btn btn-warning" value="Rerun"></td>';
+						echo '<td><input type="hidden" name="RerunTASK" value="TRUE"><input type="Submit" class="btn btn-orange-outline btn-sm" value="Rerun"></td>';
 						echo '</form>';
 					} else {
-						echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-primary" value="Refresh"></td>';
+						echo '<td><input type="hidden" name="EnableTarget" value="TRUE"><input type="Submit" class="btn btn-info btn-sm" value="Refresh"></td>';
 						echo '</form>';
 					}
-					echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['LOG_FILE'].'><input type="Submit" class="btn btn-default" value="View Log"></form></td>';                             
-                    echo '<td><form action="related_tasks.php" method="get"><input type="hidden" name="Related_TASK_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Related TASKs"></form></td>';
+					echo '<form action="singleLogByNAME.php" method="get"><td><input type="hidden" name="LOG_FILE" value='.$row['LOG_FILE'].'><input type="Submit" class="btn btn-info btn-sm" value="View Log"></td></form>';                             
+                    echo '<form action="related_tasks.php" method="get"><td><input type="hidden" name="Related_TASK_ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="Related TASKs"></td></form>';
 					echo '<td>'. $row['date_modified'] . '</td>';
-                    echo '<td><form action="tasks.php" method="get"><input type="hidden" name="HideTASK" value="TRUE"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info" value="Hide"></form></td>';
+                    echo '<form action="tasks.php" method="get"><td><input type="hidden" name="HideTASK" value="TRUE"><input type="hidden" name="ID" value="' . $row['ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="Hide"></td></form>';
 					echo '</tr>';
 				}
 				Database::disconnect();

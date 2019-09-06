@@ -85,16 +85,16 @@
 					echo '<td><input type="text" name="FILE_PATH" value="'. $row['FILE_PATH'] . '"></td>';
 					echo '<td>'. $row['FILE_HASH'] . '</td>';
 					echo '<td><input type="text" name="REBOOT_REQUIRED" value="'. $row['REBOOT_REQUIRED'] . '"></td>';
-                    echo '<td><input type="hidden" name="UpdateManagedFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Update"</td>';
+                    echo '<td><input type="hidden" name="UpdateManagedFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Update"</td>';
 					echo '</form>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="managed_files.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableManagedFile" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableManagedFile" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="managed_files.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableManagedFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableManagedFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';
@@ -125,7 +125,7 @@
 						<input type="text" name="REBOOT_REQUIRED" value="Enter a 0 or 1">
 					</td>
 					<td>
-						<input type="hidden" name="NewManagedFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Managed File"></td>
+						<input type="hidden" name="NewManagedFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Managed File"></td>
 					</td>
 				</form>
 			</tr>

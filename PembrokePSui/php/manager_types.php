@@ -74,9 +74,9 @@
 					echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 					echo '<td><input type="text" name="Name" value="'. $row['NAME'] . '"></td>';
 					echo '<td><input type="text" name="TABLENAME" value="'. $row['TABLENAME'] . '"></td>';
-					echo '<td><input type="submit" class="btn btn-success" value="UPDATE Data"></form></td>';
+					echo '<td><input type="submit" class="btn btn-success-outline btn-sm" value="UPDATE Data"></form></td>';
 					echo '<td>'. $row['date_modified'] . '</td>';
-    	            echo '<td><form action="queue_manager.php" method="get"><input type="hidden" name="QUEUE_MANAGER_TYPE_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="View Qmanagers"></form></td>';
+    	            echo '<form action="queue_manager.php" method="get"><td><input type="hidden" name="QUEUE_MANAGER_TYPE_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info btn-sm" value="View Qmanagers"></td></form>';
 					echo '</tr>';
 				}
 				Database::disconnect();
@@ -94,7 +94,7 @@
 						<input type="text" name="TABLENAME" value="Enter a TABLENAME">
 					</td>
 					<td>
-						<input type="hidden" name="NewQueueMgrType" value="TRUE"><input type="submit" class="btn btn-success" value="Add Queue Manage Type"></td>
+						<input type="hidden" name="NewQueueMgrType" value="TRUE"><input type="submit" class="btn btn-success-outline btn-sm" value="Add Queue Manage Type"></td>
 					</td>
 				</form>
 			</tr>
@@ -123,9 +123,9 @@
 					echo '<td><input type="hidden" name="ID" value="' . $row['ID'] . '">'. $row['ID'] . '</td>';
 					echo '<td><input type="text" name="NAME" value="'. $row['NAME'] . '"></td>';
 					echo '<td><input type="text" name="TABLENAME" value="'. $row['TABLENAME'] . '"></td>';
-					echo '<td><input type="submit" class="btn btn-success" value="UPDATE Data"></form></td>';
+					echo '<td><input type="submit" class="btn btn-success-outline btn-sm" value="UPDATE Data"></form></td>';
 					echo '<td>'. $row['date_modified'] . '</td>';
-    	            echo '<td><form action="workflow_manager.php" method="get"><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info" value="View WKFLmanagers"></form></td>';
+    	            echo '<form action="workflow_manager.php" method="get"><td><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['ID'] . '"><input type="submit" class="btn btn-info btn-sm" value="View WKFLmanagers"></td></form>';
 					echo '</tr>';
 				}
 				Database::disconnect();
@@ -143,7 +143,7 @@
 						<input type="text" name="TABLENAME" value="Enter a TABLENAME">
 					</td>
 					<td>
-						<input type="hidden" name="NewWorkflowMgrType" value="TRUE"><input type="submit" class="btn btn-success" value="Add Workflow Manage Type"></td>
+						<input type="hidden" name="NewWorkflowMgrType" value="TRUE"><input type="submit" class="btn btn-success-outline btn-sm" value="Add Workflow Manage Type"></td>
 					</td>
 				</form>
 			</tr>

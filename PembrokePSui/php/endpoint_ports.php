@@ -77,7 +77,7 @@
 								echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>'. $row['STATUS_NAME'] . '</td>';
 								echo '<td style=background-color:'. $row['EP_STATUS_COLOR'] . '><b>'. $row['Ep_Status'] . '</b></td>';
 								echo '<td>' . $row['date_modified'] . '</td>';
-							  echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info" value="View Manager"></td>';
+							  echo '<td><input type="hidden" name="ViewManager" value="TRUE"><input type="Submit" class="btn btn-info btn-sm" value="View Manager"></td>';
 								echo '</form>';
 								echo '</tr>';
 							}
@@ -93,7 +93,7 @@
 									<input type="text" name="PORTNUMBER" value="Enter Port Number">
 								</td>
 								<td>
-									<input type="hidden" name="NewPort" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Port"></td>
+									<input type="hidden" name="NewPort" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Port"></td>
 								</td>
 							</form>
 						</tr>

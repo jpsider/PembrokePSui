@@ -77,15 +77,15 @@
 					echo '<td><input type="text" name="PROP_NAME" value="'. $row['PROP_NAME'] . '"></td>';
 					echo '<td><input type="text" name="PROP_VALUE" value="'. $row['PROP_VALUE'] . '"></td>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
-					echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></td>';
+					echo '<td><input type="hidden" name="UpdateProperty" value="TRUE"><input type="Submit" class="btn btn-info btn-sm" value="Update"></td>';
 					echo '</form>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableProperty" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="properties.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableProperty" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableProperty" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}
 					echo '<td>'. $row['date_modified'] . '</td>';
@@ -106,7 +106,7 @@
 						<input type="text" name="PROP_VALUE" value="Enter a Value">
 					</td>
 					<td>
-						<input type="hidden" name="NewProperty" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Property"></td>
+						<input type="hidden" name="NewProperty" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Property"></td>
 					</td>
 				</form>
 			</tr>

@@ -67,10 +67,10 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><form action="wman_modules.php" method="get"><input type="hidden" name="WORKFLOW_MANAGER_ID" value="' . $row['WORKFLOW_MANAGER_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['WORKFLOW_MANAGER_ID'] . '"></form></td>';
+					echo '<form action="wman_modules.php" method="get"><td><input type="hidden" name="WORKFLOW_MANAGER_ID" value="' . $row['WORKFLOW_MANAGER_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['WORKFLOW_MANAGER_ID'] . '"></td></form>';
 					echo '<td>'. $row['HOSTNAME'] . '</td>';
 					echo '<td>'. $row['WMan_Description'] . '</td>';
-					echo '<td><form action="wman_modules.php" method="get"><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['GALLERY_NAME'] . '"></form></td>';
+					echo '<form action="wman_modules.php" method="get"><td><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['GALLERY_NAME'] . '"></td></form>';
 					echo '<td>'. $row['MODULE_VERSION'] . '</td>';
 					if($row['RESULT_ID'] == 1){
 						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
@@ -78,7 +78,7 @@
 					} else {
 						echo '<form action="wman_modules.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
 						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
-						echo '<td><input type="hidden" name="DeployWmModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Deploy File"></td>';
+						echo '<td><input type="hidden" name="DeployWmModule" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Deploy File"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';

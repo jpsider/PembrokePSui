@@ -52,6 +52,7 @@
 				<th>LOG_FILE</th>
 				<th>HEARTBEAT</th>
 				<th>Status</th>
+				<th>Action</th>
 				<th>date_modified</th>
 				<th>Kicker Status</th>
 				<th>Kicker WAIT</th>
@@ -114,25 +115,24 @@
 					echo '<td>'. $row['WAIT'] . '</td>';
 					echo '<td>'. $row['QMAN_PORT'] . '</td>';
 					echo '<td>'. $row['TABLENAME'] . '</td>';
-					echo '<td><form action="singleLogByNAME.php" method="get"><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info" value="View Log"></form></td>';
+					echo '<form action="singleLogByNAME.php" method="get"><td><input type="hidden" name="LOG_FILE" value='.$row['Qman_Log'].'><input type="Submit" class="btn btn-info btn-sm" value="View Log"></td></form>';
 					echo '<td>'. $row['HEARTBEAT'] . '</td>';
-					echo '<td style=background-color:'. $row['Qman_Color'] . '><h4><b><center>'. $row['Qman_Status'] . '</center></b></h4>';
+					echo '<td style=background-color:'. $row['Qman_Color'] . '><b>'. $row['Qman_Status'] . '</b></td>';
 					if ($row['STATUS_ID'] == 1) {
-						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="3"><input type="Submit" class="btn btn-success" value="Start Manager"></form>';
+						echo '<form action="queue_manager.php" method="get"><td><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="3"><input type="Submit" class="btn btn-success-outline btn-sm" value="Start Manager"></td></form>';
 					} elseif ($row['STATUS_ID'] == 2) {
-						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
+						echo '<form action="queue_manager.php" method="get"><td><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Stop Manager"></td></form>';
 					} elseif ($row['STATUS_ID'] == 3) {
-						echo '<form action="queue_manager.php" method="get"><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-danger" value="Stop Manager"></form>';
+						echo '<form action="queue_manager.php" method="get"><td><input type="hidden" name="ID" value='.$row['ID'].'><input type="hidden" name="NEW_STATUS_ID" value="4"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Stop Manager"></td></form>';
 					}else {
-						echo '<a class="btn btn-info" href="queue_manager.php">Refresh</a>';
+						echo '<td><a class="btn btn-info btn-sm" href="queue_manager.php">Refresh</a>';
 					}
-					echo '</td>';
 					echo '<td>'. $row['date_modified'] . '</td>';
-					echo '<td style=background-color:'. $row['Kicker_Color'] . '><h4><b><center>'. $row['Kicker_Status'] . '</center></b></h4></td>';
+					echo '<td style=background-color:'. $row['Kicker_Color'] . '><b>'. $row['Kicker_Status'] . '</b></td>';
 					echo '<td>'. $row['KICKER_WAIT'] . '</td>';
 					echo '<td>'. $row['KICKER_HEARTBEAT'] . '</td>';
 					echo '<td>'. $row['QMan_Description'] . '</td>';
-					echo '<td style=background-color:'. $row['Regis_Color'] . '><h4><b><center>'. $row['Regis_Status'] . '</center></b></h4></td>';
+					echo '<td style=background-color:'. $row['Regis_Color'] . '><b>'. $row['Regis_Status'] . '</b></td>';
 					echo '</tr>';
 				}
 				Database::disconnect();
@@ -179,7 +179,7 @@
 						<input type="text" name="Qman_Description" value="Enter a description">
 					</td>
 					<td>
-						<input type="hidden" name="NewQueueMgr" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Queue Manager"></td>
+						<input type="hidden" name="NewQueueMgr" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Queue Manager"></td>
 					</td>
 				</form>
 			</tr>

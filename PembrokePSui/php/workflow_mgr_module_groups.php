@@ -79,17 +79,17 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['GALLERY_NAME'] . '"></form></td>';
+					echo '<form action="workflow_mgr_module_groups.php" method="get"><td><input type="hidden" name="ADDL_MODULE_ID" value="' . $row['ADDL_MODULE_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['GALLERY_NAME'] . '"></td></form>';
 					echo '<td>'. $row['MODULE_VERSION'] . '</td>';
-					echo '<td><form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['WORKFLOW_MANAGER_TYPE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['NAME'] . '"></form></td>';
+					echo '<form action="workflow_mgr_module_groups.php" method="get"><td><input type="hidden" name="WORKFLOW_MANAGER_TYPE_ID" value="' . $row['WORKFLOW_MANAGER_TYPE_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['NAME'] . '"></td></form>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>'. $row['STATUS_NAME'] . '</b></td>';
 					if($row['STATUS_ID'] == 11){
 						echo '<form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="DisableWmModule" value="TRUE"><input type="Submit" class="btn btn-danger" value="Disable"></td>';
+						echo '<td><input type="hidden" name="DisableWmModule" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Disable"></td>';
 						echo '</form>';
 					} else {
 						echo '<form action="workflow_mgr_module_groups.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td><input type="hidden" name="EnableWmModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Enable"></td>';
+						echo '<td><input type="hidden" name="EnableWmModule" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Enable"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';
@@ -130,7 +130,7 @@
                         ?>
                     </td>
 					<td>
-						<input type="hidden" name="NewWmModule" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Wman Module"></td>
+						<input type="hidden" name="NewWmModule" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Wman Module"></td>
 					</td>
 				</form>
 			</tr>

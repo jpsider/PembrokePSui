@@ -73,7 +73,7 @@
 					echo '<td>'. $row['TASK_NAME'] . '</td>';
 					echo '<td><input type="text" name="ARGUMENTS" value=""></td>';
 					echo '<form action="create_new_task.php" method="get"><input type="hidden" name="TASK_TYPE_ID" value="' . $row['TASK_TYPE_ID'] . '"><input type="hidden" name="TARGET_ID" value="' . $TARGET_ID . '">';
-					echo '<td><input type="hidden" name="CreateNewTASK" value="TRUE"><input type="Submit" class="btn btn-success" value="Create TASK"></td>';
+					echo '<td><input type="hidden" name="CreateNewTASK" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Create TASK"></td>';
 					echo '</form>';                              
 					echo '<td>'. $row['date_modified'] . '</td>';
 					echo '</tr>';

@@ -71,20 +71,20 @@
 				foreach ($pdo->query($sql) as $row) {
 					echo '<tr>';
 					echo '<td>'. $row['ID'] . '</td>';
-					echo '<td><form action="qman_files.php" method="get"><input type="hidden" name="QUEUE_MANAGER_ID" value="' . $row['QUEUE_MANAGER_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['QUEUE_MANAGER_ID'] . '"></form></td>';
+					echo '<form action="qman_files.php" method="get"><td><input type="hidden" name="QUEUE_MANAGER_ID" value="' . $row['QUEUE_MANAGER_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['QUEUE_MANAGER_ID'] . '"></td></form>';
 					echo '<td>'. $row['HOSTNAME'] . '</td>';
 					echo '<td>'. $row['QMan_Description'] . '</td>';
-					echo '<td><form action="qman_files.php" method="get"><input type="hidden" name="MANAGED_FILE_ID" value="' . $row['MANAGED_FILE_ID'] . '"><input type="Submit" class="btn btn-info" value="'. $row['FILE_NAME'] . '"></form></td>';
+					echo '<form action="qman_files.php" method="get"><td><input type="hidden" name="MANAGED_FILE_ID" value="' . $row['MANAGED_FILE_ID'] . '"><input type="Submit" class="btn btn-info btn-sm" value="'. $row['FILE_NAME'] . '"></td></form>';
 					echo '<td>'. $row['FILE_PATH'] . '</td>';
 					echo '<td>'. $row['FILE_HASH'] . '</td>';
 					echo '<td>'. $row['QUEUE_MGR_HASH'] . '</td>';
 					if($row['RESULT_ID'] == 1){
-						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
+						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>' . $row['RESULT_NAME'] . '</b></td>';
 						echo '<td></td>';
 					} else {
 						echo '<form action="qman_files.php" method="get"><input type="hidden" name="ID" value="' . $row['ID'] . '">';
-						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '>' . $row['RESULT_NAME'] . '</td>';
-						echo '<td><input type="hidden" name="DeployQMFile" value="TRUE"><input type="Submit" class="btn btn-success" value="Deploy File"></td>';
+						echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><b>' . $row['RESULT_NAME'] . '</b></td>';
+						echo '<td><input type="hidden" name="DeployQMFile" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Deploy File"></td>';
 						echo '</form>';
 					}                                
 					echo '<td>'. $row['date_modified'] . '</td>';

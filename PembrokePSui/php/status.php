@@ -55,7 +55,7 @@
 					echo '<td><input type="text" name="HTMLCOLOR" value="' . $row['HTMLCOLOR'] . '"></td>';
 					echo '<td style=background-color:'. $row['HTMLCOLOR'] . '><input type="text" name="HTML_Description" value="' . $row['HTML_Description'] . '"</td>';
 					echo '<td>' . $row['date_modified'] . '</td>';
-				  echo '<td><input type="hidden" name="UpdateStatus" value="TRUE"><input type="Submit" class="btn btn-warning" value="Update"></td>';
+				  echo '<td><input type="hidden" name="UpdateStatus" value="TRUE"><input type="Submit" class="btn btn-warning-outline btn-sm" value="Update"></td>';
 					echo '</form>';
 					echo '</tr>';
 				}
@@ -77,7 +77,7 @@
 						<input type="text" name="HTML_Description" value="Enter HTML Description">
 					</td>
 					<td>
-						<input type="hidden" name="NewStatus" value="TRUE"><input type="Submit" class="btn btn-success" value="Add Status"></td>
+						<input type="hidden" name="NewStatus" value="TRUE"><input type="Submit" class="btn btn-success-outline btn-sm" value="Add Status"></td>
 					</td>
 				</form>
 			</tr>
